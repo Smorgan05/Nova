@@ -25,16 +25,12 @@ Windows 8
 Windows 8.1                     
 Windows 10                         
 
-SUPPORT LIST SERVER
-===========
 Server 2008
 Server 2008 R2 
 Server 2012
 Server 2012 R2
 Server 2016
 
-SUPPORT LIST EMBEDDED
-===================
- Windows Embedded 7
- Windows Embedded 8
- Windows Embedded 8.1
+Windows Embedded 7
+Windows Embedded 8
+Windows Embedded 8.1
