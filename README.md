@@ -16,3 +16,11 @@ $OEM$ --> $$ --> Setup --> Scripts
 4. Naviagate to the Sources Folder and drag the $OEM$ folder into it
 5. You now have the Universal OEM Pack in the ISO
 6. This will now modify the Install of Windows to create a custom Distribution
+
+SUPPORT LIST
+=============
+Windows Vista         Server 2008       
+Windows 7             Server 2008 R2          Windows Embedded 7
+Windows 8             Server 2012             Windows Embedded 8
+Windows 8.1           Server 2012 R2          Windows Embedded 8.1
+Windows 10            Server 2016             
