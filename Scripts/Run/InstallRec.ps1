@@ -49,7 +49,9 @@ if ($UtilArray[$i] -match 'exp'){$ProcessExp = $UtilArray[$i]}
 if (($UtilArray[$i] -match '7z') -and ($UtilArray[$i] -notmatch 'x64')){$7zip32 = $UtilArray[$i]}
 if (($UtilArray[$i] -match '7z') -and ($UtilArray[$i] -match 'x64')){$7zip64 = $UtilArray[$i]}
 if (($UtilArray[$i] -match 'FileZilla') -and ($UtilArray[$i] -like '*win32*')){$FileZ32 = $UtilArray[$i]}
-if (($UtilArray[$i] -match 'FileZilla') -and ($UtilArray[$i] -like '*win64*')){$FileZ64 = $UtilArray[$i]}}
+if (($UtilArray[$i] -match 'FileZilla') -and ($UtilArray[$i] -like '*win64*')){$FileZ64 = $UtilArray[$i]}
+if (($UtilArray[$i] -match 'python') -and ($UtilArray[$i] -notmatch 'amd64')){$Python32 = $UtilArray[$i]}
+if (($UtilArray[$i] -match 'python') -and ($UtilArray[$i] -match 'amd64')){$Python64 = $UtilArray[$i]}}
 #
 }
 # ==============================* Web Plugins *======================================
