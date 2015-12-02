@@ -17,7 +17,7 @@ $OEM$ --> $$ --> Setup --> Scripts
 5. You now have the Universal OEM Pack in the ISO
 6. This will now modify the Install of Windows to create a custom Distribution
 
-SUPPORT LIST (32 and 64 bit)
+SUPPORT LIST Windows (32 and 64 bit)
 =============
 Windows Vista         
 Windows 7
@@ -25,12 +25,16 @@ Windows 8
 Windows 8.1                     
 Windows 10                         
 
+SUPPORT LIST SERVER
+===========
 Server 2008
 Server 2008 R2 
 Server 2012
 Server 2012 R2
 Server 2016
 
+SUPPORT LIST EMBEDDED
+===================
  Windows Embedded 7
  Windows Embedded 8
  Windows Embedded 8.1
