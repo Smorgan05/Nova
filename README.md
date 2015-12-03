@@ -19,6 +19,6 @@ $OEM$ --> $$ --> Setup --> Scripts
 
 ISO SUPPORT LIST
 ================
-Windows Vista - Windows 10
-Windows Server 2008 - Windows Server 2016
+Windows Vista - Windows 10,
+Windows Server 2008 - Windows Server 2016,
 Windows Embedded 7 - Windows Embedded 10 
