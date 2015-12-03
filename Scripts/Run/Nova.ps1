@@ -7,13 +7,11 @@ cd $env:windir\Setup\Scripts\Run
 # Set the location for Scripting
 cd $default
 #
-# Set date for Master Development Build
-$date = Get-Date -format "MM.dd.yyyy"
 #
 # Set the key to make the OEM identifiable as the Nova Pack
 $key = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation"
 New-ItemProperty $key -Name Manufacturer -Value "Nova Edition" -Force | out-null
-New-ItemProperty $key -Name Model -Value "Nova v12.1 ($date)" -Force | out-null
+New-ItemProperty $key -Name Model -Value "Nova v12.1" -Force | out-null
 if ($NovaMod -eq "True"){New-ItemProperty $key -Name Logo -Value "$home\Nova Pack\Themes\Nova.bmp" -Force | out-null
 #
 # Start unpacking of Nova Pack
