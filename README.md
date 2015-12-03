@@ -17,7 +17,7 @@ $OEM$ --> $$ --> Setup --> Scripts
 5. You now have the Universal OEM Pack in the ISO
 6. This will now modify the Install of Windows to create a custom Distribution
 
-ISO SUPPORT LIST
+ISO SUPPORT LIST (32/64 bit)
 ================
 Windows Vista - Windows 10,
 Windows Server 2008 - Windows Server 2016,
