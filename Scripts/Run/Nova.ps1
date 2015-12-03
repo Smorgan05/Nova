@@ -7,7 +7,6 @@ cd $env:windir\Setup\Scripts\Run
 # Set the location for Scripting
 cd $default
 #
-#
 # Set the key to make the OEM identifiable as the Nova Pack
 $key = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation"
 New-ItemProperty $key -Name Manufacturer -Value "Nova Edition" -Force | out-null
