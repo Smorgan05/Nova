@@ -18,7 +18,6 @@ $OEM$ --> $$ --> Setup --> Scripts
 6. This will now modify the Install of Windows to create a custom Distribution
 
 SUPPORT LIST Windows (32 and 64 bit)
-====================
 Windows Vista
 Windows 7
 Windows 8
