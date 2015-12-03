@@ -1,6 +1,6 @@
 $Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.30"
 # Nova Module Controller (REQUIRED)
-# Coded By Morgan Overman for the Nova Project
+# Coded By Morgan Overman for the Nova Project in Collaboration with MDL Forums
 Start-Sleep -s 3
 #
 # Load Variables
