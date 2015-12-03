@@ -1,4 +1,5 @@
 # Nova Project
+# By Morgan Overman with help from Members of MDL Forums
 
 Universal OEM Pack to make slip streaming of Windows ISOs easier.
 
