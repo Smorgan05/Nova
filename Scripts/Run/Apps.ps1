@@ -30,9 +30,9 @@ start-process "Apps\Utilities\$Notepad" -ArgumentList "$s_big" -wait}
 #
 # Utilities / Tools Module (Multi - Arc)
 if ($arc -eq "64-bit"){
-start-process "Apps\Utilities\$Python64" -ArgumentList "$quiet" -wait 
+start-process "Apps\Utilities\$Python64" -ArgumentList "$PythonInst" -wait 
 start-process "Apps\Utilities\$FileZ64" -ArgumentList "$s_big" -wait } else {
-start-process "Apps\Utilities\$Python32" -ArgumentList "$quiet" -wait
+start-process "Apps\Utilities\$Python32" -ArgumentList "$PythonInst" -wait
 start-process "Apps\Utilities\$FileZ32" -ArgumentList "$s_big" -wait}
 #
 	} # End Method for Setup
