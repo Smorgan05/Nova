@@ -11,6 +11,7 @@ $default = "$env:windir\Setup\Scripts"
 $s_big = "/S"
 $q = "/q"
 $silent = "/silent"
+$quiet = "/quiet"
 $s_small = "-s"
 #
 # Set Variables for Scripts that will create a new instance of PS
