@@ -36,6 +36,4 @@ if ($ServerPrepMod -eq "True"){
 #
 # Load Tweaks script and Run Setup Method
 . .\Tweaks.ps1; Tweaks "Setup"
-#
-# Python Scripts go here
 exit
