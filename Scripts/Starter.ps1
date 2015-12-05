@@ -1,6 +1,7 @@
 $Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.30"
 # Nova Module Controller (REQUIRED)
 # Coded By Morgan Overman for the Nova Project
+# Multilingual Script Controller 
 Start-Sleep -s 3
 #
 # Load Variables
@@ -30,9 +31,10 @@ Write-Host
 Write-Host App Install Start
 . .\Apps.ps1; Apps "PostInstall"
 Write-Host
+if ($Python -eq "True"){
 Write-Host Python Script Sample
 Python Sample.py
-Write-Host
+Write-Host}
 Write-Host Shortcuts Start
 . .\Shortcuts.ps1
 Write-Host
