@@ -30,7 +30,7 @@ Write-Host
 Write-Host App Install Start
 . .\Apps.ps1; Apps "PostInstall"
 Write-Host
-Write-Host Python Script Test
+Write-Host Python Script Sample
 Python Sample.py
 Write-Host
 Write-Host Shortcuts Start
