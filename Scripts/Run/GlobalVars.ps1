@@ -21,10 +21,12 @@ $StartMenuUser = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs"
 #
 # One Use variables
 $Classy = "/qn ADDLOCAL=ClassicStartMenu"
+$PythonInst = "/passive InstallAllUsers=1"
+$Program86 = ${Env:ProgramFiles(x86)}
 #
 # Enviromental Variables (Permenant - System / User)
-$System = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment"
-$User = "HKCU:\Environment"
+$SystemVar = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment"
+$UserVar = "HKCU:\Environment"
 #
 # Privacy Variables (Privacy.ps1)
 $WinTasks = "$env:windir\System32\Tasks\Microsoft\Windows"
@@ -33,8 +35,8 @@ $Diagnostics = "$env:systemdrive\ProgramData\Microsoft\Diagnosis"
 $ShutLogger = "ETLLogs\ShutdownLogger\AutoLogger-Diagtrack-Listener.etl" 
 $AutoLogger = "ETLLogs\AutoLogger\AutoLogger-Diagtrack-Listener.etl"
 $RegRoute = "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\PersistentRoutes"
-$DiagTrack = (gsv "DiagTrack")
-$Dmwappush = (gsv "dmwappushservice")
+$DiagTrack = (gsv "DiagTrack" -ErrorAction SilentlyContinue)
+$Dmwappush = (gsv "dmwappushservice" -ErrorAction SilentlyContinue)
 #
 # Set Directory for Module Variable settings
 cd $default

@@ -1,6 +1,6 @@
 $Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.30"
 # Nova Module Controller (REQUIRED)
-# Coded By Morgan Overman for the Nova Project in Collaboration with MDL Forums
+# Coded By Morgan Overman for the Nova Project
 Start-Sleep -s 3
 #
 # Load Variables
@@ -10,9 +10,6 @@ cd $env:windir\Setup\Scripts\Run
 Write-Host ----------------- Nova Module Controller 1.30 ----------------
 Write-Host --------------------------------------------------------------
 Write-Host ------ Per Ardua Ad Astra, From Adversity to the Stars --------
-#
-# Set the Location
-cd $default\Run
 Write-Host
 Write-Host Nova Settings
 if ($NovaMod -eq "True"){
@@ -32,6 +29,9 @@ else {Write-Host "Server OS not detected."}
 Write-Host
 Write-Host App Install Start
 . .\Apps.ps1; Apps "PostInstall"
+Write-Host
+Write-Host Python Script Test
+Python Sample.py
 Write-Host
 Write-Host Shortcuts Start
 . .\Shortcuts.ps1

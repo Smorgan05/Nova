@@ -10,6 +10,16 @@ function Tweaks($Action){
 #
 if ($Action -eq "Setup"){
 #
+# Check Arc and set Correct Python path 
+if ($arc -eq "64-bit"){ $PythonPath = ";$env:ProgramFiles\Python 3.5" } else { $PythonPath = ";$Program86\Python 3.5" }
+#
+# Add Python to the Path in the Registry (needs restart)
+if (Test-Path $PythonPath.substring(1)){
+$RegPath = Get-ItemProperty $SystemVar
+$RegValue = $RegPath.Path+$PythonPath
+Set-ItemProperty -path $SystemVar -Name Path -Value $RegValue}
+#
+#
 # Windows Universal Tweaks (V - 10 / Server 2008 - Server 2016)
 regedit /s "Reg\Windows\disable_uac.reg"
 regedit /s "Reg\Windows\Takeown.reg"
