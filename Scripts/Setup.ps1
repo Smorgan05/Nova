@@ -28,7 +28,7 @@ REN "$env:windir\System32\runonce.exe" "runonce.exe.dis"}
 cd $default\Run
 #
 # Run Server Script and Module check
-if ($ServerPrepMod -eq "True"){
+if (($ServerPrepMod -eq "True") -and ($ServerMod -eq "True")){
 . .\Server.ps1; Server "ServerPrep"}
 #
 # Load Apps script and Run Setup Method
