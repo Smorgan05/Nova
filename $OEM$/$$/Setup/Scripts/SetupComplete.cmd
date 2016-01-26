@@ -1,9 +1,6 @@
 @echo off
 Title Setupcomplete with PS Install for Vista
 
-:SetVars
-set ln=echo.
-
 echo Powershell Check
 start /w regedit /s "%windir%\Setup\scripts\Reg\Windows\disable_uac.reg"
 if exist "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe" (goto reg) ELSE (goto Pwr)
@@ -21,9 +18,7 @@ goto Finish
 echo Insert starter.bat into startup via RunOnce
 reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v "Starter" /t REG_SZ /d "C:\windows\setup\scripts\SetupComplete.cmd" /f
 MD "%systemdrive%\968930"
-%ln%
-IF /I "%PROCESSOR_ARCHITECTURE%"=="AMD64" GOTO :install64
-GOTO :install32
+IF /I "%PROCESSOR_ARCHITECTURE%"=="AMD64" (goto install64) ELSE (goto install32)
 
 -----------------------------------------------------------------------------------------
 

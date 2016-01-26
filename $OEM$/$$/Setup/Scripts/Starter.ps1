@@ -1,21 +1,28 @@
-$Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.30"
+$Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.35"
 # Nova Module Controller (REQUIRED)
 # Coded By Morgan Overman for the Nova Project
-# Multilingual Script Controller 
-Start-Sleep -s 3
-#
-# Load Variables
+# Multilingual Script Controller
+
+# Check for Vmware Setup
+Get-Process | Where-object { $_.Company -eq "Vmware, Inc." } -ea SilentlyContinue | Stop-Process
+
+# Load Variables & Store in Txt
 cd $env:windir\Setup\Scripts\Run
 . .\GlobalVars.ps1
-#
-Write-Host ----------------- Nova Module Controller 1.30 ----------------
+#cmpv > variables.txt 
+
+# Check for Pending Install 
+cd $default\Extrun;
+. .\Get-PendingReboot.ps1
+if ((Get-PendingReboot).RebootPending -eq "True"){Restart-Computer -Force}; cd $default\Run
+
+Write-Host ----------------- Nova Module Controller 1.35 ----------------
 Write-Host --------------------------------------------------------------
 Write-Host ------ Per Ardua Ad Astra, From Adversity to the Stars --------
 Write-Host
-Write-Host Nova Settings
 if ($NovaMod -eq "True"){
+Write-Host Nova Settings
 . .\Nova.ps1}
-else {Write-Host Nova Module not Detected}
 Write-Host
 Write-Host Nova Privacy Settings
 Start-Process PowerShell -ArgumentList $Privacy -Wait
@@ -25,9 +32,8 @@ Write-Host Install Windows Tweaks
 Write-Host
 if ($ServerMod -eq "True"){
 Write-Host Server Workstation Install Start
-. .\Server.ps1; Server "ServerConv"} 
-else {Write-Host "Server OS not detected."}
-Write-Host
+. .\Server.ps1; Server "ServerConv"
+Write-Host} 
 Write-Host App Install Start
 . .\Apps.ps1; Apps "PostInstall"
 Write-Host
