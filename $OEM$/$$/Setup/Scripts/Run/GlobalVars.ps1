@@ -4,6 +4,7 @@
 $edition = (gwmi Win32_OperatingSystem).Caption
 $winver = (gwmi win32_OperatingSystem).Version
 $arc = (gwmi win32_OperatingSystem).OSArchitecture
+$SystemModel = (gwmi win32_computersystem).Model
 $Temp = $env:temp
 
 # Set Master script directory

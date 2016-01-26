@@ -4,7 +4,7 @@ $Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.35"
 # Multilingual Script Controller
 
 # Check for Vmware Setup
-Get-Process | Where-object { $_.Company -eq "Vmware, Inc." } -ea SilentlyContinue | Stop-Process
+if ($SystemModel -match "Vmware"){ Get-Process | Where-object { $_.Company -match "Vmware" } | Stop-Process -Force }
 
 # Load Variables & Store in Txt
 cd $env:windir\Setup\Scripts\Run
