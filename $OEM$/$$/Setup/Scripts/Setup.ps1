@@ -37,10 +37,5 @@ if (($ServerPrepMod -eq "True") -and ($ServerMod -eq "True")){
 . .\Apps.ps1; Apps "Setup"
 
 # Load Tweaks script and Run Setup Method
-<<<<<<< HEAD:$OEM$/$$/Setup/Scripts/Setup.ps1
 . .\Tweaks.ps1; Tweaks "Setup"; Lang "PassVarSetup"
 exit
-=======
-. .\Tweaks.ps1; Tweaks "Setup"
-exit
->>>>>>> origin/master:Scripts/Setup.ps1
