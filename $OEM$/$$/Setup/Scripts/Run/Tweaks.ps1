@@ -166,7 +166,7 @@ function Lang($Action){
 if ($Action -eq "PassVarSetup"){
 New-item -type file -force $profile
 $filter = '$AutomaticVariables = Get-Variable'
-$filterfunc = 'function cmpv {
+$filterfunc = 'function compvar {
     Compare-Object (Get-Variable) $AutomaticVariables -Property Name -PassThru | Where -Property Name -ne "AutomaticVariables"
 }'
 ac $profile $filter; ac $profile $filterfunc

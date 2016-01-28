@@ -1,4 +1,6 @@
+# Change directory to OEM RUN
 import os
-import sys
-Default = "C:\\Windows\\Setup\\Scripts"
+Default = "C:\\Windows\\Setup\\Scripts\\Run"
 os.chdir(Default)
+
+# Parse Variables from Text File

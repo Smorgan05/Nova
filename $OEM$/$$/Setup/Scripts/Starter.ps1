@@ -3,18 +3,22 @@ $Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.35"
 # Coded By Morgan Overman for the Nova Project
 # Multilingual Script Controller
 
-# Check for Vmware Setup
-if ($SystemModel -match "Vmware"){ Get-Process | Where-object { $_.Company -match "Vmware" } | Stop-Process -Force }
+# Check for Pending Install / Reboot then wait
+cd $env:windir\Setup\Scripts\Extrun
+. .\Get-PendingReboot.ps1
+if ((Get-PendingReboot).RebootPending -eq "True"){$host.UI.RawUI.ReadKey() | out-null}
+
+# Create PowerShell Profile & Refresh Profile
+cd $env:windir\Setup\Scripts\Run
+. .\Tweaks.ps1; Lang "PassVarSetup"; .$profile
+cls
 
 # Load Variables & Store in Txt
-cd $env:windir\Setup\Scripts\Run
 . .\GlobalVars.ps1
-#cmpv > variables.txt 
+compvar > variables.txt
 
-# Check for Pending Install 
-cd $default\Extrun;
-. .\Get-PendingReboot.ps1
-if ((Get-PendingReboot).RebootPending -eq "True"){Restart-Computer -Force}; cd $default\Run
+# Check for Vmware Setup
+if ($SystemModel -match "Vmware"){ Get-Process | Where-object { $_.Company -match "Vmware" } | Stop-Process -Force }
 
 Write-Host ----------------- Nova Module Controller 1.35 ----------------
 Write-Host --------------------------------------------------------------
@@ -22,8 +26,8 @@ Write-Host ------ Per Ardua Ad Astra, From Adversity to the Stars --------
 Write-Host
 if ($NovaMod -eq "True"){
 Write-Host Nova Settings
-. .\Nova.ps1}
-Write-Host
+. .\Nova.ps1
+Write-Host}
 Write-Host Nova Privacy Settings
 Start-Process PowerShell -ArgumentList $Privacy -Wait
 Write-Host

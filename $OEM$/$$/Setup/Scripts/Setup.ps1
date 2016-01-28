@@ -9,8 +9,10 @@ cd "$env:programdata\Microsoft\Windows\Start Menu\Programs\Startup"
 
 # Write the starter to run at post install 
 sc Starter.bat '@echo off' -en ASCII
-Add-Content starter.bat "echo Starter for Nova Module Controller"
-Add-Content starter.bat "Start PowerShell -NoLogo -NoExit -ExecutionPolicy Bypass -NoProfile -File C:\Windows\Setup\Scripts\Starter.ps1"
+ac starter.bat 'echo Starter for Nova Module Controller'
+ac starter.bat 'Start PowerShell -NoLogo -NoExit -ExecutionPolicy Bypass -NoProfile -File C:\Windows\Setup\Scripts\Starter.ps1'
+
+powershell -command ". %windir%\setup\scripts\run\tweaks.ps1; Lang "PassVarSetup";"
 
 # Set for Dot net InstallRec
 cd $default
@@ -37,10 +39,5 @@ if (($ServerPrepMod -eq "True") -and ($ServerMod -eq "True")){
 . .\Apps.ps1; Apps "Setup"
 
 # Load Tweaks script and Run Setup Method
-<<<<<<< HEAD:$OEM$/$$/Setup/Scripts/Setup.ps1
-. .\Tweaks.ps1; Tweaks "Setup"; Lang "PassVarSetup"
-exit
-=======
 . .\Tweaks.ps1; Tweaks "Setup"
 exit
->>>>>>> origin/master:Scripts/Setup.ps1
