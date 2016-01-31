@@ -164,11 +164,11 @@ regedit /s "Reg\Windows\Preview_Pane.reg"}
 function Lang($Action){
 
 if ($Action -eq "PassVarSetup"){
-New-item -type file -force $profile
+New-item -type file -force $profile | out-null
 $filter = '$AutomaticVariables = Get-Variable'
 $filterfunc = 'function compvar {
     Compare-Object (Get-Variable) $AutomaticVariables -Property Name -PassThru | Where -Property Name -ne "AutomaticVariables"
 }'
-ac $profile $filter; ac $profile $filterfunc
+ac $profile $filter | out-null; ac $profile $filterfunc | out-null
 	}
 } # End Function

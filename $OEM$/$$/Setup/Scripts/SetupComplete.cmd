@@ -28,7 +28,7 @@ cd %windir%\Setup\scripts\Apps\Prep
 Expand –F:* "Windows6.0-vista-ps2-KB968930-x86.msu" "%systemdrive%\968930"
 Start /w pkgmgr /ip /m:"%systemdrive%\968930\Windows6.0-KB968930-x86.cab" /Quiet /NoRestart
 RD /S /Q "C:\968930"
-goto :Finish
+exit
 
 :install64
 echo Start update for Vista x64 / Server 2008 x64
@@ -36,10 +36,4 @@ cd %windir%\Setup\scripts\Apps\Prep
 Expand –F:* "Windows6.0-vista-ps2-KB968930-x64.msu" "%systemdrive%\968930"
 Start /w pkgmgr /ip /m:"%systemdrive%\968930\Windows6.0-KB968930-x64.cab" /Quiet /NoRestart
 RD /S /Q "C:\968930"
-goto :Finish
-
------------------------------------------------------------------------------------------
-
-:Finish
-shutdown /r /f /t 0
 exit

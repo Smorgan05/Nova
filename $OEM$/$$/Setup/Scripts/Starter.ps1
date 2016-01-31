@@ -6,19 +6,18 @@ $Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.35"
 # Check for Pending Install / Reboot then wait
 cd $env:windir\Setup\Scripts\Extrun
 . .\Get-PendingReboot.ps1
-if ((Get-PendingReboot).RebootPending -eq "True"){$host.UI.RawUI.ReadKey() | out-null}
+if ((Get-PendingReboot).RebootPending -eq "True"){Restart-Computer -Force}
+
+# Check for Vmware Setup
+if ((gwmi win32_computersystem).Model -match "Vmware"){ Get-Process | Where-object { $_.Company -match "Vmware" } | Stop-Process -Force }
 
 # Create PowerShell Profile & Refresh Profile
 cd $env:windir\Setup\Scripts\Run
 . .\Tweaks.ps1; Lang "PassVarSetup"; .$profile
-cls
 
 # Load Variables & Store in Txt
 . .\GlobalVars.ps1
 compvar > variables.txt
-
-# Check for Vmware Setup
-if ($SystemModel -match "Vmware"){ Get-Process | Where-object { $_.Company -match "Vmware" } | Stop-Process -Force }
 
 Write-Host ----------------- Nova Module Controller 1.35 ----------------
 Write-Host --------------------------------------------------------------
