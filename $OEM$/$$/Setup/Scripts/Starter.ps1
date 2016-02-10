@@ -1,33 +1,42 @@
-$Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.30"
+$Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.35"
 # Nova Module Controller (REQUIRED)
 # Coded By Morgan Overman for the Nova Project
-# Multilingual Script Controller 
-Start-Sleep -s 3
-#
-# Load Variables
-cd $env:windir\Setup\Scripts\Run
+# Multilingual Script Controller
+
+# Check for Pending Install / Reboot then wait
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\ExtRun} else {cd $ScriptDir\ExtRun}
+. .\Get-PendingReboot.ps1
+if ((Get-PendingReboot).RebootPending -eq "True"){Restart-Computer -Force}
+
+# Check for Vmware Setup
+if ((gwmi win32_computersystem).Model -match "Vmware"){ Get-Process | Where-object { $_.Company -match "Vmware" } | Stop-Process -Force }
+
+# Create PowerShell Profile & Refresh Profile
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
+. .\Tweaks.ps1; Lang "PassVarSetup"; .$profile
+
+# Load Variables & Store in Txt
 . .\GlobalVars.ps1
-#
-Write-Host ----------------- Nova Module Controller 1.30 ----------------
+compvar > variables.txt
+
+Write-Host ----------------- Nova Module Controller 1.35 ----------------
 Write-Host --------------------------------------------------------------
 Write-Host ------ Per Ardua Ad Astra, From Adversity to the Stars --------
 Write-Host
-Write-Host Nova Settings
 if ($NovaMod -eq "True"){
-. .\Nova.ps1}
-else {Write-Host Nova Module not Detected}
-Write-Host
+Write-Host Nova Settings
+. .\Nova.ps1
+Write-Host}
 Write-Host Nova Privacy Settings
 Start-Process PowerShell -ArgumentList $Privacy -Wait
 Write-Host
-Write-Host Install Windows Tweaks
+Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "PostInstall"
 Write-Host
 if ($ServerMod -eq "True"){
-Write-Host Server Workstation Install Start
-. .\Server.ps1; Server "ServerConv"} 
-else {Write-Host "Server OS not detected."}
-Write-Host
+Write-Host Server Workstation Install
+. .\Server.ps1; Server "ServerConv"
+Write-Host} 
 Write-Host App Install Start
 . .\Apps.ps1; Apps "PostInstall"
 Write-Host
