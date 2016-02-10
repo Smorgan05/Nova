@@ -1,7 +1,8 @@
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 # Shortcuts Pack
 
 # Load Variables
-cd $env:windir\Setup\Scripts\Run
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\InstallRec.ps1
 
 # Set Location
@@ -19,7 +20,8 @@ $Shortcut.TargetPath = $TargetFile
 $Shortcut.Save()}
 
 # Remove all Shortcuts on desktop
-Remove-Item $home\desktop\* -recurse
+if ($PWD -notmatch "Desktop"){
+Remove-Item $home\desktop\* -recurse}
 Remove-Item $env:public\Desktop\* -recurse
 
 if ($AppsModUtil -eq "True"){

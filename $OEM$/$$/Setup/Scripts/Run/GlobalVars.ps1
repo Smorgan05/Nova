@@ -7,7 +7,8 @@ $arc = (gwmi win32_OperatingSystem).OSArchitecture
 $Temp = $env:temp
 
 # Set Master script directory
-$default = "$env:windir\Setup\Scripts"
+if (Test-path "$env:windir\Setup\Scripts"){
+$default = "$env:windir\Setup\Scripts"} else {$default = Split-Path (Split-Path $script:MyInvocation.MyCommand.Path) -Parent}
 
 # Multi-use Variables
 $s_big = "/S"

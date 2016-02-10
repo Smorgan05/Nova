@@ -4,7 +4,7 @@ $Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.35"
 # Multilingual Script Controller
 
 # Check for Pending Install / Reboot then wait
-cd $env:windir\Setup\Scripts\Extrun
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\ExtRun} else {cd $ScriptDir\ExtRun}
 . .\Get-PendingReboot.ps1
 if ((Get-PendingReboot).RebootPending -eq "True"){Restart-Computer -Force}
 
@@ -12,7 +12,7 @@ if ((Get-PendingReboot).RebootPending -eq "True"){Restart-Computer -Force}
 if ((gwmi win32_computersystem).Model -match "Vmware"){ Get-Process | Where-object { $_.Company -match "Vmware" } | Stop-Process -Force }
 
 # Create PowerShell Profile & Refresh Profile
-cd $env:windir\Setup\Scripts\Run
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\Tweaks.ps1; Lang "PassVarSetup"; .$profile
 
 # Load Variables & Store in Txt
@@ -30,11 +30,11 @@ Write-Host}
 Write-Host Nova Privacy Settings
 Start-Process PowerShell -ArgumentList $Privacy -Wait
 Write-Host
-Write-Host Install Windows Tweaks
+Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "PostInstall"
 Write-Host
 if ($ServerMod -eq "True"){
-Write-Host Server Workstation Install Start
+Write-Host Server Workstation Install
 . .\Server.ps1; Server "ServerConv"
 Write-Host} 
 Write-Host App Install Start

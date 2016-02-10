@@ -1,7 +1,8 @@
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 # Clean up Script
 
 # Load Variables
-cd $env:windir\Setup\Scripts\Run
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\GlobalVars.ps1
 
 # Remove startup items, set UAC back to normal, and Remove InstallVar

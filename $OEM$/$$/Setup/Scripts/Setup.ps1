@@ -1,7 +1,8 @@
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 # Powershell Setup to install all Applications (REQUIRED)
 
 # Load Variables
-cd $env:windir\Setup\Scripts\Run
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\InstallRec.ps1
 
 # Change Location to the Start Up Folder & Delete RunOnce
@@ -11,8 +12,6 @@ cd "$env:programdata\Microsoft\Windows\Start Menu\Programs\Startup"
 sc Starter.bat '@echo off' -en ASCII
 ac starter.bat 'echo Starter for Nova Module Controller'
 ac starter.bat 'Start PowerShell -NoLogo -NoExit -ExecutionPolicy Bypass -NoProfile -File C:\Windows\Setup\Scripts\Starter.ps1'
-
-powershell -command ". %windir%\setup\scripts\run\tweaks.ps1; Lang "PassVarSetup";"
 
 # Set for Dot net InstallRec
 cd $default

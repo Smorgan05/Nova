@@ -1,7 +1,8 @@
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 # Apps Module for Post Install
 
 # Load Variables
-cd $env:windir\Setup\Scripts\Run
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\InstallRec.ps1
 
 function Apps($Action){
