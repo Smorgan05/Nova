@@ -1,3 +1,4 @@
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 $Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.35"
 # Nova Module Controller (REQUIRED)
 # Coded By Morgan Overman for the Nova Project
@@ -7,9 +8,6 @@ $Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.35"
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\ExtRun} else {cd $ScriptDir\ExtRun}
 . .\Get-PendingReboot.ps1
 if ((Get-PendingReboot).RebootPending -eq "True"){Restart-Computer -Force}
-
-# Check for Vmware Setup
-if ((gwmi win32_computersystem).Model -match "Vmware"){ Get-Process | Where-object { $_.Company -match "Vmware" } | Stop-Process -Force }
 
 # Create PowerShell Profile & Refresh Profile
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
