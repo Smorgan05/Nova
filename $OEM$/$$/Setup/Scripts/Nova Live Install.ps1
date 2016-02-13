@@ -29,7 +29,6 @@ Start-Process PowerShell -ArgumentList $Privacy -Wait
 Write-Host
 Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "Setup";  Tweaks "PostInstall" 
-pause
 
 # Load Apps script and Run Setup Method
 Write-Host
