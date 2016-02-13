@@ -1,12 +1,11 @@
-# Post Install Tweaks and Fix Pack for Windows
-function Tweaks($Action){
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 
 # Load Variables
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\GlobalVars.ps1
 
-pause
+# Post Install Tweaks and Fix Pack for Windows
+function Tweaks($Action){
 
 # Set the location
 cd $default
