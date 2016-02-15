@@ -13,8 +13,6 @@ New-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate" -Name
 if ($winver -like "10.*"){
 New-NetFirewallRule -DisplayName "MS Telemetry" -Direction Outbound -Program "$env:Windir\SystemApps\Microsoft\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy\SearchUI.exe" -Action Block}
 
-# Function Management
-
 # Host
 cd $env:windir\System32\drivers\etc
 TAKEOWN /F "hosts"; ICACLS "hosts" /reset /T /Q; attrib -R hosts;

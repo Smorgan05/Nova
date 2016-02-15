@@ -29,7 +29,6 @@ Start-Process PowerShell -ArgumentList $Privacy -Wait
 Write-Host
 Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "Setup";  Tweaks "PostInstall" 
-pause
 
 # Load Apps script and Run Setup Method
 Write-Host
@@ -41,12 +40,6 @@ if ($Python -eq "True"){
 Write-Host
 Write-Host Python Script Sample
 Python Sample.py}
-
-# Run Server Script and Module check
-if (($ServerPrepMod -eq "True") -and ($ServerMod -eq "True")){
-Write-Host
-Write-Host Server Workstation Install
-. .\Server.ps1; Server "ServerPrep"; Server "ServerConv"}
 
 # Shortcuts
 Write-Host

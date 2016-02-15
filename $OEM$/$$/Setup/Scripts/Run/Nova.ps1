@@ -1,9 +1,4 @@
-$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 # Nova Pack Settings
-
-# Load Variables
-if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
-. .\GlobalVars.ps1
 
 # Set the location for Scripting
 cd $default
