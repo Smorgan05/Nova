@@ -8,14 +8,14 @@ The main goal of the Nova Pack is to create a flexible OEM pack that can be used
 
 <h2 style"font-size:200%;">Creation of Custom Distribution</h2>
 
-<p>
+<ul>
 <li>Grab a ISO editor (ie PowerISO)</li>
 <li>Download the Nova Pack Release Repository</li>
 <li>Open a Windows ISO (vista or newer)</li>
 <li>Navigate to the sources folder</li>
 <li>Drag the $OEM$ Folder from Nova Pack onto the Image</li>
 <li>You now have a custom Distribution of Windows</li>
-</p>
+</ul>
 
 This is what you should see after your finished:
 
@@ -29,9 +29,11 @@ A custom distro of windows means we are packing software, tweaks, themes, etc. T
 
 <h2 style"font-size:200%;">Nature of OEM Pack</h2>
 
+<ul>
 <li>Multilingual - The ability to interface powershell to other scripting languages by using a multilingual controller (Starter.ps1)</li>
 <li>Modular - By having multiple script controllers we can easily add modules to the pack (Setup.ps1, Starter.ps1, setupComplete.cmd)</li>
 <li>Universal - Given the large amount of Windows Operating Systems supported it is easy to switch Versions or support a large swath of operating systems if necessary</li>
+</ul>
 
 <h2 style"font-size:200%;">Additional thoughts on a Smart OEM Pack</h2>
 
@@ -39,9 +41,11 @@ There are certain advantages when using powershell. The first being access to th
 
 <h2 style"font-size:200%;">Support</h2>
 
+<ul>
 <li>Windows Vista - Windows 10</li>
 <li>Windows Server 2008 - Windows Server 2016</li>
 <li>Windows Embedded 7 - Windows Embedded 10</li>
+</ul>
 
 <h2 style"font-size:200%;">Nova License Agreement</h2>
 
