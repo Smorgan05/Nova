@@ -55,7 +55,8 @@ New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\MiniNT" -Force | out-null
 # Prep Registry by adding items (Windows 10)
 if ($winver -like "10.*") {
 New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize" -Force | out-null
-New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Force | out-null}
+New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Force | out-null
+New-item -Path "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" -Force | out-null}
 
 # Prep Registry by adding items (Custimzations to Programs)
 if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.*") -or ($winver -like "10.*"))){
@@ -86,6 +87,8 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" -Name C:\Windows\System32\cmd.exe -Value "~ RUNASADMIN" -Force | out-null
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\ClassicStartMenu" -Name "{20D04FE0-3AEA-1069-A2D8-08002B30309D}" -Value 0 -PropertyType "DWORD" -Force | out-null
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" -Name "{20D04FE0-3AEA-1069-A2D8-08002B30309D}" -Value 0 -PropertyType "DWORD" -Force | out-null
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Internet Explorer\Main" -Name "Default_Page_URL" -Value "https://www.google.com/" -PropertyType "String" -Force | out-null
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Internet Explorer\Main" -Name "Start Page" -Value "https://www.google.com/" -PropertyType "String" -Force | out-null
 
 # Vista Tweaks
 if (($winver -like "6.0.*") -and ($edition -match "Vista")){
@@ -110,7 +113,8 @@ New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 # Windows 8.1 / Windows 10
 if (($winver -like "6.3.*") -or ($winver -like "10.*")){
 New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\MiniNT" -Name "AllowRefsFormatOverNonmirrorVolume" -Value "1" -PropertyType "DWORD" -Force | out-null
-New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\FileSystem" -Name "RefsDisableLastAccessUpdate" -Value "1" -PropertyType "DWORD" -Force | out-null}
+New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\FileSystem" -Name "RefsDisableLastAccessUpdate" -Value "1" -PropertyType "DWORD" -Force | out-null
+New-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "AUOptions" -Value "2" -PropertyType "DWORD" -Force | out-null}
 
 # Windows 10 Tweaks
 if ($winver -like "10.*") {

@@ -51,14 +51,8 @@ cd $default
 #																	 	OEM Pack Internet Check
 # ============================================================================================================================================================================
 
-$HTTP_Request = [System.Net.WebRequest]::Create('http://google.com')
-$HTTP_Response = $HTTP_Request.GetResponse()
-$HTTP_Status = [int]$HTTP_Response.StatusCode
-
-If ($HTTP_Status -eq 200) { 
-	$Internet = "True"} Else {$Internet = "False"
-}
-$HTTP_Response.Close() 
+If (([Activator]::CreateInstance([Type]::GetTypeFromCLSID([Guid]"{DCB00C01-570F-4A9B-8D69-199FDBA5723B}"))).IsConnectedToInternet){ 
+	$Internet = "True"} Else {$Internet = "False"}
 
 # ============================================================================================================================================================================
 #																	 Set External Language Variables
@@ -75,17 +69,17 @@ $Python = "True"} else {$Python = "False"}
 #																		Set Primary Module Variables
 # ============================================================================================================================================================================
 
-# Set Server Prep Module Variable
-if ((Test-Path "Server") -and (Test-Path "Reg\Server") -and ($edition -match "Server") -and (($winver -like "6.*") -or ($winver -like "10.*"))){
-$ServerPrepMod = "True" } else { $ServerPrepMod = "False"}
-
 # Set Nova Module Variable
 if (Test-Path "Nova"){
 $NovaMod = "True"} else { $NovaMod = "False"}
 
 # Set Server Module Variable
-if ((Test-Path "Server") -and ($edition -match "Server") -and (($winver -like "6.*") -or ($winver -like "10.*"))){
+if ((Test-Path "Server") -and (Test-Path "Reg\Server") -and ($edition -match "Server") -and (($winver -like "6.*") -or ($winver -like "10.*"))){
 $ServerMod = "True" } else { $ServerMod = "False"}
+
+# Set External Module Variable
+if (Test-Path "ExtRun"){
+$ExternalMod = "True"} else {$ExternalMod = "False"}
 
 # ============================================================================================================================================================================
 #																		Set Apps Module Variables
