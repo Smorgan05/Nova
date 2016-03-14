@@ -5,6 +5,12 @@ $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\GlobalVars.ps1
 
+# External Scripts Run
+if (($ExternalMod -eq "True") -and ($winver -like "10.*")){
+cd $default\ExtRun
+. .\Kill-Edge.ps1
+. .\Kill-Cortana.ps1}
+
 # Disable Windows 10 upgrade
 if ($winver -notlike "10.*"){
 New-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate" -Name DisableOSUpgrade -Value "1" -PropertyType "DWord"  -Force | out-null}
@@ -12,8 +18,6 @@ New-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate" -Name
 # Disable Windows 10 Specific
 if ($winver -like "10.*"){
 New-NetFirewallRule -DisplayName "MS Telemetry" -Direction Outbound -Program "$env:Windir\SystemApps\Microsoft\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy\SearchUI.exe" -Action Block}
-
-# Function Management
 
 # Host
 cd $env:windir\System32\drivers\etc

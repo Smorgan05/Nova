@@ -41,12 +41,6 @@ Write-Host
 Write-Host Python Script Sample
 Python Sample.py}
 
-# Run Server Script and Module check
-if (($ServerPrepMod -eq "True") -and ($ServerMod -eq "True")){
-Write-Host
-Write-Host Server Workstation Install
-. .\Server.ps1; Server "ServerPrep"; Server "ServerConv"}
-
 # Shortcuts
 Write-Host
 Write-Host Shortcuts

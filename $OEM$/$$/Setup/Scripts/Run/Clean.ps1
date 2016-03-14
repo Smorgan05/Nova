@@ -1,9 +1,4 @@
-$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 # Clean up Script
-
-# Load Variables
-if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
-. .\GlobalVars.ps1
 
 # Remove startup items, set UAC back to normal, and Remove InstallVar
 New-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name EnableLUA -Value 1 -PropertyType "DWORD" -Force | out-null

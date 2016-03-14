@@ -1,9 +1,4 @@
-$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 # Nova Pack Settings
-
-# Load Variables
-if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
-. .\GlobalVars.ps1
 
 # Set the location for Scripting
 cd $default
@@ -20,7 +15,7 @@ New-ItemProperty $OEMkey -Name Logo -Value "$home\Nova Pack\Themes\Nova.bmp" -Fo
 start-process "Nova\Nova.exe" -ArgumentList "$s_small" -wait
 
 # Start themes for Server side
-if ($edition -match "Server"){
+if ($ServerMod -eq "True"){
 Set-Service Themes -startupType automatic
 net start Themes
 	} # Server Match

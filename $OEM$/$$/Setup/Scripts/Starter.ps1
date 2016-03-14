@@ -1,11 +1,12 @@
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 $Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.35"
+$FormatEnumerationLimit = "-1"
 # Nova Module Controller (REQUIRED)
 # Coded By Morgan Overman for the Nova Project
 # Multilingual Script Controller
 
 # Check for Pending Install / Reboot then wait
-if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\ExtRun} else {cd $ScriptDir\ExtRun}
+if ($ExternalMod -eq "True"){cd $env:windir\Setup\Scripts\ExtRun} else {cd $ScriptDir\ExtRun}
 . .\Get-PendingReboot.ps1
 if ((Get-PendingReboot).RebootPending -eq "True"){Restart-Computer -Force}
 
@@ -15,7 +16,7 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} els
 
 # Load Variables & Store in Txt
 . .\GlobalVars.ps1
-compvar > variables.txt
+compvar | Ft -autosize -wrap > variables.txt
 
 Write-Host ----------------- Nova Module Controller 1.35 ----------------
 Write-Host --------------------------------------------------------------
@@ -44,6 +45,7 @@ Python Sample.py
 Write-Host}
 Write-Host Shortcuts Start
 . .\Shortcuts.ps1
+pause
 Write-Host
 Write-Host Cleanup
 . .\Clean.ps1
