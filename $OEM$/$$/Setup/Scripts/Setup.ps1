@@ -30,6 +30,9 @@ REN "$env:windir\System32\runonce.exe" "runonce.exe.dis"}
 # Set for Script Execution
 cd $default\Run
 
+if ($Internet -eq "True"){
+. .\Setup_Updater.ps1}
+
 # Run Server Script and Module check
 if ($ServerMod -eq "True"){
 . .\Server.ps1; Server "ServerPrep"}
