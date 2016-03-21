@@ -13,7 +13,7 @@ sc Starter.bat '@echo off' -en ASCII
 ac starter.bat 'echo Starter for Nova Module Controller'
 ac starter.bat 'Start PowerShell -NoLogo -NoExit -ExecutionPolicy Bypass -NoProfile -File C:\Windows\Setup\Scripts\Starter.ps1'
 
-# Set for Dot net InstallRec
+# Set for Dot net Install
 cd $default
 
 # Windows 7 and Vista Specific
@@ -28,8 +28,9 @@ icacls "$env:windir\System32\runonce.exe" /Grant Administrators:'(F)'
 REN "$env:windir\System32\runonce.exe" "runonce.exe.dis"}
 
 # Set for Script Execution
-cd $default\Run
+cd $default
 
+# Run Setup Updater
 if ($Internet -eq "True"){
 . .\Setup_Updater.ps1}
 

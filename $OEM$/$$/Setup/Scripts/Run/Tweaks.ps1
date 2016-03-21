@@ -50,13 +50,15 @@ New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent"
 
 # Prep Registry by adding items (Windows 8.1 / 10)
 if (($winver -like "6.3.*") -or ($winver -like "10.*")){
+New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Force | out-null
 New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\MiniNT" -Force | out-null}
 
 # Prep Registry by adding items (Windows 10)
 if ($winver -like "10.*") {
 New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize" -Force | out-null
 New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Force | out-null
-New-item -Path "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" -Force | out-null}
+New-item -Path "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" -Force | out-null
+New-Item -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Force | out-null}
 
 # Prep Registry by adding items (Custimzations to Programs)
 if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.*") -or ($winver -like "10.*"))){
@@ -122,8 +124,10 @@ if ($winver -like "10.*") {
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize" -Name "StartupDelayInMSec" -Value "0" -PropertyType "DWORD" -Force | out-null
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "EnableProactive" -Value "0" -PropertyType "DWORD" -Force | out-null
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Value "0" -PropertyType "DWORD" -Force | out-null
-New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" -Value "Play To menu" -PropertyType "String" -Force | out-null}
+New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" -Value "Play To menu" -PropertyType "String" -Force | out-null
+#New-ItemProperty -Path "HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" -Name "System.IsPinnedToNameSpaceTree" -Value "0"  -PropertyType "DWORD" -Force | out-null
 
+}
 # ============================================================================================================================================================================
 #															Add the Registry modifications to Windows
 # ============================================================================================================================================================================
@@ -148,7 +152,7 @@ regedit /s "Reg\Windows\Right_click_cmd.reg"
 regedit /s "Reg\Windows\Right_click_pwr.reg"
 regedit /s "Reg\Windows\FirstRunIE.reg"
 
-# Win 7 and Win Vista
+# Win Vista and Win 7
 if (($winver -like "6.0.*") -or ($winver -like "6.1.*")){
 regedit /s "Reg\Windows\Pane_Off.reg"}
 
@@ -172,12 +176,12 @@ regedit /s "Reg\Windows\Photo_Viewer.reg"}
 # External Language Prep
 function Lang($Action){
 
-if ($Action -eq "PassVarSetup"){
-New-item -type file -force $profile | out-null
-$filter = '$AutomaticVariables = Get-Variable'
-$filterfunc = 'function compvar {
-    Compare-Object (Get-Variable) $AutomaticVariables -Property Name -PassThru | Where -Property Name -ne "AutomaticVariables"
-}'
-ac $profile $filter | out-null; ac $profile $filterfunc | out-null
+	if ($Action -eq "PassVarSetup"){
+	New-item -type file -force $profile | out-null
+	$filter = '$AutomaticVariables = Get-Variable'
+	$filterfunc = 'function compvar {
+		Compare-Object (Get-Variable) $AutomaticVariables -Property Name -PassThru | Where -Property Name -ne "AutomaticVariables"
+	}'
+	ac $profile $filter | out-null; ac $profile $filterfunc | out-null
 	}
 } # End Function

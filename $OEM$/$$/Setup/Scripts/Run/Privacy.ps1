@@ -23,8 +23,8 @@ New-NetFirewallRule -DisplayName "MS Telemetry" -Direction Outbound -Program "$e
 cd $env:windir\System32\drivers\etc
 TAKEOWN /F "hosts"; ICACLS "hosts" /reset /T /Q; attrib -R hosts;
 function Host($IPAddress){
-$local = "0.0.0.0"
-ac hosts "$local $IPAddress"}
+	$local = "0.0.0.0"
+	ac hosts "$local $IPAddress"}
 
 # Add IPs to Host File
 Host "vortex.data.microsoft.com"; Host "vortex-win.data.microsoft.com"; Host "telecommand.telemetry.microsoft.com"; Host "telecommand.telemetry.microsoft.com.nsatc.net"
@@ -52,9 +52,9 @@ Host "oca.telemetry.microsoft.com.nsatc.net"; Host "reports.wes.df.telemetry.mic
 
 # Router
 function Route($Route){
-$def = ",255.255.255.255,0.0.0.0,1"
-$Regkey = $Route + $def
-New-ItemProperty -Path $RegRoute -Name $Regkey -PropertyType "String" -Force | out-null}
+	$def = ",255.255.255.255,0.0.0.0,1"
+	$Regkey = $Route + $def
+	New-ItemProperty -Path $RegRoute -Name $Regkey -PropertyType "String" -Force | out-null}
 
 # Route Telemetry IP's (function)
 Route "111.221.29.177"; Route "111.221.29.253"; Route "131.253.40.37"; Route "134.170.30.202"; Route "134.170.115.60"

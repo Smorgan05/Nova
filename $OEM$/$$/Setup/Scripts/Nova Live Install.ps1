@@ -30,6 +30,10 @@ Write-Host
 Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "Setup";  Tweaks "PostInstall" 
 
+# Run Setup Updater
+if ($Internet -eq "True"){
+. .\Setup_Updater.ps1}
+
 # Load Apps script and Run Setup Method
 Write-Host
 Write-Host App Install Start

@@ -15,6 +15,7 @@ $s_big = "/S"
 $q = "/q"
 $silent = "/silent"
 $s_small = "-s"
+$fire = "-ms"
 
 # Set Variables for Scripts that will create a new instance of PS
 $Privacy = "-WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File Privacy.ps1"
