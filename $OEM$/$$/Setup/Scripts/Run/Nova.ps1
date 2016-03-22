@@ -3,12 +3,9 @@
 # Set the location for Scripting
 cd $default
 
-# Set date for Master Development Build
-$date = Get-Date -format "MM.dd.yyyy"
-
 if ($NovaMod -eq "True"){
 New-ItemProperty $OEMkey -Name Manufacturer -Value "Nova Edition" -Force | out-null
-New-ItemProperty $OEMkey -Name Model -Value "Nova v12.1 ($date)" -Force | out-null
+New-ItemProperty $OEMkey -Name Model -Value "Nova v12.1" -Force | out-null
 New-ItemProperty $OEMkey -Name Logo -Value "$home\Nova Pack\Themes\Nova.bmp" -Force | out-null
 
 # Start unpacking of Nova Pack

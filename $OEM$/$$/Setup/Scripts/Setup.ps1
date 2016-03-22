@@ -24,17 +24,12 @@ takeown /f "$env:windir\System32\runonce.exe"
 icacls "$env:windir\System32\runonce.exe" /Grant Administrators:'(F)'
 REN "$env:windir\System32\runonce.exe" "runonce.exe.dis"}
 
-# Start log for Debugging
-start-transcript -path $Env:Temp\Setup_Update.log
-
 # Set for Script Execution
 cd $default\Run
 
 # Run Setup Updater
 if ($Internet -eq "True"){
 . .\Setup_Updater.ps1}
-
-Stop-Transcript
 
 # Run Server Script and Module check
 if ($ServerMod -eq "True"){
