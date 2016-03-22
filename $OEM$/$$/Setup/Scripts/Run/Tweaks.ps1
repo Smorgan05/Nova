@@ -1,8 +1,7 @@
 # Post Install Tweaks and Fix Pack for Windows
 function Tweaks($Action){
-$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 
-# Load Variables
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\GlobalVars.ps1
 
@@ -51,12 +50,15 @@ New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent"
 
 # Prep Registry by adding items (Windows 8.1 / 10)
 if (($winver -like "6.3.*") -or ($winver -like "10.*")){
+New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Force | out-null
 New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\MiniNT" -Force | out-null}
 
 # Prep Registry by adding items (Windows 10)
 if ($winver -like "10.*") {
 New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize" -Force | out-null
-New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Force | out-null}
+New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Force | out-null
+New-item -Path "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" -Force | out-null
+New-Item -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Force | out-null}
 
 # Prep Registry by adding items (Custimzations to Programs)
 if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.*") -or ($winver -like "10.*"))){
@@ -87,6 +89,8 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" -Name C:\Windows\System32\cmd.exe -Value "~ RUNASADMIN" -Force | out-null
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\ClassicStartMenu" -Name "{20D04FE0-3AEA-1069-A2D8-08002B30309D}" -Value 0 -PropertyType "DWORD" -Force | out-null
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" -Name "{20D04FE0-3AEA-1069-A2D8-08002B30309D}" -Value 0 -PropertyType "DWORD" -Force | out-null
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Internet Explorer\Main" -Name "Default_Page_URL" -Value "https://www.google.com/" -PropertyType "String" -Force | out-null
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Internet Explorer\Main" -Name "Start Page" -Value "https://www.google.com/" -PropertyType "String" -Force | out-null
 
 # Vista Tweaks
 if (($winver -like "6.0.*") -and ($edition -match "Vista")){
@@ -101,8 +105,8 @@ if ($winver -like "6.2.*") {
 New-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\EdgeUI" -Name "DisableHelpSticker" -Value 1 -PropertyType "DWORD" -Force | out-null
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\StartPage" -Name "OpenAtLogon" -Value 0 -PropertyType "DWORD" -Force | out-null
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ImmersiveShell" -Name "DisableCharmsHint" -Value 1 -PropertyType "DWORD" -Force | out-null
-New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "-NoLockScreen" -Value 1 -PropertyType "DWORD" -Force | out-null
-New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "EnableSmartScreen" -Value 0 -PropertyType "DWORD" -Force | out-null}
+New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "EnableSmartScreen" -Value 0 -PropertyType "DWORD" -Force | out-null
+New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "-NoLockScreen" -Value 1 -PropertyType "DWORD" -Force | out-null}
 
 # Windows 8.1 Tweaks
 if ($winver -like "6.3.*") {
@@ -111,14 +115,19 @@ New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 # Windows 8.1 / Windows 10
 if (($winver -like "6.3.*") -or ($winver -like "10.*")){
 New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\MiniNT" -Name "AllowRefsFormatOverNonmirrorVolume" -Value "1" -PropertyType "DWORD" -Force | out-null
-New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\FileSystem" -Name "RefsDisableLastAccessUpdate" -Value "1" -PropertyType "DWORD" -Force | out-null}
+New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\FileSystem" -Name "RefsDisableLastAccessUpdate" -Value "1" -PropertyType "DWORD" -Force | out-null
+New-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "AUOptions" -Value "2" -PropertyType "DWORD" -Force | out-null
+New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "-NoLockScreen" -Value 1 -PropertyType "DWORD" -Force | out-null}
 
 # Windows 10 Tweaks
 if ($winver -like "10.*") {
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize" -Name "StartupDelayInMSec" -Value "0" -PropertyType "DWORD" -Force | out-null
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "EnableProactive" -Value "0" -PropertyType "DWORD" -Force | out-null
-New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Value "0" -PropertyType "DWORD" -Force | out-null}
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Value "0" -PropertyType "DWORD" -Force | out-null
+New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" -Value "Play To menu" -PropertyType "String" -Force | out-null
+#New-ItemProperty -Path "HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" -Name "System.IsPinnedToNameSpaceTree" -Value "0"  -PropertyType "DWORD" -Force | out-null
 
+}
 # ============================================================================================================================================================================
 #															Add the Registry modifications to Windows
 # ============================================================================================================================================================================
@@ -143,11 +152,11 @@ regedit /s "Reg\Windows\Right_click_cmd.reg"
 regedit /s "Reg\Windows\Right_click_pwr.reg"
 regedit /s "Reg\Windows\FirstRunIE.reg"
 
-# Win 7 and Win Vista
+# Win Vista and Win 7
 if (($winver -like "6.0.*") -or ($winver -like "6.1.*")){
 regedit /s "Reg\Windows\Pane_Off.reg"}
 
-# Win 8 and Win 8.1
+# Win 8 and Win 10
 if (($winver -ge "6.2.*") -or ($winver -like "10.*")){
 regedit /s "Reg\Windows\MetroIE.reg"
 regedit /s "Reg\Windows\AddLibrariesToNavi.reg"
@@ -156,6 +165,10 @@ regedit /s "Reg\Windows\RemoveFoldersMyComp.reg"
 regedit /s "Reg\Windows\DisableAC.reg"
 regedit /s "Reg\Windows\Preview_Pane.reg"}
 
+# Win 10
+if ($winver -like "10.*"){
+regedit /s "Reg\Windows\Photo_Viewer.reg"}
+
 	}# End Method
 	cd $default\run
 }# End Function
@@ -163,12 +176,12 @@ regedit /s "Reg\Windows\Preview_Pane.reg"}
 # External Language Prep
 function Lang($Action){
 
-if ($Action -eq "PassVarSetup"){
-New-item -type file -force $profile | out-null
-$filter = '$AutomaticVariables = Get-Variable'
-$filterfunc = 'function compvar {
-    Compare-Object (Get-Variable) $AutomaticVariables -Property Name -PassThru | Where -Property Name -ne "AutomaticVariables"
-}'
-ac $profile $filter | out-null; ac $profile $filterfunc | out-null
+	if ($Action -eq "PassVarSetup"){
+	New-item -type file -force $profile | out-null
+	$filter = '$AutomaticVariables = Get-Variable'
+	$filterfunc = 'function compvar {
+		Compare-Object (Get-Variable) $AutomaticVariables -Property Name -PassThru | Where -Property Name -ne "AutomaticVariables"
+	}'
+	ac $profile $filter | out-null; ac $profile $filterfunc | out-null
 	}
 } # End Function

@@ -1,23 +1,22 @@
-$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 # Nova Pack Settings
-
-# Load Variables
-if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
-. .\GlobalVars.ps1
 
 # Set the location for Scripting
 cd $default
 
+# Set date for Master Development Build
+$date = Get-Date -format "MM.dd.yyyy"
+
 if ($NovaMod -eq "True"){
 New-ItemProperty $OEMkey -Name Manufacturer -Value "Nova Edition" -Force | out-null
-New-ItemProperty $OEMkey -Name Model -Value "Nova v12.1 Prototype 5" -Force | out-null
+New-ItemProperty $OEMkey -Name Model -Value "Nova v12.1 ($date)" -Force | out-null
 New-ItemProperty $OEMkey -Name Logo -Value "$home\Nova Pack\Themes\Nova.bmp" -Force | out-null
 
 # Start unpacking of Nova Pack
 start-process "Nova\Nova.exe" -ArgumentList "$s_small" -wait
+start-process "Nova\Buttons.exe" -ArgumentList "$s_small" -wait
 
 # Start themes for Server side
-if ($edition -match "Server"){
+if ($ServerMod -eq "True"){
 Set-Service Themes -startupType automatic
 net start Themes
 	} # Server Match

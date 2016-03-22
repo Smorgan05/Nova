@@ -5,6 +5,12 @@ $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\GlobalVars.ps1
 
+# External Scripts Run
+if (($ExternalMod -eq "True") -and ($winver -like "10.*")){
+cd $default\ExtRun
+. .\Kill-Edge.ps1
+. .\Kill-Cortana.ps1}
+
 # Disable Windows 10 upgrade
 if ($winver -notlike "10.*"){
 New-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate" -Name DisableOSUpgrade -Value "1" -PropertyType "DWord"  -Force | out-null}
@@ -13,14 +19,12 @@ New-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate" -Name
 if ($winver -like "10.*"){
 New-NetFirewallRule -DisplayName "MS Telemetry" -Direction Outbound -Program "$env:Windir\SystemApps\Microsoft\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy\SearchUI.exe" -Action Block}
 
-# Function Management
-
 # Host
 cd $env:windir\System32\drivers\etc
 TAKEOWN /F "hosts"; ICACLS "hosts" /reset /T /Q; attrib -R hosts;
 function Host($IPAddress){
-$local = "0.0.0.0"
-ac hosts "$local $IPAddress"}
+	$local = "0.0.0.0"
+	ac hosts "$local $IPAddress"}
 
 # Add IPs to Host File
 Host "vortex.data.microsoft.com"; Host "vortex-win.data.microsoft.com"; Host "telecommand.telemetry.microsoft.com"; Host "telecommand.telemetry.microsoft.com.nsatc.net"
@@ -48,9 +52,9 @@ Host "oca.telemetry.microsoft.com.nsatc.net"; Host "reports.wes.df.telemetry.mic
 
 # Router
 function Route($Route){
-$def = ",255.255.255.255,0.0.0.0,1"
-$Regkey = $Route + $def
-New-ItemProperty -Path $RegRoute -Name $Regkey -PropertyType "String" -Force | out-null}
+	$def = ",255.255.255.255,0.0.0.0,1"
+	$Regkey = $Route + $def
+	New-ItemProperty -Path $RegRoute -Name $Regkey -PropertyType "String" -Force | out-null}
 
 # Route Telemetry IP's (function)
 Route "111.221.29.177"; Route "111.221.29.253"; Route "131.253.40.37"; Route "134.170.30.202"; Route "134.170.115.60"

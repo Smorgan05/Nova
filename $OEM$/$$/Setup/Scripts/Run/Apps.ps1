@@ -47,7 +47,6 @@ if ($Action -eq "PostInstall"){
 # Windows 8 & 8.1 & 10 (***Classic Shell Start Button***)
 if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.9200") -or ($winver -like "10.*"))){
 start-process "Apps\Handy\$Classic" -ArgumentList "$Classy" -wait
-start-process "Apps\Handy\$Buttons" -ArgumentList "$s_small" -wait
 regedit /s "Reg\Tweaks\Classicshell.reg"}
 
 # Utilities / Tools Module (Multi - ARC)
@@ -60,10 +59,6 @@ start-process "Apps\Webplugins\$Flash" -ArgumentList "-install" -wait
 
 # Web Plugins Module (Multi - ARC)
 if ($arc -eq "64-bit"){start-process "Apps\Webplugins\$Java64" -ArgumentList "/s" -wait} else { start-process "Apps\Webplugins\$Java32" -ArgumentList "/s" -wait}}
-
-# Choclatey Install
-if ($Internet -eq "True"){
-Start-Process Powershell "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" -Wait}
 	
 	} # End Method for Post Install
 	cd $default\run	

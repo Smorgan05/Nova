@@ -7,10 +7,12 @@ cd $ScriptDir\Run
 . .\Tweaks.ps1; Lang "PassVarSetup"; .$profile
 
 # Load Variables
-. .\InstallRec.ps1
+. .\GlobalVars.ps1
 compvar > variables.txt
 
+Write-Host --------------------------------------------------------
 Write-Host ----------------- Nova Live Install 1.0 ----------------
+Write-Host --------------------------------------------------------
 Write-Host
 
 # Nova Settings
@@ -23,15 +25,19 @@ Write-Host}
 Write-Host Nova Privacy Settings
 Start-Process PowerShell -ArgumentList $Privacy -Wait
 
-# Load Apps script and Run Setup Method
-Write-Host
-Write-Host App Install Start
-. .\Apps.ps1; Apps "Setup"; Apps "PostInstall"
-
 # Load Tweaks script and Run Setup Method
 Write-Host
 Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "Setup";  Tweaks "PostInstall" 
+
+# Run Setup Updater
+if ($Internet -eq "True"){
+. .\Setup_Updater.ps1}
+
+# Load Apps script and Run Setup Method
+Write-Host
+Write-Host App Install Start
+. .\Apps.ps1; Apps "Setup"; Apps "PostInstall"
 
 # Python Script Sample
 if ($Python -eq "True"){
@@ -39,18 +45,10 @@ Write-Host
 Write-Host Python Script Sample
 Python Sample.py}
 
-# Run Server Script and Module check
-if (($ServerPrepMod -eq "True") -and ($ServerMod -eq "True")){
-Write-Host
-Write-Host Server Workstation Install
-. .\Server.ps1; Server "ServerPrep"; Server "ServerConv"}
-
 # Shortcuts
 Write-Host
 Write-Host Shortcuts
 . .\Shortcuts.ps1
-
-pause
 
 # Clean up
 Write-Host
