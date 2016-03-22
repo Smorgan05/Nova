@@ -26,14 +26,13 @@ cd $Default\Apps\Handy
 
 # Set Variables for Handy
 for($i=0; $i -le $HandyArray.length; $i++){
-if ($HandyArray[$i] -match 'Button'){$Buttons = $HandyArray[$i]}
 if ($HandyArray[$i] -match 'ClassicShell'){$Classic = $HandyArray[$i]; $ClassicVer = SetupVer "$Classic"}
-if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win32*')){$Firefox32 = $HandyArray[$i]; $Firefox32Ver = $Firefox32 -match "[0-9][0-9].[0-9]"; $Firefox32Ver = $Matches.0}	
-if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win64*')){$Firefox64 = $HandyArray[$i]; $Firefox64Ver = $Firefox64 -match "[0-9][0-9].[0-9]"; $Firefox64Ver = $Matches.0}
+if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win32*')){$Firefox32 = $HandyArray[$i]; $Firefox32Ver = $Firefox32 -match "[0-9][0-9].[0-9].[0-9]" -or $Firefox32 -match "[0-9][0-9].[0-9]"; $Firefox32Ver = $Matches.0}	
+if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win64*')){$Firefox64 = $HandyArray[$i]; $Firefox64Ver = $Firefox64 -match "[0-9][0-9].[0-9].[0-9]" -or $Firefox64 -match "[0-9][0-9].[0-9]"; $Firefox64Ver = $Matches.0}
 if (($HandyArray[$i] -match 'MPC') -and ($HandyArray[$i] -like '*x86*')){$MPC32 = $HandyArray[$i]; $MPC32Ver = SetupVer "$MPC32"}
 if (($HandyArray[$i] -match 'MPC') -and ($HandyArray[$i] -like '*x64*')){$MPC64 = $HandyArray[$i]; $MPC64Ver = SetupVer "$MPC64"}
-if (($HandyArray[$i] -match 'chrome') -and ($HandyArray[$i] -notmatch '64')){$Chrome32 = $HandyArray[$i]; <# $Chrome32Ver = $Chrome32 | Where-Object {$_ -match "[0-9][0-9].[0-9].[0-9][0-9][0-9][0-9].[0-9][0-9][0-9]*"}; $Chrome32Ver = $Matches.0 #>}
-if (($HandyArray[$i] -match 'chrome') -and ($HandyArray[$i] -match '64')){$Chrome64 = $HandyArray[$i]; <# $Chrome64Ver = $Chrome64 | Where-Object {$_ -match "[0-9][0-9].[0-9].[0-9][0-9][0-9][0-9].[0-9][0-9][0-9]*"}; $Chrome64Ver = $Matches.0} #>}}
+if (($HandyArray[$i] -match 'chrome') -and ($HandyArray[$i] -notmatch '64')){$Chrome32 = $HandyArray[$i]; $Chrome32Ver = $Chrome32 | Where-Object {$_ -match "[0-9][0-9].[0-9].[0-9][0-9][0-9][0-9].[0-9][0-9][0-9]*"}; $Chrome32Ver = $Matches.0}
+if (($HandyArray[$i] -match 'chrome') -and ($HandyArray[$i] -match '64')){$Chrome64 = $HandyArray[$i]; $Chrome64Ver = $Chrome64 | Where-Object {$_ -match "[0-9][0-9].[0-9].[0-9][0-9][0-9][0-9].[0-9][0-9][0-9]*"}; $Chrome64Ver = $Matches.0}}
 
 }
 # ==================================* MS *===========================================

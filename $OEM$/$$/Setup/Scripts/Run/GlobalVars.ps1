@@ -52,7 +52,9 @@ cd $default
 #																	 	OEM Pack Internet Check
 # ============================================================================================================================================================================
 
-If (([Activator]::CreateInstance([Type]::GetTypeFromCLSID([Guid]"{DCB00C01-570F-4A9B-8D69-199FDBA5723B}"))).IsConnectedToInternet){ 
+$Connection = (get-wmiobject win32_networkadapter -filter "netconnectionstatus = 2" | select netconnectionid, name, InterfaceIndex, netconnectionstatus).netconnectionstatus
+
+If ($Connection -eq "2"){ 
 	$Internet = "True"} Else {$Internet = "False"}
 
 # ============================================================================================================================================================================

@@ -47,7 +47,6 @@ if ($Action -eq "PostInstall"){
 # Windows 8 & 8.1 & 10 (***Classic Shell Start Button***)
 if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.9200") -or ($winver -like "10.*"))){
 start-process "Apps\Handy\$Classic" -ArgumentList "$Classy" -wait
-start-process "Apps\Handy\$Buttons" -ArgumentList "$s_small" -wait
 regedit /s "Reg\Tweaks\Classicshell.reg"}
 
 # Utilities / Tools Module (Multi - ARC)
