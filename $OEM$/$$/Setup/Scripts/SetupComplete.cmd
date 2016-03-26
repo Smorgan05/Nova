@@ -1,5 +1,5 @@
 @echo off
-:: Setupcomplete with PS Install for Vista
+:: Setupcomplete with PS Install for Vista \ Server 2008
 
 :: Powershell Check
 start /w regedit /s "%windir%\Setup\scripts\Reg\Windows\disable_uac.reg"
@@ -24,7 +24,7 @@ IF /I "%PROCESSOR_ARCHITECTURE%"=="AMD64" (goto install64) ELSE (goto install32)
 
 :install32
 :: Start update for Vista x86 / Server 2008 x86
-cd %windir%\Setup\scripts\Apps\Prep
+cd %windir%\Setup\scripts\Prep
 Expand –F:* "Windows6.0-vista-ps2-KB968930-x86.msu" "%systemdrive%\968930"
 Start /w pkgmgr /ip /m:"%systemdrive%\968930\Windows6.0-KB968930-x86.cab" /Quiet /NoRestart
 RD /S /Q "C:\968930"
@@ -32,7 +32,7 @@ exit
 
 :install64
 :: Start update for Vista x64 / Server 2008 x64
-cd %windir%\Setup\scripts\Apps\Prep
+cd %windir%\Setup\scripts\Prep
 Expand –F:* "Windows6.0-vista-ps2-KB968930-x64.msu" "%systemdrive%\968930"
 Start /w pkgmgr /ip /m:"%systemdrive%\968930\Windows6.0-KB968930-x64.cab" /Quiet /NoRestart
 RD /S /Q "C:\968930"

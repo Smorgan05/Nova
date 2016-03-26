@@ -30,7 +30,7 @@ if (Test-path $Default\Apps\Handy){cd $Default\Apps\Handy} else {mkdir $Default\
 # Grab the Newest Classic Shell Setup
 
 if (!$ClassicVer) {$CCleanerVer = 0} else {$ClassicVer = $ClassicVer.replace(", ",".")}
-$WebResponse = Invoke-WebRequest http://www.classicshell.net/downloads/  -UseBasicParsing
+$WebResponse = Invoke-WebRequest http://www.classicshell.net/downloads/ -UseBasicParsing
 $ClassicRev = ($WebResponse.links | Where-Object {$_ -match "English" -and $_ -match "[0-9].[0-9].[0-9]"}  | Measure-Object -Maximum).Maximum; $ClassicLnk = $Matches.0; $ClassicRev = $ClassicLnk.replace("_",".")
 $ClassicRevKey = $WebResponse.links.href | Where-Object {$_ -match "setup" -and $_ -notmatch "-[a-z][a-z]"}
 $ClassicRevKey = $ClassicRevKey.Split("/") | Where-Object {$_.length -eq 15 }
@@ -112,6 +112,17 @@ if ($FirefoxRev -gt $Firefox64Ver){
 Write-host "Updating Firefox 64 bit"
 	if ($Firefox64){rm $Firefox64 -Force}
 Download $URLx64 $Setupx64} else {Write-host "Firefox 64 bit is up to Date"}
+
+# ==========================================================* Update the Setups  *=============================================================
+# =============================================================================================================================================
+# =============================================================* Microsoft *===================================================================
+if (Test-path $Default\Apps\Microsoft){cd $Default\Apps\Microsoft} else {mkdir $Default\Apps\Microsoft | Out-null; cd $Default\Apps\Microsoft}
+
+if (!$dotNet){
+Write-host "Updating .Net Framework 4.0"
+$Setup = 'dotNetFx40_Full_x86_x64.exe'
+$URL = 'https://download.microsoft.com/download/9/5/A/95A9616B-7A37-4AF6-BC36-D6EA96C8DAAE/' + $Setup
+Download $URL $Setup}
 
 # ==========================================================* Update the Setups  *=============================================================
 # =============================================================================================================================================
