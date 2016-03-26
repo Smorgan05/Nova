@@ -10,8 +10,8 @@ if ($winver -like "6.0.*"){
 REN "$env:windir\system32\runonce.exe.dis" "runonce.exe"}
 
 # Last Minute Install on Server 2008 R2
+if (($ServerMod -eq "True") -and ($winver -like "6.1.*")){
 cd "$default\Server\2008r2"
-if (($ServerMod -eq "True") -and ($winver -like "6.1.*") -and ($edition -match "Server")){
 start-process "Packs\W7packsR2.exe" -ArgumentList "/silent" -wait}
 
 # Delete Scripts Folder & PowerShell Profile

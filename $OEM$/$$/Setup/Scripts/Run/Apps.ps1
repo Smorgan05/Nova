@@ -13,12 +13,18 @@ cd $default
 # Apps Module for Install
 if ($Action -eq "Setup"){
 
+# Windows 7 and Vista Specific
+if (($AppsModMS -eq "True") -and (($winver -like "6.0.*") -or ($winver -like "6.1.*"))){
+start-process "Apps\Microsoft\$dotNet" -ArgumentList "/q /norestart" -wait}
+
 # Applications Module (Multi - ARC)
 if ($AppsModHandy -eq "True"){
 if ($arc -eq "64-bit"){ 
 start-process "Apps\Handy\$Chrome64" -ArgumentList "$q" -wait 
+start-process "Apps\Handy\$Firefox64" -ArgumentList "-ms" -wait
 start-process "Apps\Handy\$MPC64" -ArgumentList "$silent" -wait } else { 
 start-process "Apps\Handy\$Chrome32" -ArgumentList "$q" -wait
+start-process "Apps\Handy\$Firefox32" -ArgumentList "-ms" -wait
 start-process "Apps\Handy\$MPC32" -ArgumentList "$silent" -wait}}
 
 # Utilities / Tools Module

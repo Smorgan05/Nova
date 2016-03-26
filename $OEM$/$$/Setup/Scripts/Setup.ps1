@@ -13,6 +13,18 @@ sc Starter.bat '@echo off' -en ASCII
 ac starter.bat 'echo Starter for Nova Module Controller'
 ac starter.bat 'Start PowerShell -NoLogo -NoExit -ExecutionPolicy Bypass -NoProfile -File C:\Windows\Setup\Scripts\Starter.ps1'
 
+# Start log for Debugging
+cd $default\Run
+
+# Run Setup Updater
+if ($Internet -eq "True"){
+start-transcript -path $env:userprofile\Setup_Update.log
+. .\Setup_Updater.ps1
+Stop-Transcript}
+
+# Set to default directory
+cd $default
+
 # Windows 7 and Vista Specific
 if (($AppsModMS -eq "True") -and (($winver -like "6.0.*") -or ($winver -like "6.1.*"))){
 start-process "Apps\Microsoft\$dotNet" -ArgumentList "/q /norestart" -wait}
@@ -24,17 +36,8 @@ takeown /f "$env:windir\System32\runonce.exe"
 icacls "$env:windir\System32\runonce.exe" /Grant Administrators:'(F)'
 REN "$env:windir\System32\runonce.exe" "runonce.exe.dis"}
 
-# Start log for Debugging
-start-transcript -path $Env:Temp\Setup_Update.log
-
 # Set for Script Execution
 cd $default\Run
-
-# Run Setup Updater
-if ($Internet -eq "True"){
-. .\Setup_Updater.ps1}
-
-Stop-Transcript
 
 # Run Server Script and Module check
 if ($ServerMod -eq "True"){

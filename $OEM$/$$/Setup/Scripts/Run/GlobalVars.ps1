@@ -56,6 +56,8 @@ $Connection = (get-wmiobject win32_networkadapter -filter "netconnectionstatus =
 
 If ($Connection -eq "2"){ 
 	$Internet = "True"} Else {$Internet = "False"}
+	
+	
 
 # ============================================================================================================================================================================
 #																	 Set External Language Variables
