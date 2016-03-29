@@ -135,7 +135,10 @@ if (!$NotepadVer){$NotepadVer = 0}
 $WebResponse = Invoke-WebRequest https://notepad-plus-plus.org/repository -UseBasicParsing
 $NotepadBuild = ($WebResponse.links | Where-Object {$_ -match "[0-9].x"} | Measure-Object -Maximum).Maximum; $NotepadBuild = $Matches.0
 $WebResponse2 = Invoke-WebRequest https://notepad-plus-plus.org/repository/$NotepadBuild -UseBasicParsing
-$NotepadRev = ($WebResponse2.links | Where-Object {$_ -match "[0-9].[0-9]"} | Measure-Object -Maximum).Maximum; $NotepadRev = $Matches.0
+$NotepadRevA = ($WebResponse2.links | Where-Object {$_ -match "[0-9].[0-9]"} | Measure-Object -Maximum).Maximum; $NotepadRevA = $Matches.0
+$NotepadRevB = ($WebResponse2.links | Where-Object {$_ -match "[0-9].[0-9].[0-9]"} | Measure-Object -Maximum).Maximum; $NotepadRevA = $Matches.0
+
+if ($NotepadRevA -gt $NotepadRevB){$NotepadRev = $NotepadRevA} else {$NotepadRev = $NotepadRevB}
 
 $URL = 'https://notepad-plus-plus.org/repository/' + $NotepadBuild + '/' + $NotepadRev + '/npp.' + $NotepadRev + '.Installer.exe'
 $Setup = 'npp.' + $NotepadRev + '.Installer.exe'

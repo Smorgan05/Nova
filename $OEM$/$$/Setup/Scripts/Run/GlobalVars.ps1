@@ -10,12 +10,17 @@ $Temp = $env:temp
 if (Test-path "$env:windir\Setup\Scripts"){
 $default = "$env:windir\Setup\Scripts"} else {$default = Split-Path (Split-Path $script:MyInvocation.MyCommand.Path) -Parent}
 
+# Set Master Version
+$NovaVer = "12.1"
+
+# Set Startup Folder Variable
+$Startup = "$env:programdata\Microsoft\Windows\Start Menu\Programs\Startup"
+
 # Multi-use Variables
 $s_big = "/S"
 $q = "/q"
 $silent = "/silent"
 $s_small = "-s"
-$fire = "-ms"
 
 # Set Variables for Scripts that will create a new instance of PS
 $Privacy = "-WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File Privacy.ps1"
@@ -56,8 +61,6 @@ $Connection = (get-wmiobject win32_networkadapter -filter "netconnectionstatus =
 
 If ($Connection -eq "2"){ 
 	$Internet = "True"} Else {$Internet = "False"}
-	
-	
 
 # ============================================================================================================================================================================
 #																	 Set External Language Variables

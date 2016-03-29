@@ -1,4 +1,9 @@
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 # Nova Pack Settings
+
+# Load Variables
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
+. .\GlobalVars.ps1
 
 # Set the location for Scripting
 cd $default
@@ -8,7 +13,7 @@ $date = Get-Date -format "MM.dd.yyyy"
 
 if ($NovaMod -eq "True"){
 New-ItemProperty $OEMkey -Name Manufacturer -Value "Nova Edition" -Force | out-null
-New-ItemProperty $OEMkey -Name Model -Value "Nova v12.1 ($date)" -Force | out-null
+New-ItemProperty $OEMkey -Name Model -Value "Nova $NovaVer ($date)" -Force | out-null
 New-ItemProperty $OEMkey -Name Logo -Value "$home\Nova Pack\Themes\Nova.bmp" -Force | out-null
 
 # Start unpacking of Nova Pack

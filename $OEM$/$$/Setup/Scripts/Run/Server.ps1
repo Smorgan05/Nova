@@ -1,4 +1,9 @@
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 # Post Install Pack for Server Workstation
+
+# Load Variables
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
+. .\GlobalVars.ps1
 
 function Server($Action){
 

@@ -1,5 +1,5 @@
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
-$Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.35"
+$Host.UI.RawUI.WindowTitle = "Nova Module Controller"
 # Nova Module Controller (REQUIRED)
 # Coded By Morgan Overman for the Nova Project
 # Multilingual Script Controller
@@ -17,7 +17,7 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} els
 . .\GlobalVars.ps1
 compvar | Format-Table -Auto | Out-File variables.txt -Width 10000
 
-Write-Host ----------------- Nova Module Controller 1.35 ----------------
+Write-Host ----------------- Nova Module Controller $NovaVer ----------------
 Write-Host --------------------------------------------------------------
 Write-Host ------ Per Ardua Ad Astra, From Adversity to the Stars --------
 Write-Host
