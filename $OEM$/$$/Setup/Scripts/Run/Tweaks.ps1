@@ -1,10 +1,6 @@
 # Post Install Tweaks and Fix Pack for Windows
 function Tweaks($Action){
 
-$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
-if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
-. .\GlobalVars.ps1
-
 # Set the location
 cd $default
 
@@ -17,7 +13,7 @@ $RegValue = $RegPath.Path+$PythonPath
 Set-ItemProperty -path $SystemVar -Name Path -Value $RegValue}
 
 # Windows Universal Tweaks (V - 10 / Server 2008 - Server 2016)
-regedit /s "Reg\Windows\disable_uac.reg"
+if (Test-path "$Startup\Starter.bat"){regedit /s "Reg\Windows\disable_uac.reg"}
 regedit /s "Reg\Windows\Takeown.reg"
 regedit /s "Reg\Windows\WMPConfig.reg"
 
@@ -134,7 +130,11 @@ New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Ex
 
 # Customizations specific to Windows versions
 if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.*") -or ($winver -like "10.*"))){
-New-ItemProperty -Path "HKLM:\Software\IvoSoft\ClassicStartMenu" -Name MenuStyle_Default -Value "Win7" -PropertyType "String" -Force | out-null}
+New-ItemProperty -Path "HKLM:\Software\IvoSoft\ClassicStartMenu" -Name MenuStyle_Default -Value "Win7" -PropertyType "String" -Force | out-null
+
+	if ($VidRez -eq "3840"){New-ItemProperty -Path "HKCU:\Software\IvoSoft\ClassicStartMenu\Settings" -Name "StartButtonSize" -Value "100" -PropertyType "DWORD" -Force | out-null}
+
+}
 
 if ($AppsModUtil -eq "True"){
 New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe" -Force | out-null

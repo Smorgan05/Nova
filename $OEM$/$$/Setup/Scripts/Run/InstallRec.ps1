@@ -8,9 +8,12 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} els
 # Set Location
 cd $Default
 
+# MS Array fix
+if ((Get-ChildItem Apps\Microsoft).Count -eq "1"){echo $null >> Apps\Microsoft\temp}
+
 # Set Arrays for App Modules
 if ($AppsModHandy -eq "True"){$HandyArray = ls Apps\Handy -name}
-if ($AppsModMS -eq "True"){$MSArray = ls Apps\Microsoft -name}
+if ($AppsModMS -eq "True"){$MSArray = dir Apps\Microsoft -name}
 if ($AppsModUtil -eq "True") {$UtilArray = ls Apps\Utilities -name}
 if ($AppsModWebPlugins -eq "True") {$WebPluginArray = ls Apps\WebPlugins -name}
 
@@ -37,10 +40,14 @@ if (($HandyArray[$i] -match 'chrome') -and ($HandyArray[$i] -match '64')){$Chrom
 }
 # ==================================* MS *===========================================
 if ($AppsModMS -eq "True"){
+cd $Default\Apps\Microsoft
 
 # Set Variables for MS
 for($i=0; $i -le $MSArray.length; $i++){
 if ($MSArray[$i] -match 'dotNet'){$dotNet = $MSArray[$i]}}	
+
+# Remove Temp File
+if (Test-path temp){rm temp}
 
 }
 # ================================* Utilities *======================================

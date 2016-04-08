@@ -5,10 +5,13 @@ $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\GlobalVars.ps1
 
-# Remove startup items, set UAC back to normal, and Remove InstallVar
+# Set UAC back to normal
 New-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name EnableLUA -Value 1 -PropertyType "DWORD" -Force | out-null
-Rename-Item "$Startup\Starter.bat" "temp.TMP"
-Remove-Item "$Startup\temp.TMP"
+
+# Remove startup items if necessary
+if (Test-path "$Startup\Starter.bat"){ 
+	Rename-Item "$Startup\Starter.bat" "temp.TMP"
+	Remove-Item "$Startup\temp.TMP"}
 
 # Fix Run Once for Vista / Server 2008
 if ($winver -like "6.0.*"){

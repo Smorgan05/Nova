@@ -2,7 +2,7 @@ $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 # Powershell Setup to install all Applications (REQUIRED)
 
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\ExtRun} else {cd $ScriptDir\ExtRun}
-. .\Speed.ps1
+#. .\Speed.ps1
 
 # Load Variables
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}

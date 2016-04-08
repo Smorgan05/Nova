@@ -41,7 +41,7 @@ $Setup = 'ClassicShellSetup_' + $ClassicLnk + '.exe'
 if ($ClassicRev -gt $ClassicVer){
 Write-host "Updating Classic Shell"
 	if ($Classic) {rm $Classic -Force}
-Download $URL $Setup} else {Write-host "Classic Shell is up to Date"}
+Download $URL $Setup}
 
 # Grab the Newest MPC-HC Setup
 
@@ -59,12 +59,12 @@ $Setupx64 = 'MPC-HC.' + $MPCRev + '.x64.exe'
 if ($MPCRev -gt $MPC32Ver){
 Write-host "Updating Media Player Classic 32 bit"
 	if ($MPC32) {rm $MPC32 -Force} 
-Download $URLx32 $Setupx32} else {Write-host "Media Player Classic 32 bit is up to Date"}
+Download $URLx32 $Setupx32} 
 
 if ($MPCRev -gt $MPC64Ver){
 Write-host "Updating Media Player Classic 64 bit"
 	if ($MPC64) {rm $MPC64 -Force}
-Download $URLx64 $Setupx64} else {Write-host "Media Player Classic 64 bit is up to Date"}
+Download $URLx64 $Setupx64}
  
 # Grab the newest Chrome Setup
 
@@ -83,12 +83,12 @@ $Setupx64 = 'Chrome64 '+ $ChromeRev +'.msi'
 if ($ChromeRev -gt $Chrome32Ver){
 Write-host "Updating Chrome 32 bit"
 	if ($Chrome32){rm $Chrome32}
-wget $URLx32 -OutFile $Setupx32 -UseBasicParsing} else {Write-host "Chrome 32 bit is up to Date"}
+wget $URLx32 -OutFile $Setupx32 -UseBasicParsing} 
 
 if ($ChromeRev -gt $Chrome64Ver){
 Write-host "Updating Chrome 64 bit"
 	if ($Chrome64){rm $Chrome64}
-wget $URLx64 -OutFile $Setupx64 -UseBasicParsing} else {Write-host "Chrome 64 bit is up to Date"}
+wget $URLx64 -OutFile $Setupx64 -UseBasicParsing} 
  
 # Grab the newest Firefox Setup
 
@@ -106,12 +106,12 @@ $Setupx64 = 'Firefox-' + $FirefoxRev + '.en-US.win64.installer.exe'
 if ($FirefoxRev -gt $Firefox32Ver){
 Write-host "Updating Firefox 32 bit"
 	if ($Firefox32){rm $Firefox32 -Force}
-Download $URLx32 $Setupx32} else {Write-host "Firefox 32 bit is up to Date"}
+Download $URLx32 $Setupx32} 
 
 if ($FirefoxRev -gt $Firefox64Ver){
 Write-host "Updating Firefox 64 bit"
 	if ($Firefox64){rm $Firefox64 -Force}
-Download $URLx64 $Setupx64} else {Write-host "Firefox 64 bit is up to Date"}
+Download $URLx64 $Setupx64} 
 
 # ==========================================================* Update the Setups  *=============================================================
 # =============================================================================================================================================
@@ -146,7 +146,7 @@ $Setup = 'npp.' + $NotepadRev + '.Installer.exe'
 if ($NotepadRev -gt $NotepadVer){
 Write-host "Updating Notepad++"
 	if ($Notepad){rm $Notepad -Force}
-Download $URL $Setup} else {Write-host "Notepad++ is up to Date"}
+Download $URL $Setup} 
 
 # Grab the newest 7zip Setup
 
@@ -165,12 +165,12 @@ $Setupx64 = '7z' + $7zipRev + '-x64.exe'
 if ($7zipRev -gt $7zip32Ver){
 Write-host "Updating 7-zip 32 bit"
 	if ($7zip32){rm $7zip32 -Force}
-Download $URLx32 $Setupx32} else {Write-host "7-zip 32 bit is up to Date"}
+Download $URLx32 $Setupx32} 
 
 if ($7zipRev -gt $7zip64Ver){
 Write-host "Updating 7-zip 64 bit"
 	if ($7zip64){rm $7zip64 -Force}
-Download $URLx64 $Setupx64} else {Write-host "7-zip 64 bit is up to Date"}
+Download $URLx64 $Setupx64} 
 
 # Grab the newest CCleaner Setup
 
@@ -185,7 +185,7 @@ $Setup = 'ccsetup' + $CCRev + '.exe.'
 if ($CCRev -gt $CCleanerVer){
 Write-host "Updating CCleaner"
 	if ($CCleaner){rm $CCleaner -Force}
-Download $URL $Setup} else {Write-host "CCleaner is up to Date"}
+Download $URL $Setup} 
 
 # Grab the newest Defraggler Setup
 
@@ -200,7 +200,7 @@ $Setup = 'dfsetup' + $DefragRev + '.exe'
 if ($DefragRev -gt $DefragglerVer){
 Write-host "Updating Defraggler"
 	if ($Defraggler){rm $Defraggler -Force}
-Download $URL $Setup} else {Write-host "Defraggler is up to Date"}
+Download $URL $Setup} 
 
 # Grab the newest Filezilla Setup
 
@@ -217,12 +217,12 @@ $URLx64 = 'http://iweb.dl.sourceforge.net/project/filezilla/FileZilla_Client/' +
 if ($FileRev -gt $FileZ32Ver){
 Write-host "Updating Filezilla 32 bit"
 	if ($FileZ32){rm $FileZ32 -Force}
-Download $URLx32 $Setupx32} else {Write-host "Filezilla 32 bit is up to Date"}
+Download $URLx32 $Setupx32} 
 
 if ($FileRev -gt $FileZ64Ver){
 Write-host "Updating Filezilla 64 bit"
 	if ($FileZ64){rm $FileZ64 -Force}
-Download $URLx64 $Setupx64 } else {Write-host "Filezilla 64 bit is up to Date"}
+Download $URLx64 $Setupx64 }
 
 # Grab the newest Python Setup
 
@@ -240,12 +240,12 @@ $Setupx64 = 'python-' + $PythonRev + '-amd64.exe'
 if ($PythonRev -gt $Python32Ver){
 Write-host "Updating Python 32 bit"
 	if ($Python32){rm $Python32 -Force}
-Download $URLx32 $Setupx32 } else {Write-host "Python 32 bit is up to Date"}
+Download $URLx32 $Setupx32 } 
 
 if ($PythonRev -gt $Python64Ver){
 Write-host "Updating Python 64 bit"
 	if ($Python64){rm $Python64 -Force}
-Download $URLx64 $Setupx64 } else {Write-host "Python 64 bit is up to Date"}
+Download $URLx64 $Setupx64 } 
 
 
 # Grab the newest Process Explorer
@@ -263,7 +263,7 @@ Write-host "Updating Process Explorer"
 Download $URL $Setup 
 	if (Test-path $env:Temp\Process){rm $env:Temp\Process -Recurse}
 Unzip $PWD\ProcessExplorer.zip $env:Temp\Process; cp $env:Temp\Process\ProcExp.exe $Default\Apps\Utilities -Force
-rm ProcessExplorer.zip} else {Write-host "Process Explorer is up to Date"}
+rm ProcessExplorer.zip} 
 
 # Grab the newest Autoruns
 if (!$AutorunsVer){$AutorunsVer = 0}
@@ -279,7 +279,7 @@ Write-host "Updating Autoruns"
 Download $URL $Setup 
 	if (Test-path $env:Temp\AutoRuns){rm $env:Temp\AutoRuns -Recurse}
 Unzip $PWD\AutoRuns.Zip $env:Temp\Autoruns; cp $env:Temp\Autoruns\AutoRuns.exe $Default\Apps\Utilities -Force
-rm Autoruns.zip} else {Write-host "Autoruns is up to Date"}
+rm Autoruns.zip} 
 # ==========================================================* Update the Setups  *=============================================================
 # =============================================================================================================================================
 # ============================================================* WebPlugins *===================================================================
@@ -305,12 +305,12 @@ $Setupx64 = 'jre-' + $JavaRev + '-windows-x64.exe'
 if ($JavaRevA -gt $Java32Ver){
 Write-host "Updating Java 32 bit"
 	if ($Java32){rm $Java32 -Force}
-Download $URLx32 $Setupx32 } else {Write-host "Java 32 bit is up to Date"}
+Download $URLx32 $Setupx32 } 
 
 if ($JavaRevA -gt $Java64Ver){
 Write-host "Updating Java 64 bit"
 	if ($Java64){rm $Java64 -Force}
-Download $URLx64 $Setupx64} else {Write-host "Java 64 bit is up to Date"}
+Download $URLx64 $Setupx64} 
 
 # Grab the latest Flash Player
 
@@ -324,7 +324,7 @@ $Setup = 'flashplayer_' + $Flashlnk + '_plugin_debug.exe'
 if ($FlashRev -gt $FlashVer){
 Write-host "Updating Flash Player"
 	if ($Flash){rm $Flash -Force}
-Download $URL $Setup} else {Write-host "Flash is up to Date"}
+Download $URL $Setup} 
  
  # Return to original directory
 cd $default\run
