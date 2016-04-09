@@ -11,7 +11,8 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} els
 . .\GlobalVars.ps1
 compvar | Format-Table -Auto | Out-File variables.txt -Width 10000
 
-Write-Host ----------------- Nova Live Install $NovaVer ---------------
+cls
+Write-Host ------------------- Nova Live Install $NovaVer -------------------
 Write-Host --------------------------------------------------------------
 Write-Host ------ Per Ardua Ad Astra, From Adversity to the Stars --------
 Write-Host
@@ -30,6 +31,14 @@ sc Starter.bat '@echo off' -en ASCII
 ac starter.bat 'echo Starter for Nova Module Controller'
 ac starter.bat $StartScript
 
+#Change Location Run Scripts
+cd $Default\Run
+
+# Load Tweaks script and Run Setup Module
+Write-Host
+Write-Host Windows Tweaks
+. .\Tweaks.ps1; Tweaks "Setup"
+
 Restart-Computer -Force
 exit}
 
@@ -44,9 +53,10 @@ Write-Host Nova Privacy Settings
 Start-Process PowerShell -ArgumentList $Privacy -Wait
 
 # Load Tweaks script and Run Setup Method
+if ($ServerMod -ne "True"){
 Write-Host
 Write-Host Windows Tweaks
-. .\Tweaks.ps1; Tweaks "Setup"
+. .\Tweaks.ps1; Tweaks "Setup"}
 
 # Run Setup Updater
 if ($Internet -eq "True"){
@@ -59,7 +69,7 @@ Write-Host
 Write-Host App Install Start
 . .\Apps.ps1; Apps "Setup"; Apps "PostInstall"; Tweaks "PostInstall" 
 
-# Run Server Script and Module check
+# Run Server Script
 if ($ServerMod -eq "True"){
 Write-Host
 Write-Host Server Workstation Install
