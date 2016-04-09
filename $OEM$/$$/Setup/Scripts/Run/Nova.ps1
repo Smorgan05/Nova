@@ -21,7 +21,7 @@ start-process "Nova\Nova.exe" -ArgumentList "$s_small" -wait
 start-process "Nova\Buttons.exe" -ArgumentList "$s_small" -wait
 
 # Start themes for Server side
-if ($ServerMod -eq "True"){
+if (($ServerMod -eq "True") -and ($ThemesServ -ne "Running")){
 Set-Service Themes -startupType automatic
 net start Themes
 	} # Server Match

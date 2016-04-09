@@ -21,7 +21,7 @@ $Shortcut.Save()}
 
 # Remove all Shortcuts on desktop
 Remove-Item $home\desktop\* -include *.lnk
-rm $env:public\Desktop\* -include *.lnk
+Remove-Item $env:public\Desktop\* -include *.lnk
 
 if ($AppsModUtil -eq "True"){
 New-Item -ItemType directory -Path "$StartMenuUser\SysInternals" | out-null

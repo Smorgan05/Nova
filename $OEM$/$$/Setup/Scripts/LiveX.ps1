@@ -28,7 +28,7 @@ cd $Startup
 # Create Starter
 sc Starter.bat '@echo off' -en ASCII
 ac starter.bat 'echo Starter for Nova Module Controller'
-ac starter.bat 'Start PowerShell -NoLogo -NoExit -ExecutionPolicy Bypass -NoProfile -File $default\LiveX.ps1'
+ac starter.bat $StartScript
 
 Restart-Computer -Force
 exit}

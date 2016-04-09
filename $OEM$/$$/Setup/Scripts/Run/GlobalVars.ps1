@@ -16,6 +16,7 @@ $NovaVer = "12.1"
 
 # Set Startup Folder Variable
 $Startup = "$env:programdata\Microsoft\Windows\Start Menu\Programs\Startup"
+$StartScript = 'Start PowerShell -NoLogo -NoExit -ExecutionPolicy Bypass -NoProfile -File "' + $default + '\LiveX.ps1"'
 
 # Multi-use Variables
 $s_big = "/S"
@@ -48,8 +49,9 @@ $RegRoute = "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Persistent
 $DiagTrack = (gsv "DiagTrack" -ea SilentlyContinue)
 $Dmwappush = (gsv "dmwappushservice" -ea SilentlyContinue)
  
-# OEM Variables
+# Nova Variables
 $OEMkey = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation"
+$ThemesServ = (Get-WmiObject -Class Win32_Service -Filter "Name='Themes'").State
 
 # Set Directory for Module Variable settings
 cd $default
