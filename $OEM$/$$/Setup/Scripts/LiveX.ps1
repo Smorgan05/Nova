@@ -58,8 +58,8 @@ Write-Host
 Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "Setup"}
 
-# Run Setup Updater
-if ($Internet -eq "True"){
+# Run Setup Updater if Internet is connected & greater than 1 MB/s
+if (($Internet -eq "True") -and ($Speed -ge "1")){
 write-host
 write-host Setup Updater
 . .\Setup_Updater.ps1}

@@ -64,6 +64,16 @@ $Connection = (get-wmiobject win32_networkadapter -filter "netconnectionstatus =
 
 If ($Connection -eq "2"){ 
 	$Internet = "True"} Else {$Internet = "False"}
+	
+# Check Internet Speed in MB/s
+if (!$Speed){
+$Sum = 0 
+
+for($i=0; $i -lt 3; $i++){
+$a=Get-Date; Invoke-WebRequest http://east.testmy.net/dl-25MB -UseBasicParsing | Out-Null; $Rez = $((10/((Get-Date)-$a).TotalSeconds)*8)
+$Sum += $Rez}
+
+$Speed = $Sum/$i}
 
 # ============================================================================================================================================================================
 #																	 Set External Language Variables

@@ -27,7 +27,7 @@ REN "$env:windir\System32\runonce.exe" "runonce.exe.dis"}
 cd $default
 
 # Run Setup Updater
-if ($Internet -eq "True"){
+if (($Internet -eq "True") -and ($Speed -ge "1")){
 start-transcript -path .\Setup_Update.log
 . .\Run\Setup_Updater.ps1
 Stop-Transcript}
