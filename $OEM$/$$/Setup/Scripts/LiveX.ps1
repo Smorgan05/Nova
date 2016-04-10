@@ -12,7 +12,8 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} els
 compvar | Format-Table -Auto | Out-File variables.txt -Width 10000
 
 # Run Speed Checker
-. .\SpeedTest.ps1
+if ($Internet -eq "True"){
+. .\SpeedTest.ps1}
 
 pause
 

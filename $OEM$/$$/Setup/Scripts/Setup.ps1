@@ -9,7 +9,8 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} els
 . .\InstallRec.ps1
 
 # Run Speed Checker
-. .\SpeedTest.ps1
+if ($Internet -eq "True"){
+. .\SpeedTest.ps1}
 
 # Change Location to the Start Up Folder
 cd $Startup
