@@ -11,6 +11,11 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} els
 . .\GlobalVars.ps1
 compvar | Format-Table -Auto | Out-File variables.txt -Width 10000
 
+# Run Speed Checker
+. .\SpeedTest.ps1
+
+pause
+
 cls
 Write-Host ------------------- Nova Live Install $NovaVer -------------------
 Write-Host --------------------------------------------------------------
@@ -58,8 +63,8 @@ Write-Host
 Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "Setup"}
 
-# Run Setup Updater if Internet is connected & greater than 1 MB/s
-if (($Internet -eq "True") -and ($Speed -ge "1")){
+# Run Setup Updater if Internet is connected & greater than 15 mbps
+if (($Internet -eq "True") -and ($Speed -ge "15")){
 write-host
 write-host Setup Updater
 . .\Setup_Updater.ps1}

@@ -14,8 +14,9 @@ if ((Get-ChildItem Apps\Microsoft).Count -eq "1"){echo $null >> Apps\Microsoft\t
 # Set Arrays for App Modules
 if ($AppsModHandy -eq "True"){$HandyArray = ls Apps\Handy -name}
 if ($AppsModMS -eq "True"){$MSArray = dir Apps\Microsoft -name}
-if ($AppsModUtil -eq "True") {$UtilArray = ls Apps\Utilities -name}
-if ($AppsModWebPlugins -eq "True") {$WebPluginArray = ls Apps\WebPlugins -name}
+if ($AppsModUtil -eq "True"){$UtilArray = ls Apps\Utilities -name}
+if ($AppsModWebPlugins -eq "True"){$WebPluginArray = ls Apps\WebPlugins -name}
+if ($ExternalMod -eq "True"){$ExtModArray = ls ExtRun -name}
 
 # Set Version Grab Function
 function SetupVer($Setup){
@@ -23,6 +24,15 @@ function SetupVer($Setup){
 
 # ===========================* Define Apps Variables *===============================
 # ===================================================================================
+# ==================================* Speed *========================================
+if ($ExternalMod -eq "True"){
+cd ExtRun
+
+for($i=0; $i -le $ExtModArray.length; $i++){
+if (($ExtModArray[$i] -match "speedtest") -and ($ExtModArray[$i] -like '*32*')){$Speed32 = $ExtModArray[$i]}
+if (($ExtModArray[$i] -match "speedtest") -and ($ExtModArray[$i] -like '*64*')){$Speed64 = $ExtModArray[$i]}}
+
+}
 # ==================================* Handy *========================================
 if ($AppsModHandy -eq "True"){
 cd $Default\Apps\Handy

@@ -121,7 +121,6 @@ New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "EnableProactive" -Value "0" -PropertyType "DWORD" -Force | out-null
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Value "0" -PropertyType "DWORD" -Force | out-null
 New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" -Value "Play To menu" -PropertyType "String" -Force | out-null
-#New-ItemProperty -Path "HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" -Name "System.IsPinnedToNameSpaceTree" -Value "0"  -PropertyType "DWORD" -Force | out-null
 
 }
 # ============================================================================================================================================================================

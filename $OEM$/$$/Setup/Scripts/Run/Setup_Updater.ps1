@@ -16,11 +16,6 @@ function Download($URL, $Setup){
 $wc = New-Object System.Net.WebClient
 $Setup = "$PWD\$Setup"
 $wc.DownloadFile($URL, $Setup)}	
-	
-# Hash Checking Function
-function HashCheck($File){
-$md5 = New-Object -TypeName System.Security.Cryptography.MD5CryptoServiceProvider
-$hash = [System.BitConverter]::ToString($md5.ComputeHash([System.IO.File]::ReadAllBytes($File)))}
 
 # ==========================================================* Update the Setups  *=============================================================
 # =============================================================================================================================================
@@ -80,12 +75,12 @@ $URLx64 = 'https://dl.google.com/tag/s/appguid={00000000-0000-0000-0000-00000000
 $Setupx32 = 'Chrome ' + $ChromeRev + '.msi'
 $Setupx64 = 'Chrome64 '+ $ChromeRev +'.msi'
 
-if ($ChromeRev -gt $Chrome32Ver){
+if ($ChromeRev -ne $Chrome32Ver){
 Write-host "Updating Chrome 32 bit"
 	if ($Chrome32){rm $Chrome32}
 wget $URLx32 -OutFile $Setupx32 -UseBasicParsing} 
 
-if ($ChromeRev -gt $Chrome64Ver){
+if ($ChromeRev -ne $Chrome64Ver){
 Write-host "Updating Chrome 64 bit"
 	if ($Chrome64){rm $Chrome64}
 wget $URLx64 -OutFile $Setupx64 -UseBasicParsing} 

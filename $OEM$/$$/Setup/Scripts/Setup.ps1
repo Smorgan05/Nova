@@ -8,6 +8,9 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\ExtRun} 
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\InstallRec.ps1
 
+# Run Speed Checker
+. .\SpeedTest.ps1
+
 # Change Location to the Start Up Folder
 cd $Startup
 
@@ -26,8 +29,8 @@ REN "$env:windir\System32\runonce.exe" "runonce.exe.dis"}
 # Set to default directory
 cd $default
 
-# Run Setup Updater
-if (($Internet -eq "True") -and ($Speed -ge "1")){
+# Run Setup Updater if Internet is connected & greater than 15 mbps
+if (($Internet -eq "True") -and ($Speed -ge "15")){
 start-transcript -path .\Setup_Update.log
 . .\Run\Setup_Updater.ps1
 Stop-Transcript}
