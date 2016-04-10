@@ -6,7 +6,7 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} els
 . .\InstallRec.ps1
 
 # ===========================* Perform Speed Check *===============================
-cd $default\ExtRun
+cd $default\Prep
 
 #Check for Speed Exectuables
 if (!(Test-path report.txt) -and ($Speed32 -and $Speed64)){

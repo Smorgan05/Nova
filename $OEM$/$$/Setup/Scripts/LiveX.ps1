@@ -15,8 +15,6 @@ compvar | Format-Table -Auto | Out-File variables.txt -Width 10000
 if ($Internet -eq "True"){
 . .\SpeedTest.ps1}
 
-pause
-
 cls
 Write-Host ------------------- Nova Live Install $NovaVer -------------------
 Write-Host --------------------------------------------------------------
