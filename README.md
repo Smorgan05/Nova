@@ -30,6 +30,7 @@
 <h2 style"font-size:200%;">Nature of OEM Pack</h2>
 
 <ul>
+<li>Offline / Online Capability - The ability to update setup files on the fly with an internet speed fast enough.  While being able to do do a full online configuration and downloading all the setups if need be. </li>
 <li>Multilingual - The ability to interface powershell to other scripting languages by using a multilingual controller (Starter.ps1)</li>
 <li>Modular - By having multiple script controllers we can easily add modules to the pack (Setup.ps1, Starter.ps1, setupComplete.cmd)</li>
 <li>Universal - Given the large amount of Windows Operating Systems supported it is easy to switch Versions or support a large swath of operating systems if necessary</li>
