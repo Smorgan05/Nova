@@ -8,17 +8,20 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} els
 # Set Location
 cd $Default
 
-# MS Array fix
-if ((Get-ChildItem Apps\Microsoft).Count -eq "1"){echo $null >> Apps\Microsoft\temp}
-
 # Prep Array
 $PrepArray = ls Prep -name
 
 # Set Arrays for App Modules
 if ($AppsModHandy -eq "True"){$HandyArray = ls Apps\Handy -name}
-if ($AppsModMS -eq "True"){$MSArray = dir Apps\Microsoft -name}
 if ($AppsModUtil -eq "True"){$UtilArray = ls Apps\Utilities -name}
 if ($AppsModWebPlugins -eq "True"){$WebPluginArray = ls Apps\WebPlugins -name}
+
+# Set Array for Microsoft Apps
+
+if ($AppsModMS -eq "True"){
+
+	if ((ls Apps\Microsoft).Count -eq "1"){$MSArray = @(ls Apps\Microsoft -name)} else {$MSArray = ls Apps\Microsoft -name}
+}
 
 # Set Version Grab Function
 function SetupVer($Setup){
@@ -27,7 +30,7 @@ function SetupVer($Setup){
 # ===========================* Define Apps Variables *===============================
 # ===================================================================================
 # ==================================* Speed *========================================
-cd Prep
+cd $Default\Prep
 
 for($i=0; $i -le $PrepArray.length; $i++){
 if (($PrepArray[$i] -match "speedtest") -and ($PrepArray[$i] -like '*32*')){$Speed32 = $PrepArray[$i]}
@@ -55,9 +58,6 @@ cd $Default\Apps\Microsoft
 # Set Variables for MS
 for($i=0; $i -le $MSArray.length; $i++){
 if ($MSArray[$i] -match 'dotNet'){$dotNet = $MSArray[$i]}}	
-
-# Remove Temp File
-if (Test-path temp){rm temp}
 
 }
 # ================================* Utilities *======================================

@@ -5,6 +5,9 @@ $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\InstallRec.ps1
 
+# Log the Update Process
+start-transcript -path .\Setup_Update.log
+
 # Function to unzip files
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 function Unzip{
@@ -16,6 +19,9 @@ function Download($URL, $Setup){
 $wc = New-Object System.Net.WebClient
 $Setup = "$PWD\$Setup"
 $wc.DownloadFile($URL, $Setup)}	
+
+# Update Counter
+$Count = 0
 
 # ==========================================================* Update the Setups  *=============================================================
 # =============================================================================================================================================
@@ -36,7 +42,7 @@ $Setup = 'ClassicShellSetup_' + $ClassicLnk + '.exe'
 if ($ClassicRev -gt $ClassicVer){
 Write-host "Updating Classic Shell"
 	if ($Classic) {rm $Classic -Force}
-Download $URL $Setup}
+Download $URL $Setup; $Count++}
 
 # Grab the Newest MPC-HC Setup
 
@@ -54,12 +60,12 @@ $Setupx64 = 'MPC-HC.' + $MPCRev + '.x64.exe'
 if ($MPCRev -gt $MPC32Ver){
 Write-host "Updating Media Player Classic 32 bit"
 	if ($MPC32) {rm $MPC32 -Force} 
-Download $URLx32 $Setupx32} 
+Download $URLx32 $Setupx32; $Count++} 
 
 if ($MPCRev -gt $MPC64Ver){
 Write-host "Updating Media Player Classic 64 bit"
 	if ($MPC64) {rm $MPC64 -Force}
-Download $URLx64 $Setupx64}
+Download $URLx64 $Setupx64; $Count++}
  
 # Grab the newest Chrome Setup
 
@@ -78,12 +84,12 @@ $Setupx64 = 'Chrome64 '+ $ChromeRev +'.msi'
 if ($ChromeRev -ne $Chrome32Ver){
 Write-host "Updating Chrome 32 bit"
 	if ($Chrome32){rm $Chrome32}
-wget $URLx32 -OutFile $Setupx32 -UseBasicParsing} 
+Download $URLx32 $Setupx32; $Count++} 
 
 if ($ChromeRev -ne $Chrome64Ver){
 Write-host "Updating Chrome 64 bit"
 	if ($Chrome64){rm $Chrome64}
-wget $URLx64 -OutFile $Setupx64 -UseBasicParsing} 
+Download $URLx64 $Setupx64; $Count++} 
  
 # Grab the newest Firefox Setup
 
@@ -101,12 +107,12 @@ $Setupx64 = 'Firefox-' + $FirefoxRev + '.en-US.win64.installer.exe'
 if ($FirefoxRev -gt $Firefox32Ver){
 Write-host "Updating Firefox 32 bit"
 	if ($Firefox32){rm $Firefox32 -Force}
-Download $URLx32 $Setupx32} 
+Download $URLx32 $Setupx32; $Count++} 
 
 if ($FirefoxRev -gt $Firefox64Ver){
 Write-host "Updating Firefox 64 bit"
 	if ($Firefox64){rm $Firefox64 -Force}
-Download $URLx64 $Setupx64} 
+Download $URLx64 $Setupx64; $Count++} 
 
 # ==========================================================* Update the Setups  *=============================================================
 # =============================================================================================================================================
@@ -117,7 +123,7 @@ if (!$dotNet){
 Write-host "Updating .Net Framework 4.0"
 $Setup = 'dotNetFx40_Full_x86_x64.exe'
 $URL = 'https://download.microsoft.com/download/9/5/A/95A9616B-7A37-4AF6-BC36-D6EA96C8DAAE/' + $Setup
-Download $URL $Setup}
+Download $URL $Setup; $Count++}
 
 # ==========================================================* Update the Setups  *=============================================================
 # =============================================================================================================================================
@@ -141,7 +147,7 @@ $Setup = 'npp.' + $NotepadRev + '.Installer.exe'
 if ($NotepadRev -gt $NotepadVer){
 Write-host "Updating Notepad++"
 	if ($Notepad){rm $Notepad -Force}
-Download $URL $Setup} 
+Download $URL $Setup; $Count++} 
 
 # Grab the newest 7zip Setup
 
@@ -160,12 +166,12 @@ $Setupx64 = '7z' + $7zipRev + '-x64.exe'
 if ($7zipRev -gt $7zip32Ver){
 Write-host "Updating 7-zip 32 bit"
 	if ($7zip32){rm $7zip32 -Force}
-Download $URLx32 $Setupx32} 
+Download $URLx32 $Setupx32; $Count++} 
 
 if ($7zipRev -gt $7zip64Ver){
 Write-host "Updating 7-zip 64 bit"
 	if ($7zip64){rm $7zip64 -Force}
-Download $URLx64 $Setupx64} 
+Download $URLx64 $Setupx64; $Count++} 
 
 # Grab the newest CCleaner Setup
 
@@ -180,7 +186,7 @@ $Setup = 'ccsetup' + $CCRev + '.exe.'
 if ($CCRev -gt $CCleanerVer){
 Write-host "Updating CCleaner"
 	if ($CCleaner){rm $CCleaner -Force}
-Download $URL $Setup} 
+Download $URL $Setup; $Count++} 
 
 # Grab the newest Defraggler Setup
 
@@ -195,7 +201,7 @@ $Setup = 'dfsetup' + $DefragRev + '.exe'
 if ($DefragRev -gt $DefragglerVer){
 Write-host "Updating Defraggler"
 	if ($Defraggler){rm $Defraggler -Force}
-Download $URL $Setup} 
+Download $URL $Setup; $Count++} 
 
 # Grab the newest Filezilla Setup
 
@@ -212,12 +218,12 @@ $URLx64 = 'http://iweb.dl.sourceforge.net/project/filezilla/FileZilla_Client/' +
 if ($FileRev -gt $FileZ32Ver){
 Write-host "Updating Filezilla 32 bit"
 	if ($FileZ32){rm $FileZ32 -Force}
-Download $URLx32 $Setupx32} 
+Download $URLx32 $Setupx32; $Count++} 
 
 if ($FileRev -gt $FileZ64Ver){
 Write-host "Updating Filezilla 64 bit"
 	if ($FileZ64){rm $FileZ64 -Force}
-Download $URLx64 $Setupx64 }
+Download $URLx64 $Setupx64; $Count++}
 
 # Grab the newest Python Setup
 
@@ -235,12 +241,12 @@ $Setupx64 = 'python-' + $PythonRev + '-amd64.exe'
 if ($PythonRev -gt $Python32Ver){
 Write-host "Updating Python 32 bit"
 	if ($Python32){rm $Python32 -Force}
-Download $URLx32 $Setupx32 } 
+Download $URLx32 $Setupx32; $Count++} 
 
 if ($PythonRev -gt $Python64Ver){
 Write-host "Updating Python 64 bit"
 	if ($Python64){rm $Python64 -Force}
-Download $URLx64 $Setupx64 } 
+Download $URLx64 $Setupx64; $Count++} 
 
 
 # Grab the newest Process Explorer
@@ -255,7 +261,7 @@ $URL = 'https://download.sysinternals.com/files/' + $Setup
 if ($ProcRev -gt $ProcessExpVer){
 Write-host "Updating Process Explorer"
 	if ($ProcessExp){rm $ProcessExp -Force}
-Download $URL $Setup 
+Download $URL $Setup; $Count++ 
 	if (Test-path $env:Temp\Process){rm $env:Temp\Process -Recurse}
 Unzip $PWD\ProcessExplorer.zip $env:Temp\Process; cp $env:Temp\Process\ProcExp.exe $Default\Apps\Utilities -Force
 rm ProcessExplorer.zip} 
@@ -271,7 +277,7 @@ $URL = 'https://download.sysinternals.com/files/' + $Setup
 if ($AutoRev -gt $AutorunsVer){
 Write-host "Updating Autoruns"
 	if ($AutoRuns){rm $AutoRuns -Force}
-Download $URL $Setup 
+Download $URL $Setup; $Count++ 
 	if (Test-path $env:Temp\AutoRuns){rm $env:Temp\AutoRuns -Recurse}
 Unzip $PWD\AutoRuns.Zip $env:Temp\Autoruns; cp $env:Temp\Autoruns\AutoRuns.exe $Default\Apps\Utilities -Force
 rm Autoruns.zip} 
@@ -300,12 +306,12 @@ $Setupx64 = 'jre-' + $JavaRev + '-windows-x64.exe'
 if ($JavaRevA -gt $Java32Ver){
 Write-host "Updating Java 32 bit"
 	if ($Java32){rm $Java32 -Force}
-Download $URLx32 $Setupx32 } 
+Download $URLx32 $Setupx32; $Count++} 
 
 if ($JavaRevA -gt $Java64Ver){
 Write-host "Updating Java 64 bit"
 	if ($Java64){rm $Java64 -Force}
-Download $URLx64 $Setupx64} 
+Download $URLx64 $Setupx64; $Count++} 
 
 # Grab the latest Flash Player
 
@@ -319,7 +325,14 @@ $Setup = 'flashplayer_' + $Flashlnk + '_plugin_debug.exe'
 if ($FlashRev -gt $FlashVer){
 Write-host "Updating Flash Player"
 	if ($Flash){rm $Flash -Force}
-Download $URL $Setup} 
- 
+Download $URL $Setup; $Count++} 
+
+# Update / Download Report
+Write-host
+Write-host "Performed" $Count "Downloads or Updates to Setups."
+Write-host "Update check done on" (Get-Date).ToString()
+Write-host
+Stop-Transcript
+
  # Return to original directory
 cd $default\run

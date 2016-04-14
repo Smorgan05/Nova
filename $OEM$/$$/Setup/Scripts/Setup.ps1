@@ -8,7 +8,7 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\ExtRun} 
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\InstallRec.ps1
 
-# Run Speed Checker
+# Run Speed Checker (use # to comment out)
 if ($Internet -eq "True"){
 . .\SpeedTest.ps1}
 
@@ -31,10 +31,9 @@ REN "$env:windir\System32\runonce.exe" "runonce.exe.dis"}
 cd $default
 
 # Run Setup Updater if Internet is connected & greater than 15 mbps
+# if ($Internet -eq "True"){
 if (($Internet -eq "True") -and ($Speed -ge "15")){
-start-transcript -path .\Setup_Update.log
-. .\Run\Setup_Updater.ps1
-Stop-Transcript}
+. .\Run\Setup_Updater.ps1}
 
 # Windows 7 and Vista Specific
 if (($AppsModMS -eq "True") -and (($winver -like "6.0.*") -or ($winver -like "6.1.*"))){

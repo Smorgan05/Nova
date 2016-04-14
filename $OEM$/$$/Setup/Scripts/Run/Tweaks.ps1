@@ -1,8 +1,15 @@
-# Post Install Tweaks and Fix Pack for Windows
-function Tweaks($Action){
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+# Windows Tweaks for Nova Pack
+
+# Load Variables
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
+. .\GlobalVars.ps1
 
 # Set the location
 cd $default
+
+# Post Install Tweaks and Fix Pack for Windows
+function Tweaks($Action){
 
 if ($Action -eq "Setup"){
 
@@ -132,7 +139,6 @@ if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.*") -or ($winver -like "1
 New-ItemProperty -Path "HKLM:\Software\IvoSoft\ClassicStartMenu" -Name MenuStyle_Default -Value "Win7" -PropertyType "String" -Force | out-null
 
 	if ($VidRez -eq "3840"){New-ItemProperty -Path "HKCU:\Software\IvoSoft\ClassicStartMenu\Settings" -Name "StartButtonSize" -Value "100" -PropertyType "DWORD" -Force | out-null}
-
 }
 
 if ($AppsModUtil -eq "True"){
@@ -171,16 +177,3 @@ regedit /s "Reg\Windows\Photo_Viewer.reg"}
 	}# End Method
 	cd $default\run
 }# End Function
- 
-# External Language Prep
-function Lang($Action){
-
-	if ($Action -eq "PassVarSetup"){
-	New-item -type file -force $profile | out-null
-	$filter = '$AutomaticVariables = Get-Variable'
-	$filterfunc = 'function compvar {
-		Compare-Object (Get-Variable) $AutomaticVariables -Property Name -PassThru | Where -Property Name -ne "AutomaticVariables"
-	}'
-	ac $profile $filter | out-null; ac $profile $filterfunc | out-null
-	}
-} # End Function

@@ -21,7 +21,7 @@ if (!(Test-path report.txt) -and ($Speed32 -and $Speed64)){
 
 if (Test-path report.txt){ 
 
-$Report = [IO.File]::ReadAllText("$PWD\report.txt")
+$Report = [IO.File]::ReadAllText("$PWD\report.txt"); $Report = $Report.Split("|"); $Report = $Report | Select -last 2 | Select -first 1
 $Speed = ($report -match "[0-9][0-9][0-9].[0-9][0-9] Mbps" -or $report -match "[0-9][0-9].[0-9][0-9] Mbps" -or $report -match "[0-9].[0-9][0-9] Mbps")
 $Speed = $Matches[0]; $Speed = $Speed.Substring(0,$Speed.Length-4)
 

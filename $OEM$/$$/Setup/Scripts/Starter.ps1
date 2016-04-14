@@ -9,13 +9,15 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\ExtRun} 
 . .\Get-PendingReboot.ps1
 if ((Get-PendingReboot).RebootPending -eq "True"){Restart-Computer -Force}
 
-# Create PowerShell Profile & Refresh Profile
-if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
-. .\Tweaks.ps1; Lang "PassVarSetup"; .$profile
+# Change Directory and gather Automatical Variables
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir\Run}
+$AutomaticVariables = Get-Variable
 
-# Load Variables & Store in Txt
+# Load Variables
 . .\GlobalVars.ps1
-compvar | Format-Table -Auto | Out-File variables.txt -Width 10000
+
+# Pass Variables to the Var file
+Compare (gv) $AutomaticVariables -Property Name -PassThru | Where -Property Name -ne "AutomaticVariables" | Format-Table -Auto | Out-File variables.txt -Width 10000
 
 Write-Host ----------------- Nova Module Controller $NovaVer ----------------
 Write-Host --------------------------------------------------------------
