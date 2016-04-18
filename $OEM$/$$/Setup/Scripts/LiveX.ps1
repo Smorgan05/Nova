@@ -15,8 +15,8 @@ $AutomaticVariables = Get-Variable
 Compare (gv) $AutomaticVariables -Property Name -PassThru | Where -Property Name -ne "AutomaticVariables" | Format-Table -Auto | Out-File variables.txt -Width 10000
 
 # Run Speed Checker (use # to comment out)
-if ($Internet -eq "True"){
-. .\SpeedTest.ps1}
+#if (($Internet -eq "True") -and ($winver -notlike "6.0.*")){
+#. .\SpeedTest.ps1}
 
 cls
 Write-Host ------------------- Nova Live Install $NovaVer -------------------
@@ -65,8 +65,8 @@ Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "Setup"}
 
 # Run Setup Updater if Internet is connected & greater than 15 mbps
-# if ($Internet -eq "True"){
-if (($Internet -eq "True") -and ($Speed -ge "15")){
+if (($Internet -eq "True") -and ($winver -notlike "6.0.*")){
+#if (($Internet -eq "True") -and ($Speed -ge "15") -and ($winver -notlike "6.0.*")){
 write-host
 write-host Setup Updater
 . .\Setup_Updater.ps1}

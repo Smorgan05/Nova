@@ -89,6 +89,7 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\
 New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name NoAUAsDefaultShutdownOption -Value 1 -PropertyType "DWORD" -Force | out-null
 New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Temporary Files" -Name LastAccess -Value 3 -PropertyType "DWORD" -Force | out-null
 New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name VerboseStatus -Value 1 -PropertyType "DWORD" -Force | out-null
+New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\ShellHWDetection" -Name Start -Value 4 -PropertyType "DWORD" -Force | out-null
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" -Name C:\Windows\System32\cmd.exe -Value "~ RUNASADMIN" -Force | out-null
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\ClassicStartMenu" -Name "{20D04FE0-3AEA-1069-A2D8-08002B30309D}" -Value 0 -PropertyType "DWORD" -Force | out-null
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" -Name "{20D04FE0-3AEA-1069-A2D8-08002B30309D}" -Value 0 -PropertyType "DWORD" -Force | out-null

@@ -13,10 +13,6 @@ cd $default
 # Apps Module for Install
 if ($Action -eq "Setup"){
 
-# Windows 7 and Vista Specific
-if (($AppsModMS -eq "True") -and (($winver -like "6.0.*") -or ($winver -like "6.1.*"))){
-start-process "Apps\Microsoft\$dotNet" -ArgumentList "/q /norestart" -wait}
-
 # Applications Module (Multi - ARC)
 if ($AppsModHandy -eq "True"){
 if ($arc -eq "64-bit"){ 

@@ -1,4 +1,4 @@
-# Global Variables for Scripts (REQUIRED)
+# Global Variables for Scripts
 
 # General Script Variables
 $edition = (gwmi Win32_OperatingSystem).Caption
@@ -84,13 +84,14 @@ $Python = "True"} else {$Python = "False"}
 if (Test-Path "Nova"){
 $NovaMod = "True"} else { $NovaMod = "False"}
 
+# Set External Module Variable
+if (Test-Path "ExtRun"){
+$ExternalMod = "True"} else {$ExternalMod = "False"}
+
 # Set Server Module Variable
 if ((Test-Path "Server") -and (Test-Path "Reg\Server") -and ($edition -match "Server") -and (($winver -like "6.*") -or ($winver -like "10.*"))){
 $ServerMod = "True" } else { $ServerMod = "False"}
 
-# Set External Module Variable
-if (Test-Path "ExtRun"){
-$ExternalMod = "True"} else {$ExternalMod = "False"}
 
 # ============================================================================================================================================================================
 #																		Set Apps Module Variables
@@ -99,10 +100,6 @@ $ExternalMod = "True"} else {$ExternalMod = "False"}
 # Set Apps Handy Module Variable
 if (Test-Path "Apps\Handy"){
 $AppsModHandy = "True"} else { $AppsModHandy = "False"}
-
-# Set Apps Microsoft Module Variable
-if (Test-Path "Apps\Microsoft"){
-$AppsModMS = "True"} else { $AppsModMS = "False"}
 
 # Set Apps Utilities Module Variable
 if (Test-Path "Apps\Utilities"){
