@@ -48,6 +48,10 @@
 <li>Windows Embedded 7 - Windows Embedded 10</li>
 </ul>
 
+<h2 style"font-size:200%;">A Small Thank you</h2>
+
+<p>Thank you to all the projects that came before.  Thank you oem projects that used batch coding so that a structure could be made form nothing.  Those guys who came up with suggestions and made this project possible.  The code I was allowed to convert and piece together to make a very tightly coded project.  And those simple moments of zin that allowed for this to come to fruition.  Three years and we finally have the best of the best. </p>
+
 <h2 style"font-size:200%;">Nova License Agreement</h2>
 
 <p>For the purposes of the coding of the Nova (Original Equipment Manufacturer or OEM) Pack all coding is covered under the GNU General Public License v3 (GNU GPL v3). To be more precise this coding is given free as it is without any warranty. Additionally the license is granted to all users with the only caveat being that it not be used in a Business like environment. This permission must be granted to those who wish to use it in such an environment as not doing so is in violation of the Nova License. In using this software you agree that it is given AS-IS meaning that you take full responsibility for for the damage which may occur with the use of this pack or coding. The only exclusion to the Nova License is the External Scripts directory (ExtRun) which is protected by those respected author or authors of that code.</p>
