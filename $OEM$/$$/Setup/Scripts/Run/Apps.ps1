@@ -15,13 +15,16 @@ if ($Action -eq "Setup"){
 
 # Applications Module (Multi - ARC)
 if ($AppsModHandy -eq "True"){
-if ($arc -eq "64-bit"){ 
-start-process "Apps\Handy\$Chrome64" -ArgumentList "$q" -wait 
-start-process "Apps\Handy\$Firefox64" -ArgumentList "-ms" -wait
-start-process "Apps\Handy\$MPC64" -ArgumentList "$silent" -wait } else { 
-start-process "Apps\Handy\$Chrome32" -ArgumentList "$q" -wait
-start-process "Apps\Handy\$Firefox32" -ArgumentList "-ms" -wait
-start-process "Apps\Handy\$MPC32" -ArgumentList "$silent" -wait}}
+	if ($arc -eq "64-bit"){ 
+			if ($winver -gt "6.1") {start-process "Apps\Handy\$Firefox64" -ArgumentList "-ms" -wait}
+			
+	start-process "Apps\Handy\$Chrome64" -ArgumentList "$q" -wait	
+	start-process "Apps\Handy\$MPC64" -ArgumentList "$silent" -wait } else {
+			if ($winver -gt "6.1") {start-process "Apps\Handy\$Firefox32" -ArgumentList "-ms" -wait}
+			
+	start-process "Apps\Handy\$Chrome32" -ArgumentList "$q" -wait
+	start-process "Apps\Handy\$MPC32" -ArgumentList "$silent" -wait}
+}
 
 # Utilities / Tools Module
 if ($AppsModUtil -eq "True"){
@@ -29,14 +32,14 @@ copy "Apps\Utilities\$AutoRuns" "$env:homedrive\"
 copy "Apps\Utilities\$ProcessExp" "$env:homedrive\"
 start-process "Apps\Utilities\$CCleaner" -ArgumentList "$s_big" -wait
 start-process "Apps\Utilities\$Defraggler" -ArgumentList "$s_big" -wait
-start-process "Apps\Utilities\$Notepad" -ArgumentList "$s_big" -wait}
+start-process "Apps\Utilities\$Notepad" -ArgumentList "$s_big" -wait
 
 # Utilities / Tools Module (Multi - Arc)
 if ($arc -eq "64-bit"){
 start-process "Apps\Utilities\$Python64" -ArgumentList "$PythonInst" -wait 
 start-process "Apps\Utilities\$FileZ64" -ArgumentList "$s_big" -wait } else {
 start-process "Apps\Utilities\$Python32" -ArgumentList "$PythonInst" -wait
-start-process "Apps\Utilities\$FileZ32" -ArgumentList "$s_big" -wait}
+start-process "Apps\Utilities\$FileZ32" -ArgumentList "$s_big" -wait}}
 
 	} # End Method for Setup
 
@@ -53,7 +56,9 @@ regedit /s "Reg\Tweaks\Classicshell.reg"}
 
 # Utilities / Tools Module (Multi - ARC)
 if ($AppsModUtil -eq "True"){
-if ($arc -eq "64-bit"){start-process "Apps\Utilities\$7zip64" -ArgumentList "$s_big" -wait} else { start-process "Apps\Utilities\$7zip32" -ArgumentList "$s_big" -wait}}
+	if ($arc -eq "64-bit"){start-process "Apps\Utilities\$7zip64" -ArgumentList "$s_big" -wait} else 
+	{ start-process "Apps\Utilities\$7zip32" -ArgumentList "$s_big" -wait}
+}
 
 # Web Plugins Module
 if ($AppsModWebPlugins -eq "True"){

@@ -1,23 +1,27 @@
 @echo off
 :: Setupcomplete with PS Install for Vista \ Server 2008
 
+:: Grab the Windows Version
+For /f "tokens=4,5,6 delims=. " %%G in ('ver') Do (set _major=%%G& set _minor=%%H)
+set version=%_major%.%_minor%
+
 :: Powershell Check
 regedit /s "%windir%\Setup\scripts\Reg\Windows\disable_uac.reg"
+
+:: Insert starter.bat into startup via RunOnce
+reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v "Starter" /t REG_SZ /d "C:\windows\setup\scripts\SetupComplete.cmd" /f
 
 if exist "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe" (goto regInst) ELSE (goto Vista)
 :: -----------------------------------------------------------------------------------------
 
 :regInst
 
-:: Insert starter.bat into startup via RunOnce
-reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v "Starter" /t REG_SZ /d "C:\windows\setup\scripts\SetupComplete.cmd" /f
-
 :: Grab Powershell Version information
 FOR /F "usebackq delims=" %%v IN (`powershell -noprofile "& { $PSVersionTable.CLRVersion.Major }"`) DO set "psver=%%v"
 set psver
 
 :: Flip over to Upgrade to Powershell 3.0
-if "%psver%"=="2" (goto win7)
+if "%psver%"=="2" if "%version%"=="6.1" (goto win7)
 
 :: Execute Powershell Setup
 cd %windir%\setup\scripts

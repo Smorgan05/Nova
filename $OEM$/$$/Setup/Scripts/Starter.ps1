@@ -17,7 +17,7 @@ $AutomaticVariables = Get-Variable
 . .\GlobalVars.ps1
 
 # Pass Variables to the Var file
-Compare (gv) $AutomaticVariables -Property Name -PassThru | Where -Property Name -ne "AutomaticVariables" | Format-Table -Auto | Out-File variables.txt -Width 10000
+if ($winver -gt "6.1"){Compare (gv) $AutomaticVariables -Property Name -PassThru | Where -Property Name -ne "AutomaticVariables" | Format-Table -Auto | Out-File variables.txt -Width 10000}
 
 Write-Host ----------------- Nova Module Controller $NovaVer ----------------
 Write-Host --------------------------------------------------------------
