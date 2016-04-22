@@ -17,7 +17,7 @@ $wc = New-Object System.Net.WebClient
 $Setup = "$PWD\$Setup"
 $wc.DownloadFile($URL, $Setup)}	
 
-# Update Counter
+# Update Download Counter
 $Count = 0
 
 # ==========================================================* Update the Setups  *=============================================================

@@ -98,7 +98,7 @@ if ($Action -eq "PostInstall"){
 
 	# Vista Tweaks
 	if (($winver -like "6.0.*") -and ($edition -match "Vista")){
-	Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "WindowsWelcomeCenter"
+	Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "WindowsWelcomeCenter" -ea silentlycontinue
 	Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "Sidebar"}
 
 	# Windows 7 Tweaks
