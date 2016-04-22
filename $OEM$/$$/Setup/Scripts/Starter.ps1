@@ -32,7 +32,6 @@ Start-Process PowerShell -ArgumentList $Privacy -Wait
 Write-Host
 Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "PostInstall"
-Read-Host "Press ENTER"
 Write-Host
 if ($ServerMod -eq "True"){
 Write-Host Server Workstation Install

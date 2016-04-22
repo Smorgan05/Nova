@@ -1,5 +1,5 @@
 @echo off
-:: Setupcomplete with PS Install for Vista \ Server 2008
+:: Setupcomplete with PS 2.0 Install for Vista \ Server 2008 PS 3.0 Install for Windows 7 \ Server 2008 R2
 
 :: Grab the Windows Version
 For /f "tokens=4,5,6 delims=. " %%G in ('ver') Do (set _major=%%G& set _minor=%%H)
