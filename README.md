@@ -1,5 +1,3 @@
-# Nova
-Nova - Universal OEM Pack
 <h1 style"font-size:200%;">Nova</h1>
 
 <img src="https://i.imgur.com/1mPjoac.png">
