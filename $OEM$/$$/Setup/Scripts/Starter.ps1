@@ -17,7 +17,7 @@ $AutomaticVariables = Get-Variable
 . .\GlobalVars.ps1
 
 # Pass Variables to the Var file
-if ($winver -gt "6.1"){Compare (gv) $AutomaticVariables -Property Name -PassThru | Where -Property Name -ne "AutomaticVariables" | Format-Table -Auto | Out-File variables.txt -Width 10000}
+Compare (gv) $AutomaticVariables -Property Name -PassThru | Where {$_.Name -ne "AutomaticVariables"} | Format-Table -Auto | Out-File variables.txt -Width 10000
 
 Write-Host ----------------- Nova Module Controller $NovaVer ----------------
 Write-Host --------------------------------------------------------------
@@ -32,6 +32,7 @@ Start-Process PowerShell -ArgumentList $Privacy -Wait
 Write-Host
 Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "PostInstall"
+Read-Host "Press ENTER"
 Write-Host
 if ($ServerMod -eq "True"){
 Write-Host Server Workstation Install

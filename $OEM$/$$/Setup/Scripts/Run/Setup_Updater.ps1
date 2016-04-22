@@ -317,7 +317,6 @@ Download $URL $Setup; $Count++}
 Write-host
 Write-host "Performed" $Count "Downloads or Updates to Setups."
 Write-host "Update check done on" (Get-Date).ToString()
-Write-host
 
  # Return to original directory
 cd $default\run

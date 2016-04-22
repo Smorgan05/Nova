@@ -4,6 +4,7 @@
 $edition = (gwmi Win32_OperatingSystem).Caption
 $winver = (gwmi win32_OperatingSystem).Version
 $arc = (gwmi win32_OperatingSystem).OSArchitecture
+$PSVer = $PSVersionTable.PSVersion.Major
 $VidRez = (gwmi win32_videocontroller).CurrentHorizontalResolution
 $Temp = $env:temp
 

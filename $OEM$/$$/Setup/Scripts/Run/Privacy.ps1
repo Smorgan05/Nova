@@ -5,11 +5,11 @@ $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\GlobalVars.ps1
 
-# External Scripts Run
+<# # External Scripts Run
 if (($ExternalMod -eq "True") -and ($winver -like "10.*")){
 cd $default\ExtRun
 . .\Kill-Edge.ps1
-. .\Kill-Cortana.ps1}
+. .\Kill-Cortana.ps1}#>
 
 # Disable Windows 10 upgrade
 if ($winver -notlike "10.*"){

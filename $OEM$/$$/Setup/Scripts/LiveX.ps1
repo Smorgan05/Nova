@@ -12,7 +12,7 @@ $AutomaticVariables = Get-Variable
 . .\GlobalVars.ps1
 
 # Pass Variables to the Var file
-if ($winver -gt "6.1"){Compare (gv) $AutomaticVariables -Property Name -PassThru | Where -Property Name -ne "AutomaticVariables" | Format-Table -Auto | Out-File variables.txt -Width 10000}
+Compare (gv) $AutomaticVariables -Property Name -PassThru | Where {$_.Name -ne "AutomaticVariables"} | Format-Table -Auto | Out-File variables.txt -Width 10000
 
 # Run Speed Checker (use # to comment out)
 #if (($Internet -eq "True") -and ($winver -notlike "6.0.*")){
@@ -23,13 +23,14 @@ Write-Host ------------------- Nova Live Install $NovaVer -------------------
 Write-Host --------------------------------------------------------------
 Write-Host ------ Per Ardua Ad Astra, From Adversity to the Stars --------
 
-# Server Install
-if (($ServerMod -eq "True") -and (!(Test-Path $Startup\Starter.bat))){
+# Take care of Windows Vista / 7 and Server Install
+if ((($winver -like "6.1.*") -or ($ServerMod -eq "True")) -and (!(Test-Path $Startup\Starter.bat))){
 
-# Run Server Workstation Prep
-Write-Host
-Write-Host Server Workstation Install
-. .\Server.ps1; Server "ServerPrep"
+	if ($ServerMod -eq "True"){
+	# Run Server Workstation Prep
+	Write-Host
+	Write-Host Server Workstation Install
+	. .\Server.ps1; Server "ServerPrep"}
 
 # Change Location to the Start Up Folder
 cd $Startup
@@ -39,11 +40,28 @@ sc Starter.bat '@echo off' -en ASCII
 ac starter.bat 'echo Starter for Nova Module Controller'
 ac starter.bat $StartScript
 
+	
+	if (($winver -like "6.1.*") -and ($PSVer -eq "2.0")){
+	# Live Install 7
+	Write-Host
+	Write-Host Windows 7 Install
+	
+	# Change to Prep Directory
+	cd $default\prep
+
+	# Install .net 4.5.2
+	start-process "NDP452-KB2901907-x86-x64-AllOS-ENU.exe" -ArgumentList "/q /norestart" -wait
+		
+	if ($arc -eq "64-bit"){
+	start-process wusa 'Windows6.1-KB2506143-x64.msu /quiet /norestart' -wait } else {start-process wusa 'Windows6.1-KB2506143-x86.msu /quiet /norestart' -wait}}
+
+	
 # Load Tweaks script and Run Setup Module
 Write-Host
 Write-Host Windows Tweaks
 cd $default\run; . .\Tweaks.ps1; Tweaks "Setup"
 
+# Force Restart
 Restart-Computer -Force
 exit}
 
@@ -59,14 +77,14 @@ Write-Host Nova Privacy Settings
 Start-Process PowerShell -ArgumentList $Privacy -Wait
 
 # Load Tweaks script and Run Setup Method
-if ($ServerMod -ne "True"){
+if (($ServerMod -ne "True") -or ($winver -notlike "6.1.*")){
 Write-Host
 Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "Setup"}
 
 # Run Setup Updater if Internet is connected & greater than 15 mbps
-if (($Internet -eq "True") -and ($winver -notlike "6.0.*")){
-#if (($Internet -eq "True") -and ($Speed -ge "15") -and ($winver -notlike "6.0.*")){
+if (($Internet -eq "True") -and ($winver -notlike "6.0.*") -and ($PSVer -ge "3.0")){
+#if (($Internet -eq "True") -and ($Speed -ge "15") -and ($winver -notlike "6.0.*") -and ($PSVer -ge "3.0")){
 write-host
 write-host Setup Updater
 . .\Setup_Updater.ps1}
