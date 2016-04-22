@@ -1,5 +1,5 @@
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
-$Host.UI.RawUI.WindowTitle = "Nova Module Controller 1.35"
+$Host.UI.RawUI.WindowTitle = "Nova Module Controller"
 # Nova Module Controller (REQUIRED)
 # Coded By Morgan Overman for the Nova Project
 # Multilingual Script Controller
@@ -9,15 +9,17 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\ExtRun} 
 . .\Get-PendingReboot.ps1
 if ((Get-PendingReboot).RebootPending -eq "True"){Restart-Computer -Force}
 
-# Create PowerShell Profile & Refresh Profile
-if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
-. .\Tweaks.ps1; Lang "PassVarSetup"; .$profile
+# Change Directory and gather Automatical Variables
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir\Run}
+$AutomaticVariables = Get-Variable
 
-# Load Variables & Store in Txt
+# Load Variables
 . .\GlobalVars.ps1
-compvar | Format-Table -Auto | Out-File variables.txt -Width 10000
 
-Write-Host ----------------- Nova Module Controller 1.35 ----------------
+# Pass Variables to the Var file
+Compare (gv) $AutomaticVariables -Property Name -PassThru | Where {$_.Name -ne "AutomaticVariables"} | Format-Table -Auto | Out-File variables.txt -Width 10000
+
+Write-Host ----------------- Nova Module Controller $NovaVer ----------------
 Write-Host --------------------------------------------------------------
 Write-Host ------ Per Ardua Ad Astra, From Adversity to the Stars --------
 Write-Host

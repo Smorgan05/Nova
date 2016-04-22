@@ -1,21 +1,29 @@
-# Global Variables for Scripts (REQUIRED)
+# Global Variables for Scripts
 
 # General Script Variables
 $edition = (gwmi Win32_OperatingSystem).Caption
 $winver = (gwmi win32_OperatingSystem).Version
 $arc = (gwmi win32_OperatingSystem).OSArchitecture
+$PSVer = $PSVersionTable.PSVersion.Major
+$VidRez = (gwmi win32_videocontroller).CurrentHorizontalResolution
 $Temp = $env:temp
 
 # Set Master script directory
 if (Test-path "$env:windir\Setup\Scripts"){
 $default = "$env:windir\Setup\Scripts"} else {$default = Split-Path (Split-Path $script:MyInvocation.MyCommand.Path) -Parent}
 
+# Set Master Version
+$NovaVer = "12.1"
+
+# Set Startup Folder Variable
+$Startup = "$env:programdata\Microsoft\Windows\Start Menu\Programs\Startup"
+$StartScript = 'Start PowerShell -NoLogo -NoExit -ExecutionPolicy Bypass -NoProfile -File "' + $default + '\LiveX.ps1"'
+
 # Multi-use Variables
 $s_big = "/S"
 $q = "/q"
 $silent = "/silent"
 $s_small = "-s"
-$fire = "-ms"
 
 # Set Variables for Scripts that will create a new instance of PS
 $Privacy = "-WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File Privacy.ps1"
@@ -42,8 +50,9 @@ $RegRoute = "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Persistent
 $DiagTrack = (gsv "DiagTrack" -ea SilentlyContinue)
 $Dmwappush = (gsv "dmwappushservice" -ea SilentlyContinue)
  
-# OEM Variables
+# Nova Variables
 $OEMkey = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation"
+$ThemesServ = (Get-WmiObject -Class Win32_Service -Filter "Name='Themes'").State
 
 # Set Directory for Module Variable settings
 cd $default
@@ -56,8 +65,6 @@ $Connection = (get-wmiobject win32_networkadapter -filter "netconnectionstatus =
 
 If ($Connection -eq "2"){ 
 	$Internet = "True"} Else {$Internet = "False"}
-	
-	
 
 # ============================================================================================================================================================================
 #																	 Set External Language Variables
@@ -78,13 +85,14 @@ $Python = "True"} else {$Python = "False"}
 if (Test-Path "Nova"){
 $NovaMod = "True"} else { $NovaMod = "False"}
 
+# Set External Module Variable
+if (Test-Path "ExtRun"){
+$ExternalMod = "True"} else {$ExternalMod = "False"}
+
 # Set Server Module Variable
 if ((Test-Path "Server") -and (Test-Path "Reg\Server") -and ($edition -match "Server") -and (($winver -like "6.*") -or ($winver -like "10.*"))){
 $ServerMod = "True" } else { $ServerMod = "False"}
 
-# Set External Module Variable
-if (Test-Path "ExtRun"){
-$ExternalMod = "True"} else {$ExternalMod = "False"}
 
 # ============================================================================================================================================================================
 #																		Set Apps Module Variables
@@ -93,10 +101,6 @@ $ExternalMod = "True"} else {$ExternalMod = "False"}
 # Set Apps Handy Module Variable
 if (Test-Path "Apps\Handy"){
 $AppsModHandy = "True"} else { $AppsModHandy = "False"}
-
-# Set Apps Microsoft Module Variable
-if (Test-Path "Apps\Microsoft"){
-$AppsModMS = "True"} else { $AppsModMS = "False"}
 
 # Set Apps Utilities Module Variable
 if (Test-Path "Apps\Utilities"){
