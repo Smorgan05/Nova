@@ -19,14 +19,19 @@ $Shortcut = $WScriptShell.CreateShortcut($ShortcutFileLoco)
 $Shortcut.TargetPath = $TargetFile
 $Shortcut.Save()}
 
-# Remove all Shortcuts on desktop
-Remove-Item $home\desktop\* -include *.lnk
-Remove-Item $env:public\Desktop\* -include *.lnk
+# Remove all Shortcuts on desktop for Modern Operating Systems
+if (($winver -like "6.*") -or ($winver -like "10.*")){
+	Remove-Item $home\desktop\* -include *.lnk
+	Remove-Item $env:public\Desktop\* -include *.lnk}
+
+# Remove all Shortcuts on desktop for Legacy Systems
+if (($PSVer -eq "2.0") -and ($winver -like "5.*")){
+	Remove-Item $env:allusersprofile\Desktop\* -include *.lnk}
 
 if ($AppsModUtil -eq "True"){
-New-Item -ItemType directory -Path "$StartMenuUser\SysInternals" | out-null
-Shortcuts "$env:homedrive\$AutoRuns" "$StartMenuUser\SysInternals\Autoruns.lnk"
-Shortcuts "$env:homedrive\$ProcessExp" "$StartMenuUser\SysInternals\Process Explorer.lnk"}
+	New-Item -ItemType directory -Path "$StartMenuUser\SysInternals" | out-null
+	Shortcuts "$env:homedrive\$AutoRuns" "$StartMenuUser\SysInternals\Autoruns.lnk"
+	Shortcuts "$env:homedrive\$ProcessExp" "$StartMenuUser\SysInternals\Process Explorer.lnk"}
 
 # ========================
 

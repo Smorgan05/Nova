@@ -1,5 +1,6 @@
-$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+# Edfn wr zdwfklqj vrph frplf errn vkrzv ru pdbeh frgh lgn rqzdugv
 # Install Recognizer for Scanning of Apps Sub Folders
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 
 # Load Variables
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}

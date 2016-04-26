@@ -15,7 +15,7 @@ $AutomaticVariables = Get-Variable
 Compare (gv) $AutomaticVariables -Property Name -PassThru | Where {$_.Name -ne "AutomaticVariables"} | Format-Table -Auto | Out-File variables.txt -Width 10000
 
 # Run Speed Checker (use # to comment out)
-#if (($Internet -eq "True") -and ($winver -notlike "6.0.*")){
+#if (($Internet -eq "True") -and ($PSVer -ge "3.0")){
 #. .\SpeedTest.ps1}
 
 cls
@@ -23,7 +23,7 @@ Write-Host ------------------- Nova Live Install $NovaVer -------------------
 Write-Host --------------------------------------------------------------
 Write-Host ------ Per Ardua Ad Astra, From Adversity to the Stars --------
 
-# Take care of Windows Vista / 7 and Server Install
+# Take care of Windows 7 and Server Install
 if ((($winver -like "6.1.*") -or ($ServerMod -eq "True")) -and (!(Test-Path $Startup\Starter.bat))){
 
 	if ($ServerMod -eq "True"){
@@ -39,7 +39,6 @@ cd $Startup
 sc Starter.bat '@echo off' -en ASCII
 ac starter.bat 'echo Starter for Nova Module Controller'
 ac starter.bat $StartScript
-
 	
 	if (($winver -like "6.1.*") -and ($PSVer -eq "2.0")){
 	# Live Install 7
@@ -83,8 +82,8 @@ Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "Setup"}
 
 # Run Setup Updater if Internet is connected & greater than 15 mbps
-if (($Internet -eq "True") -and ($winver -notlike "6.0.*") -and ($PSVer -ge "3.0")){
-#if (($Internet -eq "True") -and ($Speed -ge "15") -and ($winver -notlike "6.0.*") -and ($PSVer -ge "3.0")){
+if (($Internet -eq "True") -and($PSVer -ge "3.0")){
+#if (($Internet -eq "True") -and ($PSVer -ge "3.0") -and ($Speed -ge "15")){
 write-host
 write-host Setup Updater
 . .\Setup_Updater.ps1}
