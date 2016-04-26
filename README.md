@@ -33,7 +33,7 @@
 <h2 style"font-size:200%;">Nature of OEM Pack</h2>
 
 <ul>
-<li>Live Install - We can run this on system that already has a Windows OS Installed and even on Windows XP if it has Powershell 2.0 installed.</li>
+<li>Live Install - We can run this on system that already has a Windows OS Installed.</li>
 <li>Offline / Online Capability - The ability to update setup files on the fly with an internet speed fast enough.  While being able to do do a full online configuration (with Windows 7 or newer) and downloading all the setups if need be. </li>
 <li>Multilingual - The ability to interface powershell to other scripting languages by using a multilingual controller (Starter.ps1)</li>
 <li>Modular - By having multiple script controllers we can easily add modules to the pack (Setup.ps1, Starter.ps1, setupComplete.cmd)</li>
