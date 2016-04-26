@@ -27,6 +27,9 @@
 
 <p>A custom distro of windows means we are packing software, tweaks, themes, etc. This makes it possible to customize windows at the same level as a sysprep but save time by saying what OS we want to do things to by using the WMI (Windows Management Instrumentation). Additionally we can use python or another programming language to use in parallel with Windows Powershell.</p>
 
+<h2 style"font-size:200%;">Live Install</h2>
+<p>Another feature included in the OEM Pack is the ability to do a live install on an Operating system already installed.  This means you run the Live script included in scripts folder.  You do not need to place that folder inside the Setup Folder inside the Windows folder.  This live script will set the path location automatically in order to run.  Additionally This will work on Windows XP with limited functionality in terms of Setup Updater.  However it will work on the full support list.</p>
+
 <h2 style"font-size:200%;">Nature of OEM Pack</h2>
 
 <ul>
