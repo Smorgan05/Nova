@@ -46,7 +46,6 @@
 <h2 style"font-size:200%;">Support</h2>
 
 <ul>
-<li>Windows XP - Live Install ONLY with Powershell 2.0 Installed</li>
 <li>Windows Vista - Windows 10</li>
 <li>Windows Server 2008 - Windows Server 2016</li>
 <li>Windows Embedded 7 - Windows Embedded 10</li>
