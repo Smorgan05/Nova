@@ -70,7 +70,9 @@ if ($Action -eq "PostInstall"){
 
 	if ($AppsModUtil -eq "True"){
 	New-Item -Path "HKCU:\Software\Sysinternals" -Force | out-null
-	New-Item -Path "HKCU:\Software\Sysinternals\Process Explorer" -Force | out-null}
+	New-Item -Path "HKCU:\Software\Sysinternals\AutoRuns" -Force | out-null
+	New-Item -Path "HKCU:\Software\Sysinternals\Process Explorer" -Force | out-null
+	New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe" -Force | out-null}
 
 # ============================================================================================================================================================================
 #															Add the Registry modifications to Windows
@@ -142,8 +144,8 @@ if ($Action -eq "PostInstall"){
 	New-ItemProperty -Path "HKLM:\Software\IvoSoft\ClassicStartMenu" -Name MenuStyle_Default -Value "Win7" -PropertyType "String" -Force | out-null}
 
 	if ($AppsModUtil -eq "True"){
-	New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe" -Force | out-null
 	New-ItemProperty -Path "HKCU:\Software\Sysinternals\Process Explorer" -Name EulaAccepted -Value 1 -PropertyType "DWORD" -Force | out-null
+	New-ItemProperty -Path "HKCU:\Software\Sysinternals\AutoRuns" -Name EulaAccepted -Value 1 -PropertyType "DWORD" -Force | out-null
 	New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe" -Name Debugger -Value "C:\PROCEXP.EXE" -PropertyType String -Force | out-null}
 
 # ============================================================================================================================================================================

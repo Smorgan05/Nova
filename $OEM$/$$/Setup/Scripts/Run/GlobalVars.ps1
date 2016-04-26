@@ -1,3 +1,4 @@
+# Wkdqnv wr wkh jxbv ryhu dw PGO, Zlq7y, dqg Whfkzl.vhz
 # Global Variables for Scripts
 
 # General Script Variables
@@ -71,11 +72,12 @@ If ($Connection -eq "2"){
 # ============================================================================================================================================================================
 
 # Check Arc and set Correct Python path 
-if ($arc -eq "64-bit"){ $PythonPath = ";$env:ProgramFiles\Python 3.5" } else { $PythonPath = ";$Program86\Python 3.5" }
+if ($arc -eq "64-bit"){
+	$PythonPath = ";$env:ProgramFiles\Python 3.5" } else { $PythonPath = ";$Program86\Python 3.5" }
 
 # Set Python check variable
 if (Test-Path $PythonPath.substring(1)){
-$Python = "True"} else {$Python = "False"}
+	$Python = "True"} else {$Python = "False"}
 
 # ============================================================================================================================================================================
 #																		Set Primary Module Variables
@@ -83,15 +85,15 @@ $Python = "True"} else {$Python = "False"}
 
 # Set Nova Module Variable
 if (Test-Path "Nova"){
-$NovaMod = "True"} else { $NovaMod = "False"}
+	$NovaMod = "True"} else { $NovaMod = "False"}
 
 # Set External Module Variable
 if (Test-Path "ExtRun"){
-$ExternalMod = "True"} else {$ExternalMod = "False"}
+	$ExternalMod = "True"} else {$ExternalMod = "False"}
 
 # Set Server Module Variable
 if ((Test-Path "Server") -and (Test-Path "Reg\Server") -and ($edition -match "Server") -and (($winver -like "6.*") -or ($winver -like "10.*"))){
-$ServerMod = "True" } else { $ServerMod = "False"}
+	$ServerMod = "True" } else { $ServerMod = "False"}
 
 
 # ============================================================================================================================================================================
@@ -100,15 +102,15 @@ $ServerMod = "True" } else { $ServerMod = "False"}
 
 # Set Apps Handy Module Variable
 if (Test-Path "Apps\Handy"){
-$AppsModHandy = "True"} else { $AppsModHandy = "False"}
+	$AppsModHandy = "True"} else { $AppsModHandy = "False"}
 
 # Set Apps Utilities Module Variable
 if (Test-Path "Apps\Utilities"){
-$AppsModUtil = "True"} else { $AppsModUtil = "False"}
+	$AppsModUtil = "True"} else { $AppsModUtil = "False"}
 
 # Set Apps WebPlugins Module Variable
 if (Test-Path "Apps\Webplugins"){
-$AppsModWebPlugins = "True"} else { $AppsModWebPlugins = "False"}
+	$AppsModWebPlugins = "True"} else { $AppsModWebPlugins = "False"}
 
 # ============================================================================================================================================================================ 
 

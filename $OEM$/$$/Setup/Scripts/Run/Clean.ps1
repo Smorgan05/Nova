@@ -6,10 +6,12 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} els
 . .\GlobalVars.ps1
 
 # Copy Setup Log to User Folder
-if (Test-path Setup_Update.log){mv "Setup_Update.log" "$env:UserProfile"}
+if (Test-path Setup_Update.log){
+	mv "Setup_Update.log" "$env:UserProfile"}
 
 # Set UAC back to normal
-New-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name EnableLUA -Value 1 -PropertyType "DWORD" -Force | out-null
+if (($winver -like "6.*") -or ($winver -like "10.*")){
+	New-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name EnableLUA -Value 1 -PropertyType "DWORD" -Force | out-null}
 
 # Remove startup items if necessary
 if (Test-path "$Startup\Starter.bat"){ 
@@ -18,12 +20,12 @@ if (Test-path "$Startup\Starter.bat"){
 
 # Fix Run Once for Vista / Server 2008
 if ($winver -like "6.0.*"){
-REN "$env:windir\system32\runonce.exe.dis" "runonce.exe"}
+	REN "$env:windir\system32\runonce.exe.dis" "runonce.exe"}
 
 # Last Minute Install on Server 2008 R2
 if (($ServerMod -eq "True") -and ($winver -like "6.1.*")){
-cd "$default\Server\2008r2"
-start-process "Packs\W7packsR2.exe" -ArgumentList "/silent" -wait}
+	cd "$default\Server\2008r2"
+	start-process "Packs\W7packsR2.exe" -ArgumentList "/silent" -wait}
 
 # Delete Scripts Folder & PowerShell Profile
 if (test-path "$env:windir\Setup\Scripts"){
@@ -31,5 +33,6 @@ if (test-path "$env:windir\Setup\Scripts"){
 	sc wipe.ps1 'rm -r -force "$env:windir\Setup\Scripts"'
 	. .\wipe.ps1}
 	
+Read-Host "Press Enter to Restart"	
 Restart-Computer -Force
 exit
