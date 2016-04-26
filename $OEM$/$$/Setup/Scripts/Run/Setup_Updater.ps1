@@ -93,8 +93,11 @@ Download $URLx64 $Setupx64; $Count++}
 if (!$Firefox32Ver){$Firefox32Ver = 0}
 if (!$Firefox64Ver){$Firefox64Ver = 0}
 $WebResponse = Invoke-WebRequest https://ftp.mozilla.org/pub/firefox/releases/ -UseBasicParsing
-$FirefoxRev = ($WebResponse.Links.href | Where-Object {$_ -like "*[0-9][0-9].[0-9].[0-9]*" -and $_ -notlike "*.[0-9][a-z]*"} | Measure-Object -Maximum).Maximum
-$FirefoxRev = $FirefoxRev | Where-Object {$_ -match "[0-9][0-9].[0-9].[0-9]"}; $FirefoxRev = $Matches[0]
+$FirefoxRevA = ($WebResponse.Links.href | Where-Object {$_ -like "*[0-9][0-9].[0-9]*" -and $_ -notlike "*.[0-9][a-z]*"} | Measure-Object -Maximum).Maximum; $FirefoxRevA = $FirefoxRevA | Where-Object {$_ -match "[0-9][0-9].[0-9]"}; $FirefoxRevA = $Matches[0]
+$FirefoxRevB = ($WebResponse.Links.href | Where-Object {$_ -like "*[0-9][0-9].[0-9].[0-9]*" -and $_ -notlike "*.[0-9][a-z]*"} | Measure-Object -Maximum).Maximum; $FirefoxRevB = $FirefoxRevB | Where-Object {$_ -match "[0-9][0-9].[0-9].[0-9]"}; $FirefoxRevB = $Matches[0]
+
+# Set the newest Version to Firefox Rev
+if ($FirefoxRevA -gt $FirefoxRevB){$FirefoxRev = $FirefoxRevA} else {$FirefoxRev = $FirefoxRevB}
 
 $URLx32 = 'https://ftp.mozilla.org/pub/firefox/releases/' + $FirefoxRev + '/win32/en-US/Firefox Setup ' + $FirefoxRev + '.exe'
 $URLx64 = 'https://ftp.mozilla.org/pub/firefox/releases/' + $FirefoxRev + '/win64/en-US/Firefox Setup ' + $FirefoxRev + '.exe'
