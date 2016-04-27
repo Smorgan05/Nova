@@ -19,7 +19,7 @@ if (Test-path "$Startup\Starter.bat"){
 	Remove-Item "$Startup\temp.TMP"}
 
 # Fix Run Once for Vista / Server 2008
-if ($winver -like "6.0.*"){
+if (Test-path $env:windir\system32\runonce.exe.dis){
 	REN "$env:windir\system32\runonce.exe.dis" "runonce.exe"}
 
 # Last Minute Install on Server 2008 R2
@@ -33,6 +33,4 @@ if (test-path "$env:windir\Setup\Scripts"){
 	sc wipe.ps1 'rm -r -force "$env:windir\Setup\Scripts"'
 	. .\wipe.ps1}
 	
-Read-Host "Press Enter to Restart"	
 Restart-Computer -Force
-exit

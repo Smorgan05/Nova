@@ -19,9 +19,11 @@ $Shortcut = $WScriptShell.CreateShortcut($ShortcutFileLoco)
 $Shortcut.TargetPath = $TargetFile
 $Shortcut.Save()}
 
+# Remove Shortcuts command for Universal
+Remove-Item $home\desktop\* -include *.lnk
+
 # Remove all Shortcuts on desktop for Modern Operating Systems
 if (($winver -like "6.*") -or ($winver -like "10.*")){
-	Remove-Item $home\desktop\* -include *.lnk
 	Remove-Item $env:public\Desktop\* -include *.lnk}
 
 # Remove all Shortcuts on desktop for Legacy Systems

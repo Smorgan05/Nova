@@ -24,7 +24,7 @@ Write-Host --------------------------------------------------------------
 Write-Host ------ Per Ardua Ad Astra, From Adversity to the Stars --------
 
 # Take care of Windows 7 and Server Install
-if ((($winver -like "6.1.*") -or ($ServerMod -eq "True")) -and (!(Test-Path $Startup\Starter.bat))){
+if (((($winver -like "6.1.*") -and ($PSVer -eq "2.0")) -or ($ServerMod -eq "True")) -and (!(Test-Path $Startup\Starter.bat))){
 
 	if ($ServerMod -eq "True"){
 	# Run Server Workstation Prep
@@ -40,7 +40,7 @@ sc Starter.bat '@echo off' -en ASCII
 ac starter.bat 'echo Starter for Nova Module Controller'
 ac starter.bat $StartScript
 	
-	if (($winver -like "6.1.*") -and ($PSVer -eq "2.0")){
+	if ($winver -like "6.1.*"){
 	# Live Install 7
 	Write-Host
 	Write-Host Windows 7 Install
@@ -76,13 +76,13 @@ Write-Host Nova Privacy Settings
 Start-Process PowerShell -ArgumentList $Privacy -Wait
 
 # Load Tweaks script and Run Setup Method
-if (($ServerMod -ne "True") -or ($winver -notlike "6.1.*")){
+if (($ServerMod -ne "True") -or ($PSVer -ge "3.0")){
 Write-Host
 Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "Setup"}
 
 # Run Setup Updater if Internet is connected & greater than 15 mbps
-if (($Internet -eq "True") -and($PSVer -ge "3.0")){
+if (($Internet -eq "True") -and ($PSVer -ge "3.0")){
 #if (($Internet -eq "True") -and ($PSVer -ge "3.0") -and ($Speed -ge "15")){
 write-host
 write-host Setup Updater

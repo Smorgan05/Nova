@@ -15,14 +15,20 @@ if ($Action -eq "Setup"){
 
 	# Applications Module (Multi - ARC)
 	if ($AppsModHandy -eq "True"){
-		if ($arc -eq "64-bit"){ 
-				if ($winver -gt "6.1") {start-process "Apps\Handy\$Firefox64" -ArgumentList "-ms" -wait}
+		if ($arc -eq "64-bit"){
+			
+				#Firefox Require Windows 7 or newer for 64 bit
+				if (($winver -gt "6.1") -or ($winver -like "10.*")){start-process "Apps\Handy\$Firefox64" -ArgumentList "-ms" -wait
+																		start-process "Apps\Handy\$Chrome64" -ArgumentList "$q" -wait}
+																		
+				#Install Firefox 32 bit if we can't install the 64 bit copy
+				if (($winver -lt "6.1")){start-process "Apps\Handy\$Firefox32" -ArgumentList "-ms" -wait}
 				
-		start-process "Apps\Handy\$Chrome64" -ArgumentList "$q" -wait	
 		start-process "Apps\Handy\$MPC64" -ArgumentList "$silent" -wait } else {
-				if ($winver -gt "6.1") {start-process "Apps\Handy\$Firefox32" -ArgumentList "-ms" -wait}
-				
-		start-process "Apps\Handy\$Chrome32" -ArgumentList "$q" -wait
+		
+		if (($winver -gt "6.1") -or ($winver -like "10.*")){start-process "Apps\Handy\$Chrome32" -ArgumentList "$q" -wait}
+		
+		start-process "Apps\Handy\$Firefox32" -ArgumentList "-ms" -wait
 		start-process "Apps\Handy\$MPC32" -ArgumentList "$silent" -wait}
 	}
 
