@@ -71,7 +71,7 @@ $Util["Python"] = @{}
 	for ($i=0; $i -le $UtilArray.length; $i++){
 	if ($UtilArray[$i] -match 'cc'){$Util["CCleaner"]["Setup"] = $UtilArray[$i]; $Util["CCleaner"]["Version"] = $Util.CCleaner.Setup -match "[0-9][0-9][0-9]"; $Util["CCleaner"]["Version"] = $Matches[0]}
 	if ($UtilArray[$i] -match 'df'){$Util["Defraggler"]["Setup"] = $UtilArray[$i]; $Util["Defraggler"]["Version"] = $Util.Defraggler.Setup -match "[0-9][0-9][0-9]"; $Util["Defraggler"]["Version"] = $Matches[0]}
-	if ($UtilArray[$i] -match 'npp'){$Util["Notepad"]["Setup"] = $UtilArray[$i]; $NotepadRevA = $Util.Notepad.Setup -match "[0-9].[0-9]"; $NotepadRevA = $Matches[0]; $NotepadRevB = $Util.Notepad.Setup -match "[0-9].[0-9].[0-9]"; $NotepadRevB = $Matches[0]; if ($NotepadRevA -gt $NotepadRevB){$Util["Notepad"]["Version"] = $NotepadRevA} else {$Util["Notepad"]["Version"] = $NotepadRevB} }
+	if ($UtilArray[$i] -match 'npp'){$Util["Notepad"]["Setup"] = $UtilArray[$i]; $Temp = $Util.Notepad.Setup.Substring(4); $Temp = $Temp.Substring(0,$Temp.IndexOf("I")); $Util["Notepad"]["Version"] = $Temp.Substring(0,$Temp.Length-1)}
 	if ($UtilArray[$i] -match 'Auto'){$Util["AutoRuns"]["Setup"] = $UtilArray[$i]; $Util["AutoRuns"]["Version"] = SetupVer $Util.AutoRuns.Setup}
 	if ($UtilArray[$i] -match 'exp'){$Util["ProcessExp"]["Setup"] = $UtilArray[$i]; $Util["ProcessExp"]["Version"] = SetupVer $Util.ProcessExp.Setup}
 	if (($UtilArray[$i] -match '7z') -and ($UtilArray[$i] -notmatch 'x64')){$Util["7zip"]["Setup32"] = $UtilArray[$i]; $Util["7zip"]["Version32"] = SetupVer $Util["7zip"]["Setup32"]}
