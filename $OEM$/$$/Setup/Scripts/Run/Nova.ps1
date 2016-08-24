@@ -18,6 +18,7 @@ if (($NovaMod -eq "True") -and (($PSVer -eq "2.0") -or ($winver -ge "6.1") -or (
 	start-process "Nova\Nova.exe" -ArgumentList "$s_small" -wait
 	
 	if (($winver -ge "6.1") -or ($winver -like "10.*")){
+	
 	# Set information in System Information
 	New-ItemProperty $OEMkey -Name Manufacturer -Value "Nova Edition" -Force | out-null
 	New-ItemProperty $OEMkey -Name Model -Value "Nova $NovaVer ($date)" -Force | out-null

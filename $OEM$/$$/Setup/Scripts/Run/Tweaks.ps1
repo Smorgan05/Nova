@@ -130,8 +130,18 @@ if ($Action -eq "PostInstall"){
 	New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize" -Name "StartupDelayInMSec" -Value "0" -PropertyType "DWORD" -Force | out-null
 	New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "EnableProactive" -Value "0" -PropertyType "DWORD" -Force | out-null
 	New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Value "0" -PropertyType "DWORD" -Force | out-null
-	New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" -Value "Play To menu" -PropertyType "String" -Force | out-null}
+	New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" -Value "Play To menu" -PropertyType "String" -Force | out-null
+	New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "UseOLEDTaskbarTransparency" -Value "1" -PropertyType "DWORD" -Force | out-null
 	
+	# Grab the Metro Apps that Suspend in Background
+	$MetroAppsArray = (Get-ChildItem HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications | ForEach-Object {Get-ItemProperty $_.pspath}).PSChildName
+
+	# Disable Suspension of Metro Apps
+	for($i=0; $i -le $MetroAppsArray.length; $i++){
+	$RegPath = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications\" + $MetroAppsArray[$i]
+	New-ItemProperty -Path $RegPath -Name "Disabled" -Value "1" -PropertyType "Dword" -Force | out-null}
+	
+	}
 	
 # ============================================================================================================================================================================
 #															Add the Registry modifications to Windows

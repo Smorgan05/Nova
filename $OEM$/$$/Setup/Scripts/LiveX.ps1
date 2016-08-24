@@ -1,5 +1,4 @@
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
-#$ScriptDirPar = Split-Path (Split-Path $script:MyInvocation.MyCommand.Path) -Parent
 $Host.UI.RawUI.WindowTitle = "Nova Live Install Controller"
 # Coded By Morgan Overman for the Nova Project
 # Live Install Script

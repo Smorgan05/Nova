@@ -15,37 +15,41 @@ if ($Action -eq "Setup"){
 
 	# Applications Module (Multi - ARC)
 	if ($AppsModHandy -eq "True"){
+	cd $default\Apps\Handy
+	
 		if ($arc -eq "64-bit"){
 			
 				#Firefox Require Windows 7 or newer for 64 bit
-				if (($winver -gt "6.1") -or ($winver -like "10.*")){start-process "Apps\Handy\$Firefox64" -ArgumentList "-ms" -wait
-																		start-process "Apps\Handy\$Chrome64" -ArgumentList "$q" -wait}
+				if (($winver -gt "6.1") -or ($winver -like "10.*")){start-process $Handy.Firefox.Setup64 -ArgumentList "-ms" -wait
+																		start-process $Handy.Chrome.Setup64 -ArgumentList "$q" -wait}
 																		
 				#Install Firefox 32 bit if we can't install the 64 bit copy
-				if (($winver -lt "6.1")){start-process "Apps\Handy\$Firefox32" -ArgumentList "-ms" -wait}
+				if (($winver -lt "6.1")){start-process $Handy.Firefox.Setup32 -ArgumentList "-ms" -wait}
 				
-		start-process "Apps\Handy\$MPC64" -ArgumentList "$silent" -wait } else {
+		start-process $Handy.MPC.Setup64 -ArgumentList "$silent" -wait } else {
 		
-		if (($winver -gt "6.1") -or ($winver -like "10.*")){start-process "Apps\Handy\$Chrome32" -ArgumentList "$q" -wait}
+		if (($winver -gt "6.1") -or ($winver -like "10.*")){start-process $Handy.Chrome.Setup32 -ArgumentList "$q" -wait}
 		
-		start-process "Apps\Handy\$Firefox32" -ArgumentList "-ms" -wait
-		start-process "Apps\Handy\$MPC32" -ArgumentList "$silent" -wait}
+		start-process $Handy.Firefox.Setup32 -ArgumentList "-ms" -wait
+		start-process $Handy.MPC.Setup32 -ArgumentList "$silent" -wait}
 	}
 
 	# Utilities / Tools Module
 	if ($AppsModUtil -eq "True"){
-	copy "Apps\Utilities\$AutoRuns" "$env:homedrive\"
-	copy "Apps\Utilities\$ProcessExp" "$env:homedrive\"
-	start-process "Apps\Utilities\$CCleaner" -ArgumentList "$s_big" -wait
-	start-process "Apps\Utilities\$Defraggler" -ArgumentList "$s_big" -wait
-	start-process "Apps\Utilities\$Notepad" -ArgumentList "$s_big" -wait
+	cd $default\Apps\Utilities
+	
+	copy $Util.AutoRuns.Setup "$env:homedrive\"
+	copy $Util.ProcessExp.Setup "$env:homedrive\"
+	start-process $Util.CCleaner.Setup -ArgumentList "$s_big" -wait
+	start-process $Util.Defraggler.Setup -ArgumentList "$s_big" -wait
+	start-process $Util.Notepad.Setup -ArgumentList "$s_big" -wait
 
 	# Utilities / Tools Module (Multi - Arc)
 	if ($arc -eq "64-bit"){
-	start-process "Apps\Utilities\$Python64" -ArgumentList "$PythonInst" -wait 
-	start-process "Apps\Utilities\$FileZ64" -ArgumentList "$s_big" -wait } else {
-	start-process "Apps\Utilities\$Python32" -ArgumentList "$PythonInst" -wait
-	start-process "Apps\Utilities\$FileZ32" -ArgumentList "$s_big" -wait}}
+	start-process $Util.Python.Setup64 -ArgumentList "$PythonInst" -wait 
+	start-process $Util.FileZ.Setup64 -ArgumentList "$s_big" -wait } else {
+	start-process $Util.Python.Setup32 -ArgumentList "$PythonInst" -wait
+	start-process $Util.FileZ.Setup32 -ArgumentList "$s_big" -wait}}
 
 } # End Method for Setup
 
@@ -57,21 +61,27 @@ if ($Action -eq "PostInstall"){
 
 	# Windows 8 & 8.1 & 10 (***Classic Shell Start Button***)
 	if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.9200") -or ($winver -like "10.*"))){
-	start-process "Apps\Handy\$Classic" -ArgumentList "$Classy" -wait
-	regedit /s "Reg\Tweaks\Classicshell.reg"}
+	cd $default\Apps\Handy
+	
+	start-process $Handy.Classic.Setup -ArgumentList "$Classy" -wait
+	regedit /s "$default\Reg\Tweaks\Classicshell.reg"}
 
 	# Utilities / Tools Module (Multi - ARC)
 	if ($AppsModUtil -eq "True"){
-		if ($arc -eq "64-bit"){start-process "Apps\Utilities\$7zip64" -ArgumentList "$s_big" -wait} else 
-		{ start-process "Apps\Utilities\$7zip32" -ArgumentList "$s_big" -wait}
+	cd $default\Apps\Utilities
+	
+		if ($arc -eq "64-bit"){start-process $Util["7zip"]["Setup64"] -ArgumentList "$s_big" -wait} else 
+		{ start-process $Util["7zip"]["Setup32"] -ArgumentList "$s_big" -wait}
 	}
 
 	# Web Plugins Module
 	if ($AppsModWebPlugins -eq "True"){
-	start-process "Apps\Webplugins\$Flash" -ArgumentList "-install" -wait
+	cd $default\Apps\Webplugins
+	
+	start-process $WebPlugins.Flash.Setup -ArgumentList "-install" -wait
 
 	# Web Plugins Module (Multi - ARC)
-	if ($arc -eq "64-bit"){start-process "Apps\Webplugins\$Java64" -ArgumentList "/s" -wait} else { start-process "Apps\Webplugins\$Java32" -ArgumentList "/s" -wait}}
+	if ($arc -eq "64-bit"){start-process $WebPlugins.Java.Setup64 -ArgumentList "/s" -wait} else { start-process $WebPlugins.Java.Setup32 -ArgumentList "/s" -wait}}
 	
 	} # End Method for Post Install
 	cd $default\run	

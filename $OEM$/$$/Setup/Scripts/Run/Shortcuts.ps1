@@ -32,8 +32,8 @@ if (($PSVer -eq "2.0") -and ($winver -like "5.*")){
 
 if ($AppsModUtil -eq "True"){
 	New-Item -ItemType directory -Path "$StartMenuUser\SysInternals" | out-null
-	Shortcuts "$env:homedrive\$AutoRuns" "$StartMenuUser\SysInternals\Autoruns.lnk"
-	Shortcuts "$env:homedrive\$ProcessExp" "$StartMenuUser\SysInternals\Process Explorer.lnk"}
+	Shortcuts "$env:homedrive\$Util.AutoRuns.Setup" "$StartMenuUser\SysInternals\Autoruns.lnk"
+	Shortcuts "$env:homedrive\$Util.ProcessExp.Setup" "$StartMenuUser\SysInternals\Process Explorer.lnk"}
 
 # ========================
 
