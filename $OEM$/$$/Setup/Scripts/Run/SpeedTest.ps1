@@ -9,12 +9,12 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} els
 cd $default\Prep
 
 #Check for Speed Exectuables
-if (!(Test-path report.txt) -and ($Speed32 -and $Speed64)){
+if (!(Test-path report.txt) -and ($Prep.Speed.Speed32 -and $Prep.Speed.Speed64)){
 
 	if ($arc -eq "64-bit"){
-	. .\$Speed64 > report.txt
+	. .\$Prep.Speed.Speed64 > report.txt
 	} else {
-	. .\$Speed32 > report.txt
+	. .\$Prep.Speed.Speed32 > report.txt
 	}
 
 }

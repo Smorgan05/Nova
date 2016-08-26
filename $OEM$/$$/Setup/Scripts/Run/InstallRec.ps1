@@ -45,12 +45,12 @@ $Handy["Chrome"] = @{}
 	# Set Variables for Handy
 	for($i=0; $i -le $HandyArray.length; $i++){
 	if ($HandyArray[$i] -match 'ClassicShell'){ $Handy["Classic"]["Setup"] = $HandyArray[$i]; $Handy["Classic"]["Version"] = SetupVer $Handy.Classic.Setup; $Handy.Classic.Version = $Handy.Classic.Version.replace(", ",".")}
-	if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win32*')){$Handy["Firefox"]["Setup32"] = $HandyArray[$i]; $Handy["Firefox"]["Version32"] = $Handy.Firefox.Setup32 -match "[0-9][0-9].[0-9].[0-9]" -or $Handy.Firefox.Setup32 -match "[0-9][0-9].[0-9]"; $Handy["Firefox"]["Version32"] = $Matches[0]}	
-	if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win64*')){$Handy["Firefox"]["Setup64"] = $HandyArray[$i]; $Handy["Firefox"]["Version64"] = $Handy.Firefox.Setup64 -match "[0-9][0-9].[0-9].[0-9]" -or $Handy.Firefox.Setup64 -match "[0-9][0-9].[0-9]"; $Handy["Firefox"]["Version64"] = $Matches[0]}
+	if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win32*')){$Handy["Firefox"]["Setup32"] = $HandyArray[$i]; $Temp = $Handy.Firefox.Setup32.Substring(8); $Handy["Firefox"]["Version32"] = $Temp.Substring(0,$Temp.IndexOf("e")-1)}	
+	if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win64*')){$Handy["Firefox"]["Setup64"] = $HandyArray[$i]; $Temp = $Handy.Firefox.Setup64.Substring(8); $Handy["Firefox"]["Version64"] = $Temp.Substring(0,$Temp.IndexOf("e")-1)}
 	if (($HandyArray[$i] -match 'MPC') -and ($HandyArray[$i] -like '*x86*')){$Handy["MPC"]["Setup32"] = $HandyArray[$i]; $Handy["MPC"]["Version32"] = SetupVer $Handy.MPC.Setup32}
 	if (($HandyArray[$i] -match 'MPC') -and ($HandyArray[$i] -like '*x64*')){$Handy["MPC"]["Setup64"] = $HandyArray[$i]; $Handy["MPC"]["Version64"] = SetupVer $Handy.MPC.Setup64}
-	if (($HandyArray[$i] -match 'chrome') -and ($HandyArray[$i] -notmatch '64')){$Handy["Chrome"]["Setup32"] = $HandyArray[$i]; $Chrome32Ver = $Handy.Chrome.Setup32 | Where-Object {$_ -match "[0-9][0-9].[0-9].[0-9][0-9][0-9][0-9].[0-9][0-9][0-9]*"}; $Handy["Chrome"]["Version32"] = $Matches[0]}
-	if (($HandyArray[$i] -match 'chrome') -and ($HandyArray[$i] -match '64')){$Handy["Chrome"]["Setup64"] = $HandyArray[$i]; $Chrome64Ver = $Handy.Chrome.Setup64 | Where-Object {$_ -match "[0-9][0-9].[0-9].[0-9][0-9][0-9][0-9].[0-9][0-9][0-9]*"}; $Handy["Chrome"]["Version64"] = $Matches[0]}}
+	if (($HandyArray[$i] -match 'chrome') -and ($HandyArray[$i] -notmatch '64')){$Handy["Chrome"]["Setup32"] = $HandyArray[$i]; $Temp = $Handy.Chrome.Setup32.Substring(7); $Handy["Chrome"]["Version32"] = $Temp.Substring(0, $Temp.IndexOf("m")-1)}
+	if (($HandyArray[$i] -match 'chrome') -and ($HandyArray[$i] -match '64')){$Handy["Chrome"]["Setup64"] = $HandyArray[$i]; $Temp = $Handy.Chrome.Setup64.Substring(9); $Handy["Chrome"]["Version64"] = $Temp.Substring(0, $Temp.IndexOf("m")-1)}}
 
 }
 # ================================* Utilities *======================================
@@ -71,7 +71,7 @@ $Util["Python"] = @{}
 	for ($i=0; $i -le $UtilArray.length; $i++){
 	if ($UtilArray[$i] -match 'cc'){$Util["CCleaner"]["Setup"] = $UtilArray[$i]; $Util["CCleaner"]["Version"] = $Util.CCleaner.Setup -match "[0-9][0-9][0-9]"; $Util["CCleaner"]["Version"] = $Matches[0]}
 	if ($UtilArray[$i] -match 'df'){$Util["Defraggler"]["Setup"] = $UtilArray[$i]; $Util["Defraggler"]["Version"] = $Util.Defraggler.Setup -match "[0-9][0-9][0-9]"; $Util["Defraggler"]["Version"] = $Matches[0]}
-	if ($UtilArray[$i] -match 'npp'){$Util["Notepad"]["Setup"] = $UtilArray[$i]; $Temp = $Util.Notepad.Setup.Substring(4); $Temp = $Temp.Substring(0,$Temp.IndexOf("I")); $Util["Notepad"]["Version"] = $Temp.Substring(0,$Temp.Length-1)}
+	if ($UtilArray[$i] -match 'npp'){$Util["Notepad"]["Setup"] = $UtilArray[$i]; $Temp = $Util.Notepad.Setup.Substring(4);  $Util["Notepad"]["Version"] = $Temp.Substring(0,$Temp.IndexOf("I")-1)}
 	if ($UtilArray[$i] -match 'Auto'){$Util["AutoRuns"]["Setup"] = $UtilArray[$i]; $Util["AutoRuns"]["Version"] = SetupVer $Util.AutoRuns.Setup}
 	if ($UtilArray[$i] -match 'exp'){$Util["ProcessExp"]["Setup"] = $UtilArray[$i]; $Util["ProcessExp"]["Version"] = SetupVer $Util.ProcessExp.Setup}
 	if (($UtilArray[$i] -match '7z') -and ($UtilArray[$i] -notmatch 'x64')){$Util["7zip"]["Setup32"] = $UtilArray[$i]; $Util["7zip"]["Version32"] = SetupVer $Util["7zip"]["Setup32"]}
