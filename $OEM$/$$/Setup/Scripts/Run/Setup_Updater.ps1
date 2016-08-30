@@ -23,10 +23,11 @@ $Count = 0
 # ==========================================================* Update the Setups  *=============================================================
 # =============================================================================================================================================
 # ===============================================================* Handy *=====================================================================
-if (Test-path $Default\Apps\Handy){cd $Default\Apps\Handy} else {mkdir $Default\Apps\Handy | Out-null; cd $Default\Apps\Handy}
+if (Test-path $Default\Apps\Handy){cd $Default\Apps\Handy} else {mkdir $Default\Apps\Handy | Out-null; $Handy=@{}; cd $Default\Apps\Handy}
 
 # Grab the Newest Classic Shell Setup
 
+$Handy["Classic"] = @{}
 if (!$Handy.Classic.Version) {$Handy.Classic.Version = 0}
 $WebResponse = Invoke-WebRequest http://www.classicshell.net/downloads/ -UseBasicParsing
 $ClassicRev = ($WebResponse.links | Where-Object {$_ -match "English" -and $_ -match "[0-9].[0-9].[0-9]"}  | Measure-Object -Maximum).Maximum; $ClassicLnk = $Matches[0]; $ClassicRev = $ClassicLnk.replace("_",".")
@@ -43,6 +44,7 @@ Download $URL $Setup; $Count++}
 
 # Grab the Newest MPC-HC Setup
 
+$Handy["MPC"] = @{}
 if (!$Handy.MPC.Version32) {$Handy.MPC.Version32 = 0}
 if (!$Handy.MPC.Version64) {$Handy.MPC.Version64 = 0}
 $WebResponse = Invoke-WebRequest https://mpc-hc.org/downloads/ -UseBasicParsing
@@ -66,6 +68,7 @@ Download $URLx64 $Setupx64; $Count++}
  
 # Grab the newest Chrome Setup
 
+$Handy["Chrome"] = @{}
 if (!$Handy.Chrome.Version32){$Handy.Chrome.Version32 = 0}
 if (!$Handy.Chrome.Version64){$Handy.Chrome.Version64 = 0}
 $WebURL = 'https://www.whatismybrowser.com/guides/the-latest-version/chrome'
@@ -90,6 +93,7 @@ Download $URLx64 $Setupx64; $Count++}
  
 # Grab the newest Firefox Setup
 
+$Handy["Firefox"] = @{} 
 if (!$Handy.Firefox.Version32){$Handy.Firefox.Version32 = 0}
 if (!$Handy.Firefox.Version64){$Handy.Firefox.Version64 = 0}
 $WebResponse = Invoke-WebRequest https://ftp.mozilla.org/pub/firefox/releases/ -UseBasicParsing
@@ -117,10 +121,11 @@ Download $URLx64 $Setupx64; $Count++}
 # ==========================================================* Update the Setups  *=============================================================
 # =============================================================================================================================================
 # =============================================================* Utilities *===================================================================
-if (Test-path $Default\Apps\Utilities){cd $Default\Apps\Utilities} else {mkdir $Default\Apps\Utilities | Out-null; cd $Default\Apps\Utilities}
+if (Test-path $Default\Apps\Utilities){cd $Default\Apps\Utilities} else {mkdir $Default\Apps\Utilities | Out-null; $Util = @{}; cd $Default\Apps\Utilities}
 
 # Grab the newest Notepad++ Setup
 
+$Util["Notepad"] = @{}
 if (!$Util.Notepad.Version){$Util.Notepad.Version = 0}
 $WebResponse = Invoke-WebRequest https://notepad-plus-plus.org/repository -UseBasicParsing
 $NotepadBuild = ($WebResponse.links | Where-Object {$_ -match "[0-9].x"} | Measure-Object -Maximum).Maximum; $NotepadBuild = $Matches[0]
@@ -140,6 +145,7 @@ Download $URL $Setup; $Count++}
 
 # Grab the newest 7zip Setup
 
+$Util["7zip"] = @{}
 if (!$Util["7zip"]["Version32"]){$Util["7zip"]["Version32"] = 0}
 if (!$Util["7zip"]["Version64"]){$Util["7zip"]["Version32"] = 0}
 $WebResponse = Invoke-WebRequest http://www.7-zip.org/ -UseBasicParsing
@@ -164,6 +170,7 @@ Download $URLx64 $Setupx64; $Count++}
 
 # Grab the newest CCleaner Setup
 
+$Util["CCleaner"] = @{}
 if (!$Util.CCleaner.Version){$Util.CCleaner.Version = 0}
 $WebResponse = Invoke-WebRequest https://www.piriform.com/ccleaner/download -UseBasicParsing
 $CCVer = $WebResponse.RawContent | Where-Object {$_ -match "v[0-9].[0-9][0-9]"} 
@@ -179,6 +186,7 @@ Download $URL $Setup; $Count++}
 
 # Grab the newest Defraggler Setup
 
+$Util["Defraggler"] = @{}
 if (!$Util.Defraggler.Version){$Util.Defraggler.Version = 0}
 $WebResponse = Invoke-WebRequest https://www.piriform.com/defraggler/download -UseBasicParsing
 $DefragRev = $WebResponse.RawContent; $DefragRev -match "v[0-9].[0-9][0-9]" | Out-null; $DefragRev = $Matches[0]
@@ -194,6 +202,7 @@ Download $URL $Setup; $Count++}
 
 # Grab the newest Filezilla Setup
 
+$Util["FileZ"] = @{}
 if (!$Util.FileZ.Version32){$Util.FileZ.Version32 = 0}
 if (!$Util.FileZ.Version64){$Util.FileZ.Version64 = 0}
 $WebResponse = Invoke-WebRequest https://filezilla-project.org/download.php?show_all=1 -UseBasicParsing
@@ -216,6 +225,7 @@ Download $URLx64 $Setupx64; $Count++}
 
 # Grab the newest Python Setup
 
+$Util["Python"] = @{}
 if (!$Util.Python.Version32){$Util.Python.Version32 = 0}
 if (!$Util.Python.Version64){$Util.Python.Version64 = 0}
 $WebResponse = Invoke-WebRequest https://www.python.org/downloads/ -UseBasicParsing
@@ -240,6 +250,7 @@ Download $URLx64 $Setupx64; $Count++}
 
 # Grab the newest Process Explorer
 
+$Util["ProcessExp"] = @{}
 if (!$Util.ProcessExp.Version){$Util.ProcessExp.Version = 0}
 $WebResponse = Invoke-WebRequest https://technet.microsoft.com/en-us/sysinternals/processexplorer.aspx -UseBasicParsing
 $ProcRev = $WebResponse.RawContent; $ProcRev -match "v[0-9][0-9].[0-9][0-9]" | Out-null; $ProcRev = $Matches[0]; $ProcRev = $ProcRev.replace("v","")
@@ -257,6 +268,8 @@ Unzip $PWD\ProcessExplorer.zip $env:Temp\Process; cp $env:Temp\Process\ProcExp.e
 rm ProcessExplorer.zip} 
 
 # Grab the newest Autoruns
+
+$Util["AutoRuns"] = @{}
 if (!$Util.AutoRuns.Version){$Util.AutoRuns.Version = 0}
 $WebResponse = Invoke-WebRequest https://technet.microsoft.com/en-us/sysinternals/bb963902.aspx -UseBasicParsing
 $AutoRev = $WebResponse.RawContent; $AutoRev -match "v[0-9][0-9].[0-9][0-9]" | Out-null; $AutoRev = $Matches[0]; $AutoRev = $AutoRev.replace("v","")
@@ -274,10 +287,11 @@ rm Autoruns.zip}
 # ==========================================================* Update the Setups  *=============================================================
 # =============================================================================================================================================
 # ============================================================* WebPlugins *===================================================================
-if (Test-path $Default\Apps\WebPlugins){cd $Default\Apps\WebPlugins} else {mkdir $Default\Apps\WebPlugins | Out-null; cd $Default\Apps\WebPlugins}
+if (Test-path $Default\Apps\WebPlugins){cd $Default\Apps\WebPlugins} else {mkdir $Default\Apps\WebPlugins | Out-null; $WebPlugins = @{}; cd $Default\Apps\WebPlugins}
 
 # Grab the latest JRE	
 
+$WebPlugins["Java"] = @{}
 if (!$WebPlugins.Java.Version32){$WebPlugins.Java.Version32 = 0}
 if (!$WebPlugins.Java.Version64){$WebPlugins.Java.Version64 = 0}
 $WebResponse = Invoke-WebRequest java.com/en/download/manual.jsp -UseBasicParsing
@@ -305,6 +319,7 @@ Download $URLx64 $Setupx64; $Count++}
 
 # Grab the latest Flash Player
 
+$WebPlugins["Flash"] = @{}
 if (!$WebPlugins.Flash.Version){$WebPlugins.Flash.Version = 0}
 $WebResponse = Invoke-WebRequest https://get.adobe.com/flashplayer/ -UseBasicParsing
 $FlashRev = $WebResponse.RawContent | Where-Object { $_ -match "Version [0-9][0-9].[0-9].[0-9].[0-9][0-9]"}; $FlashRev = $Matches[0]; $FlashRev = $FlashRev.replace("Version ",""); $Flashlnk = $FlashRev.Substring(0, 2)

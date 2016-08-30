@@ -19,7 +19,7 @@ if ($Action -eq "Setup"){
 	$RegValue = $RegPath.Path+$PythonPath
 	Set-ItemProperty -path $SystemVar -Name Path -Value $RegValue}
 
-	# Windows Universal Tweaks (V - 10 / Server 2008 - Server 2016)
+	# Windows Universal Tweaks (7 - 10 / Server 2008 - Server 2016)
 	if (Test-path "$Startup\Starter.bat"){regedit /s "Reg\Windows\disable_uac.reg"}
 	regedit /s "Reg\Windows\Takeown.reg"
 	regedit /s "Reg\Windows\WMPConfig.reg"
@@ -70,9 +70,7 @@ if ($Action -eq "PostInstall"){
 
 	if ($AppsModUtil -eq "True"){
 	New-Item -Path "HKCU:\Software\Sysinternals" -Force | out-null
-	New-Item -Path "HKCU:\Software\Sysinternals\AutoRuns" -Force | out-null
-	New-Item -Path "HKCU:\Software\Sysinternals\Process Explorer" -Force | out-null
-	New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe" -Force | out-null}
+	New-Item -Path "HKCU:\Software\Sysinternals\Process Explorer" -Force | out-null}
 
 # ============================================================================================================================================================================
 #															Add the Registry modifications to Windows
@@ -97,11 +95,6 @@ if ($Action -eq "PostInstall"){
 	New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" -Name "{20D04FE0-3AEA-1069-A2D8-08002B30309D}" -Value 0 -PropertyType "DWORD" -Force | out-null
 	New-ItemProperty -Path "HKCU:\Software\Microsoft\Internet Explorer\Main" -Name "Default_Page_URL" -Value "https://www.google.com/" -PropertyType "String" -Force | out-null
 	New-ItemProperty -Path "HKCU:\Software\Microsoft\Internet Explorer\Main" -Name "Start Page" -Value "https://www.google.com/" -PropertyType "String" -Force | out-null
-
-	# Vista Tweaks
-	if (($winver -like "6.0.*") -and ($edition -match "Vista")){
-	Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "WindowsWelcomeCenter" -ea silentlycontinue
-	Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "Sidebar"}
 
 	# Windows 7 Tweaks
 	if ($winver -like "6.1.*"){}
@@ -130,32 +123,22 @@ if ($Action -eq "PostInstall"){
 	New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize" -Name "StartupDelayInMSec" -Value "0" -PropertyType "DWORD" -Force | out-null
 	New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "EnableProactive" -Value "0" -PropertyType "DWORD" -Force | out-null
 	New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Value "0" -PropertyType "DWORD" -Force | out-null
-	New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" -Value "Play To menu" -PropertyType "String" -Force | out-null
-	New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "UseOLEDTaskbarTransparency" -Value "1" -PropertyType "DWORD" -Force | out-null
+	New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" -Value "Play To menu" -PropertyType "String" -Force | out-null}
 	
-	# Grab the Metro Apps that Suspend in Background
-	$MetroAppsArray = (Get-ChildItem HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications | ForEach-Object {Get-ItemProperty $_.pspath}).PSChildName
-
-	# Disable Suspension of Metro Apps
-	for($i=0; $i -le $MetroAppsArray.length; $i++){
-	$RegPath = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications\" + $MetroAppsArray[$i]
-	New-ItemProperty -Path $RegPath -Name "Disabled" -Value "1" -PropertyType "Dword" -Force | out-null}
-	
-	}
 	
 # ============================================================================================================================================================================
 #															Add the Registry modifications to Windows
 # ============================================================================================================================================================================
 
 	# Customizations specific to Windows versions
-	if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.*") -or ($winver -like "10.*"))){
+	if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.9200") -or ($winver -like "10.*"))){
 			if ($VidRez -eq "3840"){New-ItemProperty -Path "HKCU:\Software\IvoSoft\ClassicStartMenu\Settings" -Name "StartButtonSize" -Value "100" -PropertyType "DWORD" -Force | out-null}
 	
 	New-ItemProperty -Path "HKLM:\Software\IvoSoft\ClassicStartMenu" -Name MenuStyle_Default -Value "Win7" -PropertyType "String" -Force | out-null}
 
 	if ($AppsModUtil -eq "True"){
+	New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe" -Force | out-null
 	New-ItemProperty -Path "HKCU:\Software\Sysinternals\Process Explorer" -Name EulaAccepted -Value 1 -PropertyType "DWORD" -Force | out-null
-	New-ItemProperty -Path "HKCU:\Software\Sysinternals\AutoRuns" -Name EulaAccepted -Value 1 -PropertyType "DWORD" -Force | out-null
 	New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe" -Name Debugger -Value "C:\PROCEXP.EXE" -PropertyType String -Force | out-null}
 
 # ============================================================================================================================================================================
@@ -164,13 +147,13 @@ if ($Action -eq "PostInstall"){
 
 	# Registry Tweaks for Windows
 
-	# Windows Legacy
+	# Windows Universal Tweaks
 	regedit /s "Reg\Windows\Right_click_cmd.reg"
 	regedit /s "Reg\Windows\Right_click_pwr.reg"
 	regedit /s "Reg\Windows\FirstRunIE.reg"
 
-	# Win Vista and Win 7
-	if (($winver -like "6.0.*") -or ($winver -like "6.1.*")){
+	# Win 7
+	if ($winver -like "6.1.*"){
 	regedit /s "Reg\Windows\Pane_Off.reg"}
 
 	# Win 8 and Win 10

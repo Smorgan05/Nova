@@ -2,13 +2,16 @@ $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 # Powershell Setup to install all Applications (REQUIRED)
 
 # Run Speed Checker (use # to comment out)
-cd $env:windir\Setup\Scripts\ExtRun
-#if (($Internet -eq "True") -and ($winver -notlike "6.0.*")){
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\ExtRun} else {cd $ScriptDir\ExtRun}
+#if ($Internet -eq "True"){
 #. .\SpeedTest.ps1}
 
 # Load Variables
-cd $env:windir\Setup\Scripts\Run
+if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\InstallRec.ps1
+
+# Detect Windows Vista or Earlier and Kill
+if ($PSVer -lt "4.0"){exit}
 
 # Change Location to the Start Up Folder
 cd $Startup
@@ -21,18 +24,12 @@ ac starter.bat 'Start PowerShell -NoLogo -NoExit -ExecutionPolicy Bypass -NoProf
 # Remove RunOnce
 Remove-ItemProperty -Name 'Starter' -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\RunOnce" -Force
 
-# Run Vista / Server 2008 Fix
-if ($winver -like "6.0.*"){
-takeown /f "$env:windir\System32\runonce.exe"
-icacls "$env:windir\System32\runonce.exe" /Grant Administrators:'(F)'
-REN "$env:windir\System32\runonce.exe" "runonce.exe.dis"}
-
 # Set for Script Execution
 cd $default\Run
 
 # Run Setup Updater if Internet is connected & greater than 15 mbps
-if (($Internet -eq "True") -and ($PSVer -ge "3.0")){
-#if (($Internet -eq "True") -and ($PSVer -ge "3.0") -and ($Speed -ge "15")){
+if ($Internet -eq "True"){
+#if (($Internet -eq "True") -and ($Speed -ge "15")){
 . .\Setup_Updater.ps1}
 
 # Run Server Script and Module check

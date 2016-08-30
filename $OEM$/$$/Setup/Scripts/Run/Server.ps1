@@ -22,9 +22,9 @@ if ($Action -eq "ServerConv"){
 #		  All Server Versions (2008 R2 - Server 2016)
 # ============================================================
 
-	# Adding Features to SRV2008 / 2008 R2 Workstation Specific
+	# Adding Features to 2008 R2 Workstation Specific
 
-	if (($winver -like "6.0.*") -or ($winver -like "6.1.*")){
+	if ($winver -like "6.1.*"){
 
 	# Register System32 side
 	cd "$env:SystemRoot\System32"
@@ -61,14 +61,11 @@ if ($Action -eq "ServerConv"){
 	# Visual C++ 2010 Install
 	cd "$default\Server\2008r2"
 	start-process "Apps\2010x32.exe" -wait
-	start-process "Apps\2010x64.exe" -wait}
-
-	# Server 2008 R2 Workstation Install
-	if ($winver -like "6.1.*"){
+	start-process "Apps\2010x64.exe" -wait
 	start-process "Other\Uxth64.exe"}
 
 # ============================================================
-#			   Section Ender for 2008 / 2008 R2 
+#			   Section Ender for 2008 R2 
 # ============================================================
 # Adding Features to SRV2012/R2 Workstation Specific
 
@@ -129,12 +126,12 @@ if ($Action -eq "ServerPrep"){
 
 	cd $default\Server
 
-	# Universal to Server 2008 / Server 2008 R2 and Server 2012 / Server 2012 R2
+	# Universal to Server 2008 R2 and Server 2012 / Server 2012 R2
 	Set-Service Audiosrv -startupType automatic
 	Set-Service AudioEndpointBuilder -startupType automatic
 
-	# Server 2008 / Server 2008 R2 Specific
-	if (($edition -match "Server 2008") -and ($winver -ge "6.0.6002")){
+	# Server 2008 R2 Specific
+	if (($edition -match "Server 2008") -and ($winver -like "6.1.*")){
 	start-process "2008r2\Cursors.exe" -ArgumentList "$s_small" -wait
 	start-process "2008r2\System32.exe" -ArgumentList "$s_small" -wait
 	start-process "2008r2\SysWow64.exe" -ArgumentList "$s_small" -wait}
@@ -160,8 +157,8 @@ if ($Action -eq "ServerPrep"){
 	if ($edition -match "Server"){
 	regedit /s "Universal\Server.reg"}
 
-	# Registry Imports for Server 2008 / R2
-	if (($edition -match "Server 2008") -and ($winver -ge "6.0.6002")){
+	# Registry Imports for Server 2008 R2
+	if (($edition -match "Server 2008") -and ($winver -like "6.1.*")){
 	regedit /s "Serv2008r2\bda.reg"
 	regedit /s "Serv2008r2\mpeg2enc.reg"
 	regedit /s "Serv2008r2\iccvid.reg"
@@ -185,13 +182,6 @@ if ($Action -eq "ServerPrep"){
 # ============================================================
 #			Server Enable Features for Server OS
 # ============================================================
-
-	# Server 2008 ONLY
-	if ($winver -like "6.0.*"){
-	servermanagercmd -install Desktop-Experience
-	servermanagercmd -install Wireless-Networking
-	servermanagercmd -install Net-Framework -allSubFeatures
-	servermanagercmd -install Backup-Features}
 
 	# Server 2008 R2 - Server 2016
 	if (($winver -ge "6.1.*") -or ($winver -like "10.*")){

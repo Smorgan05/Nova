@@ -25,6 +25,8 @@ function SetupVer($Setup){
 # ==================================* Speed *========================================
 cd $Default\Prep
 
+# Setup Prep Hash Table
+
 $Prep=@{}
 $Prep["Speed"] = @{}
 
@@ -35,6 +37,8 @@ if (($PrepArray[$i] -match "speedtest") -and ($PrepArray[$i] -like '*64*')){$Pre
 # ==================================* Handy *========================================
 if ($AppsModHandy -eq "True"){
 cd $Default\Apps\Handy
+
+# Setup Handy Hash Table
 
 $Handy=@{}
 $Handy["Classic"] = @{}
@@ -56,6 +60,8 @@ $Handy["Chrome"] = @{}
 # ================================* Utilities *======================================
 if ($AppsModUtil -eq "True"){
 cd $Default\Apps\Utilities
+
+# Setup Util Hash Table
 
 $Util = @{};
 $Util["CCleaner"] = @{}
@@ -85,6 +91,8 @@ $Util["Python"] = @{}
 # ==============================* Web Plugins *======================================
 if ($AppsModWebPlugins -eq "True"){
 cd $Default\Apps\WebPlugins
+
+# Setup Web Plugins Hash Table
 
 $WebPlugins = @{}
 $WebPlugins["Flash"] = @{}

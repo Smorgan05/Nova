@@ -6,8 +6,7 @@ $Host.UI.RawUI.WindowTitle = "Nova Module Controller"
 
 # Check for Pending Install / Reboot then wait
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\ExtRun} else {cd $ScriptDir\ExtRun}
-. .\Get-PendingReboot.ps1
-if ((Get-PendingReboot).RebootPending -eq "True"){Restart-Computer -Force}
+. .\Get-PendingReboot.ps1; if ((Get-PendingReboot).RebootPending -eq "True"){Restart-Computer -Force}
 
 # Change Directory and gather Automatical Variables
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir\Run}

@@ -18,18 +18,10 @@ if ($Action -eq "Setup"){
 	cd $default\Apps\Handy
 	
 		if ($arc -eq "64-bit"){
-			
-				#Firefox Require Windows 7 or newer for 64 bit
-				if (($winver -gt "6.1") -or ($winver -like "10.*")){start-process $Handy.Firefox.Setup64 -ArgumentList "-ms" -wait
-																		start-process $Handy.Chrome.Setup64 -ArgumentList "$q" -wait}
-																		
-				#Install Firefox 32 bit if we can't install the 64 bit copy
-				if (($winver -lt "6.1")){start-process $Handy.Firefox.Setup32 -ArgumentList "-ms" -wait}
-				
+		start-process $Handy.Firefox.Setup64 -ArgumentList "-ms" -wait
+		start-process $Handy.Chrome.Setup64 -ArgumentList "$q" -wait		
 		start-process $Handy.MPC.Setup64 -ArgumentList "$silent" -wait } else {
-		
-		if (($winver -gt "6.1") -or ($winver -like "10.*")){start-process $Handy.Chrome.Setup32 -ArgumentList "$q" -wait}
-		
+		start-process $Handy.Chrome.Setup32 -ArgumentList "$q" -wait
 		start-process $Handy.Firefox.Setup32 -ArgumentList "-ms" -wait
 		start-process $Handy.MPC.Setup32 -ArgumentList "$silent" -wait}
 	}

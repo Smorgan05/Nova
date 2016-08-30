@@ -1,4 +1,5 @@
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+#$ScriptDirPar = Split-Path (Split-Path $script:MyInvocation.MyCommand.Path) -Parent
 $Host.UI.RawUI.WindowTitle = "Nova Live Install Controller"
 # Coded By Morgan Overman for the Nova Project
 # Live Install Script
@@ -14,7 +15,7 @@ $AutomaticVariables = Get-Variable
 Compare (gv) $AutomaticVariables -Property Name -PassThru | Where {$_.Name -ne "AutomaticVariables"} | Format-Table -Auto | Out-File variables.txt -Width 10000
 
 # Run Speed Checker (use # to comment out)
-#if (($Internet -eq "True") -and ($PSVer -ge "3.0")){
+#if ($Internet -eq "True"){
 #. .\SpeedTest.ps1}
 
 cls
@@ -23,7 +24,7 @@ Write-Host --------------------------------------------------------------
 Write-Host ------ Per Ardua Ad Astra, From Adversity to the Stars --------
 
 # Take care of Windows 7 and Server Install
-if (((($winver -like "6.1.*") -and ($PSVer -eq "2.0")) -or ($ServerMod -eq "True")) -and (!(Test-Path $Startup\Starter.bat))){
+if ((($winver -like "6.1.*") -or ($ServerMod -eq "True")) -and (!(Test-Path $Startup\Starter.bat))){
 
 	if ($ServerMod -eq "True"){
 	# Run Server Workstation Prep
@@ -38,8 +39,9 @@ cd $Startup
 sc Starter.bat '@echo off' -en ASCII
 ac starter.bat 'echo Starter for Nova Module Controller'
 ac starter.bat $StartScript
+
 	
-	if ($winver -like "6.1.*"){
+	if (($winver -like "6.1.*") -and ($PSVer -eq "2.0")){
 	# Live Install 7
 	Write-Host
 	Write-Host Windows 7 Install
@@ -48,10 +50,10 @@ ac starter.bat $StartScript
 	cd $default\prep
 
 	# Install .net 4.5.2
-	start-process "NDP452-KB2901907-x86-x64-AllOS-ENU.exe" -ArgumentList "/q /norestart" -wait
+	start-process "NDP461-KB3102436-x86-x64-AllOS-ENU.exe" -ArgumentList "/q /norestart" -wait
 		
 	if ($arc -eq "64-bit"){
-	start-process wusa 'Windows6.1-KB2506143-x64.msu /quiet /norestart' -wait } else {start-process wusa 'Windows6.1-KB2506143-x86.msu /quiet /norestart' -wait}}
+	start-process wusa 'Windows6.1-KB2819745-x64-MultiPkg.msu /quiet /norestart' -wait } else {start-process wusa 'Windows6.1-KB2819745-x86-MultiPkg.msu /quiet /norestart' -wait}}
 
 	
 # Load Tweaks script and Run Setup Module
@@ -75,14 +77,14 @@ Write-Host Nova Privacy Settings
 Start-Process PowerShell -ArgumentList $Privacy -Wait
 
 # Load Tweaks script and Run Setup Method
-if (($ServerMod -ne "True") -or ($PSVer -ge "3.0")){
+if (($ServerMod -ne "True") -or ($winver -notlike "6.1.*")){
 Write-Host
 Write-Host Windows Tweaks
 . .\Tweaks.ps1; Tweaks "Setup"}
 
 # Run Setup Updater if Internet is connected & greater than 15 mbps
-if (($Internet -eq "True") -and ($PSVer -ge "3.0")){
-#if (($Internet -eq "True") -and ($PSVer -ge "3.0") -and ($Speed -ge "15")){
+if ($Internet -eq "True"){
+#if (($Internet -eq "True") -and ($Speed -ge "15")){
 write-host
 write-host Setup Updater
 . .\Setup_Updater.ps1}

@@ -12,7 +12,7 @@ cd $default
 $date = Get-Date -format "MM.dd.yyyy"
 
 # Apply Theme packs and Start button
-if (($NovaMod -eq "True") -and (($PSVer -eq "2.0") -or ($winver -ge "6.1") -or ($winver -like "10.*"))){
+if (($NovaMod -eq "True") -and (($PSVer -ge "4.0") -or ($winver -ge "6.1") -or ($winver -like "10.*"))){
 	
 	#UnPack Nova themes and background
 	start-process "Nova\Nova.exe" -ArgumentList "$s_small" -wait
@@ -40,7 +40,7 @@ if (($NovaMod -eq "True") -and (($PSVer -eq "2.0") -or ($winver -ge "6.1") -or (
 		start-process "$home\Nova Pack\Themes\Nova v7.themepack"}
 	}
 	
-	if (($PSVer -eq "2.0") -or (($winver -like "6.1.*") -and ($edition -ne "Starter") -and ($edition -ne "Home Basic"))){
+	if (($PSVer -ge "4.0") -or (($winver -like "6.1.*") -and ($edition -ne "Starter") -and ($edition -ne "Home Basic"))){
 	Set-ItemProperty "HKCU:\Control Panel\Desktop" -Name Wallpaper -Value "$env:userprofile\Nova Pack\Themes\Nova.bmp"}
 	
 	} # End Nova Module Check
