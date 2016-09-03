@@ -18,9 +18,9 @@ $AutomaticVariables = Get-Variable
 # Pass Variables to the Var file
 Compare (gv) $AutomaticVariables -Property Name -PassThru | Where {$_.Name -ne "AutomaticVariables"} | Format-Table -Auto | Out-File variables.txt -Width 10000
 
-Write-Host ----------------- Nova Module Controller $NovaVer ----------------
-Write-Host --------------------------------------------------------------
-Write-Host ------ Per Ardua Ad Astra, From Adversity to the Stars --------
+Write-Host *************** Nova Module Controller $NovaVer ****************
+Write-Host ************************************************************
+Write-Host ****** Per Ardua Ad Astra, From Adversity to the Stars ******
 Write-Host
 if ($NovaMod -eq "True"){
 Write-Host Nova Settings
