@@ -14,7 +14,7 @@ if (Test-path "$env:windir\Setup\Scripts"){
 $default = "$env:windir\Setup\Scripts"} else {$default = Split-Path (Split-Path $script:MyInvocation.MyCommand.Path) -Parent}
 
 # Set Master Version
-$NovaVer = "12.1"
+$NovaVer = "12.2"
 
 # Set Startup Folder Variable
 $Startup = "$env:programdata\Microsoft\Windows\Start Menu\Programs\Startup"

@@ -89,7 +89,7 @@ Write-host "Updating Chrome 64 bit"
 Download $URLx64 $Setupx64; $Count++} 
  
 # Grab the newest Firefox Setup
-
+ 
 if (!$Handy.Firefox.Version32){$Handy.Firefox.Version32 = 0}
 if (!$Handy.Firefox.Version64){$Handy.Firefox.Version64 = 0}
 $WebResponse = Invoke-WebRequest https://ftp.mozilla.org/pub/firefox/releases/ -UseBasicParsing
@@ -122,13 +122,10 @@ if (Test-path $Default\Apps\Utilities){cd $Default\Apps\Utilities} else {mkdir $
 # Grab the newest Notepad++ Setup
 
 if (!$Util.Notepad.Version){$Util.Notepad.Version = 0}
-$WebResponse = Invoke-WebRequest https://notepad-plus-plus.org/repository -UseBasicParsing
-$NotepadBuild = ($WebResponse.links | Where-Object {$_ -match "[0-9].x"} | Measure-Object -Maximum).Maximum; $NotepadBuild = $Matches[0]
-$WebResponse2 = Invoke-WebRequest https://notepad-plus-plus.org/repository/$NotepadBuild -UseBasicParsing
-$NotepadRevA = ($WebResponse2.links | Where-Object {$_ -match "[0-9].[0-9]"} | Measure-Object -Maximum).Maximum; $NotepadRevA = $Matches[0]
-$NotepadRevB = ($WebResponse2.links | Where-Object {$_ -match "[0-9].[0-9].[0-9]"} | Measure-Object -Maximum).Maximum; $NotepadRevA = $Matches[0]
-
-if ($NotepadRevA -gt $NotepadRevB){$NotepadRev = $NotepadRevA} else {$NotepadRev = $NotepadRevB}
+$WebResponse = Invoke-WebRequest https://notepad-plus-plus.org/ -UseBasicParsing
+$NotepadRev = $WebResponse.Links.href | Where-Object {$_ -match "[0-9].[0-9]" -or $_ -match "[0-9].[0-9].[0-9]" -and $_ -like "*download*"}
+$NotepadRev = $NotepadRev.replace("download/v",""); $NotepadRev = $NotepadRev.replace(".html","")
+$NotepadBuild = $NotepadRev.Substring(0,2); $NotepadBuild += "x"
 
 $URL = 'https://notepad-plus-plus.org/repository/' + $NotepadBuild + '/' + $NotepadRev + '/npp.' + $NotepadRev + '.Installer.exe'
 $Setup = 'npp.' + $NotepadRev + '.Installer.exe'
@@ -257,6 +254,7 @@ Unzip $PWD\ProcessExplorer.zip $env:Temp\Process; cp $env:Temp\Process\ProcExp.e
 rm ProcessExplorer.zip} 
 
 # Grab the newest Autoruns
+
 if (!$Util.AutoRuns.Version){$Util.AutoRuns.Version = 0}
 $WebResponse = Invoke-WebRequest https://technet.microsoft.com/en-us/sysinternals/bb963902.aspx -UseBasicParsing
 $AutoRev = $WebResponse.RawContent; $AutoRev -match "v[0-9][0-9].[0-9][0-9]" | Out-null; $AutoRev = $Matches[0]; $AutoRev = $AutoRev.replace("v","")
@@ -281,24 +279,25 @@ if (Test-path $Default\Apps\WebPlugins){cd $Default\Apps\WebPlugins} else {mkdir
 if (!$WebPlugins.Java.Version32){$WebPlugins.Java.Version32 = 0}
 if (!$WebPlugins.Java.Version64){$WebPlugins.Java.Version64 = 0}
 $WebResponse = Invoke-WebRequest java.com/en/download/manual.jsp -UseBasicParsing
-$JavaRev = $WebResponse.RawContent | Where-Object { $_ -match "[0-9] Update [0-9][0-9]"}; $JavaRev = $Matches[0]; $JavaRev = $JavaRev.replace(" Update ","u")
+$JavaBuild = $WebResponse.RawContent | Where-Object { $_ -match "[0-9] Update [0-9][0-9]*"}
+$JavaBuild = $Matches[0]; $JavaBuild = $JavaBuild.replace(" Update ","u");
+$JavaRev = $JavaBuild.Split("u")[0] + ".0." + $JavaBuild.Split("u")[1] 
 $JavaKey32 = $WebResponse.Links | Where-Object {$_.outerhtml -match "Windows Offline" -and $_.outerhtml -notmatch "(64-bit)"}
 $JavaKey32 = $JavaKey32 | Where-Object {$_.outerhtml -match "[0-9][0-9][0-9][0-9][0-9][0-9]"}; $JavaKey32 = $Matches[0]
 $JavaKey64 = $WebResponse.Links | Where-Object {$_.outerhtml -match "Windows Offline" -and $_.outerhtml -match "(64-bit)"}
 $JavaKey64 = $JavaKey64 | Where-Object {$_.outerhtml -match "[0-9][0-9][0-9][0-9][0-9][0-9]"}; $JavaKey64 = $Matches[0]
-$JavaRevA = $JavaRev.Substring(0, 1) + '.0.' + $JavaRev.Substring($JavaRev.length - 2, 2)
 
 $URLx32 = 'http://javadl.oracle.com/webapps/download/AutoDL?BundleId=' + $JavaKey32
 $URLx64 = 'http://javadl.oracle.com/webapps/download/AutoDL?BundleId=' + $JavaKey64
-$Setupx32 = 'jre-' + $JavaRev + '-windows-i586.exe'
-$Setupx64 = 'jre-' + $JavaRev + '-windows-x64.exe'
+$Setupx32 = 'jre-' + $JavaBuild + '-windows-i586.exe'
+$Setupx64 = 'jre-' + $JavaBuild + '-windows-x64.exe'
 
-if ($JavaRevA -gt $WebPlugins.Java.Version32){
+if ($JavaRev -gt $WebPlugins.Java.Version32){
 Write-host "Updating Java 32 bit"
 	if ($WebPlugins.Java.Setup32){rm $WebPlugins.Java.Setup32 -Force}
 Download $URLx32 $Setupx32; $Count++} 
 
-if ($JavaRevA -gt $WebPlugins.Java.Version64){
+if ($JavaRev -gt $WebPlugins.Java.Version64){
 Write-host "Updating Java 64 bit"
 	if ($WebPlugins.Java.Setup64){rm $WebPlugins.Java.Setup64 -Force}
 Download $URLx64 $Setupx64; $Count++} 
