@@ -24,10 +24,12 @@ $Count = 0
 # =============================================================================================================================================
 # ===============================================================* Handy *=====================================================================
 if (Test-path $Default\Apps\Handy){cd $Default\Apps\Handy} else {mkdir $Default\Apps\Handy | Out-null; cd $Default\Apps\Handy}
+if (!$Handy){$Handy=@{}}
 
 # Grab the Newest Classic Shell Setup
-
+if (!$Handy.Classic){$Handy["Classic"] = @{}}
 if (!$Handy.Classic.Version) {$Handy.Classic.Version = 0}
+
 $WebResponse = Invoke-WebRequest http://www.classicshell.net/downloads/ -UseBasicParsing
 $ClassicRev = ($WebResponse.links | Where-Object {$_ -match "English" -and $_ -match "[0-9].[0-9].[0-9]"}  | Measure-Object -Maximum).Maximum; $ClassicLnk = $Matches[0]; $ClassicRev = $ClassicLnk.replace("_",".")
 $ClassicRevKey = $WebResponse.links.href | Where-Object {$_ -match "setup" -and $_ -notmatch "-[a-z][a-z]"}
@@ -42,7 +44,7 @@ Write-host "Updating Classic Shell"
 Download $URL $Setup; $Count++}
 
 # Grab the Newest MPC-HC Setup
-
+if (!$Handy.MPC){$Handy["MPC"] = @{}}
 if (!$Handy.MPC.Version32) {$Handy.MPC.Version32 = 0}
 if (!$Handy.MPC.Version64) {$Handy.MPC.Version64 = 0}
 $WebResponse = Invoke-WebRequest https://mpc-hc.org/downloads/ -UseBasicParsing
@@ -54,18 +56,18 @@ $URLx64 = 'https://binaries.mpc-hc.org/MPC HomeCinema - x64/MPC-HC_v' + $MPCRev 
 $Setupx32 = 'MPC-HC.' + $MPCRev + '.x86.exe' 
 $Setupx64 = 'MPC-HC.' + $MPCRev + '.x64.exe'
 
-if ($MPCRev -gt $Handy.MPC.Version32){
+if ($MPCRev -gt $Handy.MPC.Version32 -and $arc -eq "32-bit"){
 Write-host "Updating Media Player Classic 32 bit"
 	if ($Handy.MPC.Setup32) {rm $Handy.MPC.Setup32 -Force} 
 Download $URLx32 $Setupx32; $Count++} 
 
-if ($MPCRev -gt $Handy.MPC.Version64){
+if ($MPCRev -gt $Handy.MPC.Version64 -and $arc -eq "64-bit"){
 Write-host "Updating Media Player Classic 64 bit"
 	if ($Handy.MPC.Setup64) {rm $Handy.MPC.Setup64 -Force}
 Download $URLx64 $Setupx64; $Count++}
  
 # Grab the newest Chrome Setup
-
+if (!$Handy.Chrome){$Handy["Chrome"] = @{}}
 if (!$Handy.Chrome.Version32){$Handy.Chrome.Version32 = 0}
 if (!$Handy.Chrome.Version64){$Handy.Chrome.Version64 = 0}
 $WebURL = 'https://www.whatismybrowser.com/guides/the-latest-version/chrome'
@@ -78,18 +80,18 @@ $URLx64 = 'https://dl.google.com/tag/s/appguid={00000000-0000-0000-0000-00000000
 $Setupx32 = 'Chrome ' + $ChromeRev + '.msi'
 $Setupx64 = 'Chrome64 '+ $ChromeRev +'.msi'
 
-if ($ChromeRev -ne $Handy.Chrome.Version32){
+if ($ChromeRev -ne $Handy.Chrome.Version32 -and $arc -eq "32-bit"){
 Write-host "Updating Chrome 32 bit"
 	if ($Handy.Chrome.Setup32){rm $Handy.Chrome.Setup32}
 Download $URLx32 $Setupx32; $Count++} 
 
-if ($ChromeRev -ne $Handy.Chrome.Version64){
+if ($ChromeRev -ne $Handy.Chrome.Version64  -and $arc -eq "64-bit"){
 Write-host "Updating Chrome 64 bit"
 	if ($Handy.Chrome.Setup64){rm $Handy.Chrome.Setup64}
 Download $URLx64 $Setupx64; $Count++} 
  
 # Grab the newest Firefox Setup
- 
+if (!$Handy.Firefox){$Handy["Firefox"] = @{}}
 if (!$Handy.Firefox.Version32){$Handy.Firefox.Version32 = 0}
 if (!$Handy.Firefox.Version64){$Handy.Firefox.Version64 = 0}
 $WebResponse = Invoke-WebRequest https://ftp.mozilla.org/pub/firefox/releases/ -UseBasicParsing
@@ -104,12 +106,12 @@ $URLx64 = 'https://ftp.mozilla.org/pub/firefox/releases/' + $FirefoxRev + '/win6
 $Setupx32 = 'Firefox-' + $FirefoxRev + '.en-US.win32.installer.exe'
 $Setupx64 = 'Firefox-' + $FirefoxRev + '.en-US.win64.installer.exe'
 
-if ($FirefoxRev -gt $Handy.Firefox.Version32){
+if ($FirefoxRev -gt $Handy.Firefox.Version32 -and $arc -eq "32-bit"){
 Write-host "Updating Firefox 32 bit"
 	if ($Handy.Firefox.Setup32){rm $Handy.Firefox.Setup32 -Force}
 Download $URLx32 $Setupx32; $Count++} 
 
-if ($FirefoxRev -gt $Handy.Firefox.Version64){
+if ($FirefoxRev -gt $Handy.Firefox.Version64 -and $arc -eq "64-bit"){
 Write-host "Updating Firefox 64 bit"
 	if ($Handy.Firefox.Setup64){rm $Handy.Firefox.Setup64 -Force}
 Download $URLx64 $Setupx64; $Count++} 
@@ -118,9 +120,10 @@ Download $URLx64 $Setupx64; $Count++}
 # =============================================================================================================================================
 # =============================================================* Utilities *===================================================================
 if (Test-path $Default\Apps\Utilities){cd $Default\Apps\Utilities} else {mkdir $Default\Apps\Utilities | Out-null; cd $Default\Apps\Utilities}
+if (!$Util){$Util = @{}}
 
 # Grab the newest Notepad++ Setup
-
+if (!$Util.Notepad){$Util["Notepad"] = @{}}
 if (!$Util.Notepad.Version){$Util.Notepad.Version = 0}
 $WebResponse = Invoke-WebRequest https://notepad-plus-plus.org/ -UseBasicParsing
 $NotepadRev = $WebResponse.Links.href | Where-Object {$_ -match "[0-9].[0-9]" -or $_ -match "[0-9].[0-9].[0-9]" -and $_ -like "*download*"}
@@ -136,7 +139,7 @@ Write-host "Updating Notepad++"
 Download $URL $Setup; $Count++} 
 
 # Grab the newest 7zip Setup
-
+if (!$Util["7zip"]){$Util["7zip"] = @{}}
 if (!$Util["7zip"]["Version32"]){$Util["7zip"]["Version32"] = 0}
 if (!$Util["7zip"]["Version64"]){$Util["7zip"]["Version32"] = 0}
 $WebResponse = Invoke-WebRequest http://www.7-zip.org/ -UseBasicParsing
@@ -149,18 +152,18 @@ $URLx64 = 'http://www.7-zip.org/a/7z' + $7ziplnk + '-x64.exe'
 $Setupx32 = '7z' + $7zipRev + '.exe'
 $Setupx64 = '7z' + $7zipRev + '-x64.exe'
 
-if ($7zipRev -gt $Util["7zip"]["Version32"]){
+if ($7zipRev -gt $Util["7zip"]["Version32"] -and $arc -eq "32-bit"){
 Write-host "Updating 7-zip 32 bit"
 	if ($Util["7zip"]["Setup32"]){rm $Util["7zip"]["Setup32"] -Force}
 Download $URLx32 $Setupx32; $Count++} 
 
-if ($7zipRev -gt $Util["7zip"]["Version64"]){
+if ($7zipRev -gt $Util["7zip"]["Version64"] -and $arc -eq "64-bit"){
 Write-host "Updating 7-zip 64 bit"
 	if ($Util["7zip"]["Setup64"]){rm $Util["7zip"]["Setup64"] -Force}
 Download $URLx64 $Setupx64; $Count++} 
 
 # Grab the newest CCleaner Setup
-
+if (!$Util.CCleaner){$Util["CCleaner"] = @{}}
 if (!$Util.CCleaner.Version){$Util.CCleaner.Version = 0}
 $WebResponse = Invoke-WebRequest https://www.piriform.com/ccleaner/download -UseBasicParsing
 $CCVer = $WebResponse.RawContent | Where-Object {$_ -match "v[0-9].[0-9][0-9]"} 
@@ -175,7 +178,7 @@ Write-host "Updating CCleaner"
 Download $URL $Setup; $Count++} 
 
 # Grab the newest Defraggler Setup
-
+if (!$Util.Defraggler){$Util["Defraggler"] = @{}}
 if (!$Util.Defraggler.Version){$Util.Defraggler.Version = 0}
 $WebResponse = Invoke-WebRequest https://www.piriform.com/defraggler/download -UseBasicParsing
 $DefragRev = $WebResponse.RawContent; $DefragRev -match "v[0-9].[0-9][0-9]" | Out-null; $DefragRev = $Matches[0]
@@ -190,7 +193,7 @@ Write-host "Updating Defraggler"
 Download $URL $Setup; $Count++} 
 
 # Grab the newest Filezilla Setup
-
+if (!$Util.FileZ){$Util["FileZ"] = @{}}
 if (!$Util.FileZ.Version32){$Util.FileZ.Version32 = 0}
 if (!$Util.FileZ.Version64){$Util.FileZ.Version64 = 0}
 $WebResponse = Invoke-WebRequest https://filezilla-project.org/download.php?show_all=1 -UseBasicParsing
@@ -201,18 +204,18 @@ $Setupx64 = 'FileZilla_' + $FileRev + '_win64-setup.exe'
 $URLx32 = 'http://heanet.dl.sourceforge.net/project/filezilla/FileZilla_Client/' + $FileRev + '/' + $Setupx32
 $URLx64 = 'http://heanet.dl.sourceforge.net/project/filezilla/FileZilla_Client/' + $FileRev + '/' + $Setupx64
 
-if ($FileRev -gt $Util.FileZ.Version32){
+if ($FileRev -gt $Util.FileZ.Version32 -and $arc -eq "32-bit"){
 Write-host "Updating Filezilla 32 bit"
 	if ($Util.FileZ.Setup32){rm $Util.FileZ.Setup32 -Force}
 Download $URLx32 $Setupx32; $Count++} 
 
-if ($FileRev -gt $Util.FileZ.Version64){
+if ($FileRev -gt $Util.FileZ.Version64 -and $arc -eq "64-bit"){
 Write-host "Updating Filezilla 64 bit"
 	if ($Util.FileZ.Setup64){rm $Util.FileZ.Setup64 -Force}
 Download $URLx64 $Setupx64; $Count++}
 
 # Grab the newest Python Setup
-
+if (!$Util.Python){$Util["Python"] = @{}}
 if (!$Util.Python.Version32){$Util.Python.Version32 = 0}
 if (!$Util.Python.Version64){$Util.Python.Version64 = 0}
 $WebResponse = Invoke-WebRequest https://www.python.org/downloads/ -UseBasicParsing
@@ -224,19 +227,19 @@ $URLx64 = 'https://www.python.org/ftp/python/' + $PythonRev + '/python-' + $Pyth
 $Setupx32 = 'python-' + $PythonRev + '.exe'
 $Setupx64 = 'python-' + $PythonRev + '-amd64.exe'
 
-if ($PythonRev -gt $Util.Python.Version32){
+if ($PythonRev -gt $Util.Python.Version32 -and $arc -eq "32-bit"){
 Write-host "Updating Python 32 bit"
 	if ($Util.Python.Setup32){rm $Util.Python.Setup32 -Force}
 Download $URLx32 $Setupx32; $Count++} 
 
-if ($PythonRev -gt $Util.Python.Version64){
+if ($PythonRev -gt $Util.Python.Version64 -and $arc -eq "64-bit"){
 Write-host "Updating Python 64 bit"
 	if ($Util.Python.Setup64){rm $Util.Python.Setup64 -Force}
 Download $URLx64 $Setupx64; $Count++} 
 
 
 # Grab the newest Process Explorer
-
+if (!$Util.ProcessExp){$Util["ProcessExp"] = @{}}
 if (!$Util.ProcessExp.Version){$Util.ProcessExp.Version = 0}
 $WebResponse = Invoke-WebRequest https://technet.microsoft.com/en-us/sysinternals/processexplorer.aspx -UseBasicParsing
 $ProcRev = $WebResponse.RawContent; $ProcRev -match "v[0-9][0-9].[0-9][0-9]" | Out-null; $ProcRev = $Matches[0]; $ProcRev = $ProcRev.replace("v","")
@@ -254,7 +257,7 @@ Unzip $PWD\ProcessExplorer.zip $env:Temp\Process; cp $env:Temp\Process\ProcExp.e
 rm ProcessExplorer.zip} 
 
 # Grab the newest Autoruns
-
+if (!$Util.AutoRuns){$Util["AutoRuns"] = @{}}
 if (!$Util.AutoRuns.Version){$Util.AutoRuns.Version = 0}
 $WebResponse = Invoke-WebRequest https://technet.microsoft.com/en-us/sysinternals/bb963902.aspx -UseBasicParsing
 $AutoRev = $WebResponse.RawContent; $AutoRev -match "v[0-9][0-9].[0-9][0-9]" | Out-null; $AutoRev = $Matches[0]; $AutoRev = $AutoRev.replace("v","")
@@ -273,9 +276,10 @@ rm Autoruns.zip}
 # =============================================================================================================================================
 # ============================================================* WebPlugins *===================================================================
 if (Test-path $Default\Apps\WebPlugins){cd $Default\Apps\WebPlugins} else {mkdir $Default\Apps\WebPlugins | Out-null; cd $Default\Apps\WebPlugins}
+if (!$WebPlugins){$WebPlugins = @{}}
 
 # Grab the latest JRE	
-
+if (!$WebPlugins.Java){$WebPlugins["Java"] = @{}}
 if (!$WebPlugins.Java.Version32){$WebPlugins.Java.Version32 = 0}
 if (!$WebPlugins.Java.Version64){$WebPlugins.Java.Version64 = 0}
 $WebResponse = Invoke-WebRequest java.com/en/download/manual.jsp -UseBasicParsing
@@ -292,18 +296,18 @@ $URLx64 = 'http://javadl.oracle.com/webapps/download/AutoDL?BundleId=' + $JavaKe
 $Setupx32 = 'jre-' + $JavaBuild + '-windows-i586.exe'
 $Setupx64 = 'jre-' + $JavaBuild + '-windows-x64.exe'
 
-if ($JavaRev -gt $WebPlugins.Java.Version32){
+if ($JavaRev -gt $WebPlugins.Java.Version32 -and $arc -eq "32-bit"){
 Write-host "Updating Java 32 bit"
 	if ($WebPlugins.Java.Setup32){rm $WebPlugins.Java.Setup32 -Force}
 Download $URLx32 $Setupx32; $Count++} 
 
-if ($JavaRev -gt $WebPlugins.Java.Version64){
+if ($JavaRev -gt $WebPlugins.Java.Version64 -and $arc -eq "64-bit"){
 Write-host "Updating Java 64 bit"
 	if ($WebPlugins.Java.Setup64){rm $WebPlugins.Java.Setup64 -Force}
 Download $URLx64 $Setupx64; $Count++} 
 
 # Grab the latest Flash Player
-
+if (!$WebPlugins.Flash){$WebPlugins["Flash"] = @{}}
 if (!$WebPlugins.Flash.Version){$WebPlugins.Flash.Version = 0}
 $WebResponse = Invoke-WebRequest https://get.adobe.com/flashplayer/ -UseBasicParsing
 $FlashRev = $WebResponse.RawContent | Where-Object { $_ -match "Version [0-9][0-9].[0-9].[0-9].[0-9][0-9]"}; $FlashRev = $Matches[0]; $FlashRev = $FlashRev.replace("Version ",""); $Flashlnk = $FlashRev.Substring(0, 2)
