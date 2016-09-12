@@ -22,18 +22,6 @@ function SetupVer($Setup){
 
 # ===========================* Define Apps Variables *===============================
 # ===================================================================================
-# ==================================* Speed *========================================
-cd $Default\Prep
-
-# Setup Prep Hash Table
-
-$Prep=@{}
-$Prep["Speed"] = @{}
-
-for($i=0; $i -le $PrepArray.length; $i++){
-if (($PrepArray[$i] -match "speedtest") -and ($PrepArray[$i] -like '*32*')){$Prep["Speed"]["Speed32"] = $PrepArray[$i]}
-if (($PrepArray[$i] -match "speedtest") -and ($PrepArray[$i] -like '*64*')){$Prep["Speed"]["Speed64"] = $PrepArray[$i]}}
-
 # ==================================* Handy *========================================
 if ($AppsModHandy -eq "True"){
 cd $Default\Apps\Handy

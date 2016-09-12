@@ -1,11 +1,6 @@
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 # Powershell Setup to install all Applications (REQUIRED)
 
-# Run Speed Checker (use # to comment out)
-if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\ExtRun} else {cd $ScriptDir\ExtRun}
-#if ($Internet -eq "True"){
-#. .\SpeedTest.ps1}
-
 # Load Variables
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\InstallRec.ps1
@@ -29,7 +24,6 @@ cd $default\Run
 
 # Run Setup Updater if Internet is connected & greater than 15 mbps
 if ($Internet -eq "True"){
-#if (($Internet -eq "True") -and ($Speed -ge "15")){
 . .\Setup_Updater.ps1}
 
 # Run Server Script and Module check
