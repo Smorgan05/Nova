@@ -5,9 +5,6 @@ $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir}
 . .\InstallRec.ps1
 
-# Detect Windows Vista or Earlier and Kill
-if ($PSVer -lt "4.0"){exit}
-
 # Change Location to the Start Up Folder
 cd $Startup
 
