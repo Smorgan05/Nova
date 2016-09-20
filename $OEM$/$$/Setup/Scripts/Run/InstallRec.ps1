@@ -8,9 +8,6 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} els
 # Set Location
 cd $Default
 
-# Set Prep Array
-$PrepArray = ls Prep -name
-
 # Set Arrays for App Modules
 if ($AppsModHandy -eq "True"){$HandyArray = ls Apps\Handy -name}
 if ($AppsModUtil -eq "True"){$UtilArray = ls Apps\Utilities -name}

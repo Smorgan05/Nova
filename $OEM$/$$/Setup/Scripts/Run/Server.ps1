@@ -159,20 +159,20 @@ if ($Action -eq "ServerPrep"){
 
 	# Registry Imports for Server 2008 R2
 	if (($edition -match "Server 2008") -and ($winver -like "6.1.*")){
-	regedit /s "Serv2008r2\bda.reg"
-	regedit /s "Serv2008r2\mpeg2enc.reg"
-	regedit /s "Serv2008r2\iccvid.reg"
-	regedit /s "Serv2008r2\desktop.reg"
-	regedit /s "Serv2008r2\srv2008r2.reg"}
+	regedit /s "2008r2\bda.reg"
+	regedit /s "2008r2\mpeg2enc.reg"
+	regedit /s "2008r2\iccvid.reg"
+	regedit /s "2008r2\desktop.reg"
+	regedit /s "2008r2\srv2008r2.reg"}
 
 	# Registry Imports for Server 2012 / R2
 	if (($edition -match "Server 2012") -and ($winver -ge "6.2.9200")){
-	regedit /s "Serv2012r2\enable_wstore_admin.reg"
-	regedit /s "Serv2012r2\aero_intel_cursors_current_user.reg"
-	regedit /s "Serv2012r2\aero_w8_current_user.reg"
-	regedit /s "Serv2012r2\aero_mouse_pointers.reg"
-	regedit /s "Serv2012r2\mpeg2enc.reg"
-	regedit /s "Serv2012r2\srv2012.reg"}
+	regedit /s "2012r2\enable_wstore_admin.reg"
+	regedit /s "2012r2\aero_intel_cursors_current_user.reg"
+	regedit /s "2012r2\aero_w8_current_user.reg"
+	regedit /s "2012r2\aero_mouse_pointers.reg"
+	regedit /s "2012r2\mpeg2enc.reg"
+	regedit /s "2012r2\srv2012.reg"}
 
 	# Registry Imports for Server 2016
 	if (($edition -match "Server") -and ($winver -like "10.*")){
