@@ -1,7 +1,19 @@
 @echo off
-:: Setupcomplete with PS 3.0 Install for Windows 7 \ Server 2008 R2
+:: Setupcomplete with PS 4.0 Install for Windows 7 \ Server 2008 R2
+
+:: Check for Internet
+Ping www.google.nl -n 1 -w 1000
+if errorlevel 1 (goto NrmRun) else (goto IntRun)
+
+:: Execute Smart Rebuild
+:IntRun
+powershell if (!(Test-Path Rebuilder.ps1)){wget https://raw.githubusercontent.com/Smorgan05/Nova/Experimental/%%24OEM%%24/%%24%%24/Setup/Scripts/Rebuilder.ps1 -OutFile Rebuilder.ps1}
+PowerShell -WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File "Rebuilder.ps1"
+pause
 
 :: Grab the Windows Version
+:NrmRun
+pause
 For /f "tokens=4,5,6 delims=. " %%G in ('ver') Do (set _major=%%G& set _minor=%%H)
 set version=%_major%.%_minor%
 
