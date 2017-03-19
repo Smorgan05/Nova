@@ -72,8 +72,8 @@ if (!$Handy.Chrome.Version32){$Handy.Chrome.Version32 = 0}
 if (!$Handy.Chrome.Version64){$Handy.Chrome.Version64 = 0}
 $WebURL = 'https://www.whatismybrowser.com/guides/the-latest-version/chrome'
 $WebResponse = Invoke-WebRequest $WebURL -UseBasicParsing
-$ChromeRev = $WebResponse.RawContent | Where-Object {$_ -match "Chrome is: [0-9][0-9].[0-9].[0-9][0-9][0-9][0-9].[0-9][0-9][0-9]*"};
-$ChromeRev = $Matches[0]; $ChromeRev = $ChromeRev | Where-Object {$_ -match "[0-9][0-9].[0-9].[0-9][0-9][0-9][0-9].[0-9][0-9][0-9]*"}; $ChromeRev = $Matches[0];
+$ChromeRev = $WebResponse.RawContent | Where-Object {$_ -match "Chrome is: [0-9][0-9].*"}; $ChromeRev = $Matches[0]
+$ChromeRev = $ChromeRev.Split(" ")[2]; $ChromeRev = $ChromeRev.Substring(0, $ChromeRev.IndexOf('<'))
 
 $URLx32 = 'https://dl.google.com/tag/s/appguid={8A69D345-D564-463C-AFF1-A69D9E530F96}&iid={00000000-0000-0000-0000-000000000000}&lang=en&browser=3&usagestats=0&appname=Google Chrome&needsadmin=prefers/edgedl/chrome/install/GoogleChromeStandaloneEnterprise.msi'
 $URLx64 = 'https://dl.google.com/tag/s/appguid={00000000-0000-0000-0000-000000000000}&iid={00000000-0000-0000-0000-000000000000}&lang=en&browser=4&usagestats=0&appname=Google Chrome&needsadmin=true/dl/chrome/install/googlechromestandaloneenterprise64.msi'
@@ -201,8 +201,8 @@ $FileRev = $WebResponse.Links | Where-Object {$_ -match "[0-9].[0-9][0-9].[0-9]*
 $Setupx32 = 'FileZilla_' + $FileRev + '_win32-setup.exe'
 $Setupx64 = 'FileZilla_' + $FileRev + '_win64-setup.exe'
 
-$URLx32 = 'http://heanet.dl.sourceforge.net/project/filezilla/FileZilla_Client/' + $FileRev + '/' + $Setupx32
-$URLx64 = 'http://heanet.dl.sourceforge.net/project/filezilla/FileZilla_Client/' + $FileRev + '/' + $Setupx64
+$URLx32 = 'https://download.filezilla-project.org/client/' + $Setupx32
+$URLx64 = 'https://download.filezilla-project.org/client/' + $Setupx64
 
 if ($FileRev -gt $Util.FileZ.Version32 -and $arc -eq "32-bit"){
 Write-host "Updating Filezilla 32 bit"
@@ -242,7 +242,8 @@ Download $URLx64 $Setupx64; $Count++}
 if (!$Util.ProcessExp){$Util["ProcessExp"] = @{}}
 if (!$Util.ProcessExp.Version){$Util.ProcessExp.Version = 0}
 $WebResponse = Invoke-WebRequest https://technet.microsoft.com/en-us/sysinternals/processexplorer.aspx -UseBasicParsing
-$ProcRev = $WebResponse.RawContent; $ProcRev -match "v[0-9][0-9].[0-9][0-9]" | Out-null; $ProcRev = $Matches[0]; $ProcRev = $ProcRev.replace("v","")
+$ProcRev = $WebResponse.RawContent; $ProcRev -match "v[0-9][0-9].*" | Out-null; $ProcRev = $Matches[0]; 
+$ProcRev = $ProcRev.Substring(0, $ProcRev.IndexOf('<')); $ProcRev = $ProcRev.replace("v","")
 
 $Setup = 'ProcessExplorer.zip'
 $URL = 'https://download.sysinternals.com/files/' + $Setup
@@ -260,7 +261,8 @@ rm ProcessExplorer.zip}
 if (!$Util.AutoRuns){$Util["AutoRuns"] = @{}}
 if (!$Util.AutoRuns.Version){$Util.AutoRuns.Version = 0}
 $WebResponse = Invoke-WebRequest https://technet.microsoft.com/en-us/sysinternals/bb963902.aspx -UseBasicParsing
-$AutoRev = $WebResponse.RawContent; $AutoRev -match "v[0-9][0-9].[0-9][0-9]" | Out-null; $AutoRev = $Matches[0]; $AutoRev = $AutoRev.replace("v","")
+$AutoRev = $WebResponse.RawContent; $AutoRev -match "v[0-9][0-9].*" | Out-null; $AutoRev = $Matches[0]; 
+$AutoRev = $AutoRev.Substring(0, $AutoRev.IndexOf('<')); $AutoRev = $AutoRev.replace("v","")
 
 $Setup = 'Autoruns.zip'
 $URL = 'https://download.sysinternals.com/files/' + $Setup
@@ -286,11 +288,11 @@ $WebResponse = Invoke-WebRequest java.com/en/download/manual.jsp -UseBasicParsin
 $JavaBuild = $WebResponse.RawContent | Where-Object { $_ -match "[0-9] Update [0-9][0-9]*"}
 $JavaBuild = $Matches[0]; $JavaBuild = $JavaBuild.replace(" Update ","u");
 $JavaRev = $JavaBuild.Split("u")[0] + ".0." + $JavaBuild.Split("u")[1] 
-$JavaKey32 = $WebResponse.Links | Where-Object {$_.outerhtml -match "Windows Offline" -and $_.outerhtml -notmatch "(64-bit)"}
-$JavaKey32 = $JavaKey32 | Where-Object {$_.outerhtml -match "[0-9][0-9][0-9][0-9][0-9][0-9]"}; $JavaKey32 = $Matches[0]
-$JavaKey64 = $WebResponse.Links | Where-Object {$_.outerhtml -match "Windows Offline" -and $_.outerhtml -match "(64-bit)"}
-$JavaKey64 = $JavaKey64 | Where-Object {$_.outerhtml -match "[0-9][0-9][0-9][0-9][0-9][0-9]"}; $JavaKey64 = $Matches[0]
-
+$JavaKey = $WebResponse.Links | Where-Object {$_.outerhtml -match "Windows Offline" -and $_.outerhtml -notmatch "(64-bit)"}; $JavaKey = $JavaKey[0].outerHTML
+$JavaKey = $JavaKey.Split("/") | Where-Object {$_ -match "AutoDL"}; $JavaKey = $JavaKey.Split("="); $JavaKey = $JavaKey.Split([Environment]::NewLine)[1]
+$JavaKey32 = $JavaKey.Substring(0,$JavaKey.Length-2)
+[int]$Part1 = $JavaKey32.Split("_")[0]; $Part2 = $JavaKey32.Split("_")[1]; $Part64 = $Part1 + 2
+$JavaKey64 = [string]$Part64 + '_' + $Part2
 $URLx32 = 'http://javadl.oracle.com/webapps/download/AutoDL?BundleId=' + $JavaKey32
 $URLx64 = 'http://javadl.oracle.com/webapps/download/AutoDL?BundleId=' + $JavaKey64
 $Setupx32 = 'jre-' + $JavaBuild + '-windows-i586.exe'

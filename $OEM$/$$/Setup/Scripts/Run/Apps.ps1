@@ -75,6 +75,9 @@ if ($Action -eq "PostInstall"){
 	# Web Plugins Module (Multi - ARC)
 	if ($arc -eq "64-bit"){start-process $WebPlugins.Java.Setup64 -ArgumentList "/s" -wait} else { start-process $WebPlugins.Java.Setup32 -ArgumentList "/s" -wait}}
 	
+	# Firefox Silent Plugin Install
+	
+	
 	} # End Method for Post Install
 	cd $default\run	
 } #End Function

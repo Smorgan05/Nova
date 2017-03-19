@@ -26,10 +26,13 @@ Remove-Item $home\desktop\* -include *.lnk
 if (($winver -like "6.*") -or ($winver -like "10.*")){
 	Remove-Item $env:public\Desktop\* -include *.lnk}
 
+$AutoPath = $env:homedrive + "\" + $Util.AutoRuns.Setup
+$ProcPath = $env:homedrive + "\" + $Util.ProcessExp.Setup
+	
 if ($AppsModUtil -eq "True"){
 	New-Item -ItemType directory -Path "$StartMenuUser\SysInternals" | out-null
-	Shortcuts "$env:homedrive\$Util.AutoRuns.Setup" "$StartMenuUser\SysInternals\Autoruns.lnk"
-	Shortcuts "$env:homedrive\$Util.ProcessExp.Setup" "$StartMenuUser\SysInternals\Process Explorer.lnk"}
+	Shortcuts $AutoPath "$StartMenuUser\SysInternals\Autoruns.lnk"
+	Shortcuts $ProcPath "$StartMenuUser\SysInternals\Process Explorer.lnk"}
 
 # ========================
 

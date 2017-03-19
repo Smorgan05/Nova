@@ -18,6 +18,11 @@ if ($Action -eq "Setup"){
 	$RegPath = Get-ItemProperty $SystemVar
 	$RegValue = $RegPath.Path+$PythonPath
 	Set-ItemProperty -path $SystemVar -Name Path -Value $RegValue}
+	
+	# Add 7zip to the Path in the Registry (needs restart)
+	$7zPath = ";$env:ProgramFiles\7-zip"
+	$RegValue = $RegPath.Path+$7zPath
+	Set-ItemProperty -path $SystemVar -Name Path -Value $RegValue
 
 	# Windows Universal Tweaks (7 - 10 / Server 2008 - Server 2016)
 	if (Test-path "$Startup\Starter.bat"){regedit /s "Reg\Windows\disable_uac.reg"}
