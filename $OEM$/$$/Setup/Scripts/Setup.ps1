@@ -27,9 +27,9 @@ if ($Internet -eq "True"){
 if ($ServerMod -eq "True"){
 . .\Server.ps1; Server "ServerPrep"}
 
-# Load Apps script and Run Setup Method
+# Load Apps Script and Run Setup Method
 . .\Apps.ps1; Apps "Setup"
 
-# Load Tweaks script and Run Setup Method
+# Load Tweaks Script and Run Setup Method
 . .\Tweaks.ps1; Tweaks "Setup"
 exit

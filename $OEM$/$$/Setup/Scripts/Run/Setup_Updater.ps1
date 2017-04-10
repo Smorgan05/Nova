@@ -43,10 +43,27 @@ Write-host "Updating Classic Shell"
 	if ($Handy.Classic.Setup) {rm $Handy.Classic.Setup -Force}
 Download $URL $Setup; $Count++}
 
+# Grab the Newest Media Monkey Setup
+if (!$Handy.MediaMonkey){$Handy["MediaMonkey"] = @{}}
+if (!$Handy.MediaMonkey.Version) {$Handy.MediaMonkey.Version = 0}
+
+$WebResponse = Invoke-WebRequest http://www.mediamonkey.com/information/changelog/ -UseBasicParsing
+$MonkeyRev = $WebResponse.RawContent | Where-Object { $_ -match "MediaMonkey [0-9].[0-9].*"}; $MonkeyRev = $Matches[0] 
+$MonkeyRev = $MonkeyRev.Split(" ")[1]; $MonkeyRev = $MonkeyRev.Substring(0, $MonkeyRev.IndexOf('<'))
+
+$URL = 'http://e8d327b5fb.site.internapcdn.net/sw/MediaMonkey_' + $MonkeyRev + ".exe"
+$Setup = 'MediaMonkey_' + $MonkeyRev + '.exe'
+
+if ($MonkeyRev -gt $Handy.MediaMonkey.Version){
+Write-host "Updating MediaMonkey"
+	if ($Handy.MediaMonkey.Setup) {rm $Handy.MediaMonkey.Setup -Force} 
+Download $URL $Setup; $Count++}
+
 # Grab the Newest MPC-HC Setup
 if (!$Handy.MPC){$Handy["MPC"] = @{}}
 if (!$Handy.MPC.Version32) {$Handy.MPC.Version32 = 0}
 if (!$Handy.MPC.Version64) {$Handy.MPC.Version64 = 0}
+
 $WebResponse = Invoke-WebRequest https://mpc-hc.org/downloads/ -UseBasicParsing
 $MPCRev =  ($WebResponse.Links.href | Where-Object {$_ -match "exe"} | Measure-Object -Maximum).Maximum
 $MPCRev = $MPCRev.Split("_"); $MPCRev = $MPCRev[1]; $MPCRev = $MPCRev.replace("v","")
@@ -257,7 +274,7 @@ Download $URL $Setup; $Count++
 Unzip $PWD\ProcessExplorer.zip $env:Temp\Process; cp $env:Temp\Process\ProcExp.exe $Default\Apps\Utilities -Force
 rm ProcessExplorer.zip} 
 
-# Grab the newest Autoruns
+# Grab the Newest Autoruns
 if (!$Util.AutoRuns){$Util["AutoRuns"] = @{}}
 if (!$Util.AutoRuns.Version){$Util.AutoRuns.Version = 0}
 $WebResponse = Invoke-WebRequest https://technet.microsoft.com/en-us/sysinternals/bb963902.aspx -UseBasicParsing
@@ -273,7 +290,32 @@ Write-host "Updating Autoruns"
 Download $URL $Setup; $Count++ 
 	if (Test-path $env:Temp\AutoRuns){rm $env:Temp\AutoRuns -Recurse}
 Unzip $PWD\AutoRuns.Zip $env:Temp\Autoruns; cp $env:Temp\Autoruns\AutoRuns.exe $Default\Apps\Utilities -Force
-rm Autoruns.zip} 
+rm Autoruns.zip}
+
+# Grab the Newest qBittorrent
+
+if (!$Util.Qbit){$Util["Qbit"] = @{}}
+if (!$Util.Qbit.Version32){$Util.Qbit.Version32 = 0}
+if (!$Util.Qbit.Version64){$Util.Qbit.Version64 = 0}
+$WebResponse = Invoke-WebRequest https://www.qbittorrent.org/download.php -UseBasicParsing
+$QbitRev = $WebResponse.RawContent; $QbitRev -match "v[0-9].[0-9].*" | Out-null
+$QbitRev = $Matches[0]; $QbitRev = $QbitRev.replace("v",""); $QbitRev = $QbitRev.Split("<")[0]
+
+$URLx32 = "https://sourceforge.net/projects/qbittorrent/files/qbittorrent-win32/qbittorrent-" + $QbitRev + "/qbittorrent_" + $QbitRev + "_setup.exe/download"
+$URLx64 = "https://sourceforge.net/projects/qbittorrent/files/qbittorrent-win32/qbittorrent-" + $QbitRev + "/qbittorrent_" + $QbitRev + "_x64_setup.exe/download"
+$Setupx32 = "qbittorrent_" + $QbitRev + "_setup.exe"
+$Setupx64 = "qbittorrent_" + $QbitRev + "_x64_setup.exe"
+
+if ($QbitRev -gt $Util.Qbit.Version32 -and $arc -eq "32-bit"){
+Write-host "Updating Qbittorrent 32 bit"
+	if ($Util.Qbit.Setup32){rm $Util.Qbit.Setup32 -Force}
+Download $URLx32 $Setupx32; $Count++} 
+
+if ($QbitRev -gt $Util.Qbit.Version64 -and $arc -eq "64-bit"){
+Write-host "Updating Qbittorrent 64 bit"
+	if ($Util.Qbit.Setup64){rm $Util.Qbit.Setup64 -Force}
+Download $URLx64 $Setupx64; $Count++} 
+
 # ==========================================================* Update the Setups  *=============================================================
 # =============================================================================================================================================
 # ============================================================* WebPlugins *===================================================================
@@ -290,9 +332,9 @@ $JavaBuild = $Matches[0]; $JavaBuild = $JavaBuild.replace(" Update ","u");
 $JavaRev = $JavaBuild.Split("u")[0] + ".0." + $JavaBuild.Split("u")[1] 
 $JavaKey = $WebResponse.Links | Where-Object {$_.outerhtml -match "Windows Offline" -and $_.outerhtml -notmatch "(64-bit)"}; $JavaKey = $JavaKey[0].outerHTML
 $JavaKey = $JavaKey.Split("/") | Where-Object {$_ -match "AutoDL"}; $JavaKey = $JavaKey.Split("="); $JavaKey = $JavaKey.Split([Environment]::NewLine)[1]
-$JavaKey32 = $JavaKey.Substring(0,$JavaKey.Length-2)
-[int]$Part1 = $JavaKey32.Split("_")[0]; $Part2 = $JavaKey32.Split("_")[1]; $Part64 = $Part1 + 2
+$JavaKey32 = $JavaKey.Substring(0,$JavaKey.Length-2); [int]$Part1 = $JavaKey32.Split("_")[0]; $Part2 = $JavaKey32.Split("_")[1]; $Part64 = $Part1 + 2
 $JavaKey64 = [string]$Part64 + '_' + $Part2
+
 $URLx32 = 'http://javadl.oracle.com/webapps/download/AutoDL?BundleId=' + $JavaKey32
 $URLx64 = 'http://javadl.oracle.com/webapps/download/AutoDL?BundleId=' + $JavaKey64
 $Setupx32 = 'jre-' + $JavaBuild + '-windows-i586.exe'

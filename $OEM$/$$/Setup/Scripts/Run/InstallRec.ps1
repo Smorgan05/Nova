@@ -28,12 +28,14 @@ cd $Default\Apps\Handy
 $Handy=@{}
 $Handy["Classic"] = @{}
 $Handy["Firefox"] = @{} 
+$Handy["MediaMonkey"] = @{}
 $Handy["MPC"] = @{}
 $Handy["Chrome"] = @{}
 
 	# Set Variables for Handy
 	for($i=0; $i -le $HandyArray.length; $i++){
 	if ($HandyArray[$i] -match 'ClassicShell'){ $Handy["Classic"]["Setup"] = $HandyArray[$i]; $Handy["Classic"]["Version"] = SetupVer $Handy.Classic.Setup; $Handy.Classic.Version = $Handy.Classic.Version.replace(", ",".")}
+	if ($HandyArray[$i] -match 'MediaMonkey'){$Handy["MediaMonkey"]["Setup"] = $HandyArray[$i]; $Temp = $Handy.MediaMonkey.Setup.Split("_")[1]; $Handy["MediaMonkey"]["Version"] = $Temp.Substring(0,$Temp.IndexOf(".exe"))}
 	if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win32*')){$Handy["Firefox"]["Setup32"] = $HandyArray[$i]; $Temp = $Handy.Firefox.Setup32.Substring(8); $Handy["Firefox"]["Version32"] = $Temp.Substring(0,$Temp.IndexOf("e")-1)}	
 	if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win64*')){$Handy["Firefox"]["Setup64"] = $HandyArray[$i]; $Temp = $Handy.Firefox.Setup64.Substring(8); $Handy["Firefox"]["Version64"] = $Temp.Substring(0,$Temp.IndexOf("e")-1)}
 	if (($HandyArray[$i] -match 'MPC') -and ($HandyArray[$i] -like '*x86*')){$Handy["MPC"]["Setup32"] = $HandyArray[$i]; $Handy["MPC"]["Version32"] = SetupVer $Handy.MPC.Setup32}
@@ -57,6 +59,7 @@ $Util["ProcessExp"] = @{}
 $Util["7zip"] = @{}
 $Util["FileZ"] = @{}
 $Util["Python"] = @{}
+$Util["Qbit"] = @{}
 
 	# Set Variables for Utilities
 	for ($i=0; $i -le $UtilArray.length; $i++){
@@ -70,8 +73,9 @@ $Util["Python"] = @{}
 	if (($UtilArray[$i] -match 'FileZilla') -and ($UtilArray[$i] -like '*win32*')){$Util["FileZ"]["Setup32"] = $UtilArray[$i]; $Util["FileZ"]["Version32"] = SetupVer $Util.FileZ.Setup32}
 	if (($UtilArray[$i] -match 'FileZilla') -and ($UtilArray[$i] -like '*win64*')){$Util["FileZ"]["Setup64"] = $UtilArray[$i]; $Util["FileZ"]["Version64"] = SetupVer $Util.FileZ.Setup64}
 	if (($UtilArray[$i] -match 'python') -and ($UtilArray[$i] -notmatch 'amd64')){$Util["Python"]["Setup32"] = $UtilArray[$i]; $Util["Python"]["Version32"] = SetupVer $Util.Python.Setup32}
-	if (($UtilArray[$i] -match 'python') -and ($UtilArray[$i] -match 'amd64')){$Util["Python"]["Setup64"] = $UtilArray[$i]; $Util["Python"]["Version64"] = SetupVer $Util.Python.Setup64}}
-
+	if (($UtilArray[$i] -match 'python') -and ($UtilArray[$i] -match 'amd64')){$Util["Python"]["Setup64"] = $UtilArray[$i]; $Util["Python"]["Version64"] = SetupVer $Util.Python.Setup64}
+	if (($UtilArray[$i] -match 'qbit') -and ($UtilArray[$i] -notlike '*x64*')){$Util["Qbit"]["Setup32"] = $UtilArray[$i]; $Util["Qbit"]["Version32"] = $Util.Qbit.Setup32.Split("_")[1]}
+	if (($UtilArray[$i] -match 'qbit') -and ($UtilArray[$i] -like '*x64*')){$Util["Qbit"]["Setup64"] = $UtilArray[$i]; $Util["Qbit"]["Version64"] = $Util.Qbit.Setup64.Split("_")[1]}}
 }
 # ==============================* Web Plugins *======================================
 if ($AppsModWebPlugins -eq "True"){

@@ -23,7 +23,8 @@ if ($Action -eq "Setup"){
 		start-process $Handy.MPC.Setup64 -ArgumentList "$silent" -wait } else {
 		start-process $Handy.Chrome.Setup32 -ArgumentList "$q" -wait
 		start-process $Handy.Firefox.Setup32 -ArgumentList "-ms" -wait
-		start-process $Handy.MPC.Setup32 -ArgumentList "$silent" -wait}
+		start-process $Handy.MPC.Setup32 -ArgumentList "$silent" -wait
+		start-process $Handy.MediaMonkey.Setup -ArgumentList "$silent" -wait}
 	}
 
 	# Utilities / Tools Module
@@ -39,9 +40,11 @@ if ($Action -eq "Setup"){
 	# Utilities / Tools Module (Multi - Arc)
 	if ($arc -eq "64-bit"){
 	start-process $Util.Python.Setup64 -ArgumentList "$PythonInst" -wait 
-	start-process $Util.FileZ.Setup64 -ArgumentList "$s_big" -wait } else {
+	start-process $Util.FileZ.Setup64 -ArgumentList "$s_big" -wait 
+	start-process $Util.Qbit.Setup64 -ArgumentList "$s_big" -wait } else {
 	start-process $Util.Python.Setup32 -ArgumentList "$PythonInst" -wait
-	start-process $Util.FileZ.Setup32 -ArgumentList "$s_big" -wait}}
+	start-process $Util.FileZ.Setup32 -ArgumentList "$s_big" -wait
+	start-process $Util.Qbit.Setup32 -ArgumentList "$s_big" -wait}}
 
 } # End Method for Setup
 
