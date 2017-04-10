@@ -108,6 +108,7 @@ Write-host "Updating Chrome 64 bit"
 Download $URLx64 $Setupx64; $Count++} 
  
 # Grab the newest Firefox Setup
+
 if (!$Handy.Firefox){$Handy["Firefox"] = @{}}
 if (!$Handy.Firefox.Version32){$Handy.Firefox.Version32 = 0}
 if (!$Handy.Firefox.Version64){$Handy.Firefox.Version64 = 0}
@@ -293,7 +294,6 @@ Unzip $PWD\AutoRuns.Zip $env:Temp\Autoruns; cp $env:Temp\Autoruns\AutoRuns.exe $
 rm Autoruns.zip}
 
 # Grab the Newest qBittorrent
-
 if (!$Util.Qbit){$Util["Qbit"] = @{}}
 if (!$Util.Qbit.Version32){$Util.Qbit.Version32 = 0}
 if (!$Util.Qbit.Version64){$Util.Qbit.Version64 = 0}
