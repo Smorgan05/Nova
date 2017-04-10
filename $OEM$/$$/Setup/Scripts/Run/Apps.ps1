@@ -18,20 +18,13 @@ if ($Action -eq "Setup"){
 	cd $default\Apps\Handy
 	
 		if ($arc -eq "64-bit"){
-			
-				#Firefox Require Windows 7 or newer for 64 bit
-				if (($winver -gt "6.1") -or ($winver -like "10.*")){start-process $Handy.Firefox.Setup64 -ArgumentList "-ms" -wait
-																		start-process $Handy.Chrome.Setup64 -ArgumentList "$q" -wait}
-																		
-				#Install Firefox 32 bit if we can't install the 64 bit copy
-				if (($winver -lt "6.1")){start-process $Handy.Firefox.Setup32 -ArgumentList "-ms" -wait}
-				
+		start-process $Handy.Firefox.Setup64 -ArgumentList "-ms" -wait
+		start-process $Handy.Chrome.Setup64 -ArgumentList "$q" -wait		
 		start-process $Handy.MPC.Setup64 -ArgumentList "$silent" -wait } else {
-		
-		if (($winver -gt "6.1") -or ($winver -like "10.*")){start-process $Handy.Chrome.Setup32 -ArgumentList "$q" -wait}
-		
+		start-process $Handy.Chrome.Setup32 -ArgumentList "$q" -wait
 		start-process $Handy.Firefox.Setup32 -ArgumentList "-ms" -wait
-		start-process $Handy.MPC.Setup32 -ArgumentList "$silent" -wait}
+		start-process $Handy.MPC.Setup32 -ArgumentList "$silent" -wait
+		start-process $Handy.MediaMonkey.Setup -ArgumentList "$silent" -wait}
 	}
 
 	# Utilities / Tools Module
@@ -47,9 +40,11 @@ if ($Action -eq "Setup"){
 	# Utilities / Tools Module (Multi - Arc)
 	if ($arc -eq "64-bit"){
 	start-process $Util.Python.Setup64 -ArgumentList "$PythonInst" -wait 
-	start-process $Util.FileZ.Setup64 -ArgumentList "$s_big" -wait } else {
+	start-process $Util.FileZ.Setup64 -ArgumentList "$s_big" -wait 
+	start-process $Util.Qbit.Setup64 -ArgumentList "$s_big" -wait } else {
 	start-process $Util.Python.Setup32 -ArgumentList "$PythonInst" -wait
-	start-process $Util.FileZ.Setup32 -ArgumentList "$s_big" -wait}}
+	start-process $Util.FileZ.Setup32 -ArgumentList "$s_big" -wait
+	start-process $Util.Qbit.Setup32 -ArgumentList "$s_big" -wait}}
 
 } # End Method for Setup
 
@@ -82,6 +77,9 @@ if ($Action -eq "PostInstall"){
 
 	# Web Plugins Module (Multi - ARC)
 	if ($arc -eq "64-bit"){start-process $WebPlugins.Java.Setup64 -ArgumentList "/s" -wait} else { start-process $WebPlugins.Java.Setup32 -ArgumentList "/s" -wait}}
+	
+	# Firefox Silent Plugin Install
+	
 	
 	} # End Method for Post Install
 	cd $default\run	

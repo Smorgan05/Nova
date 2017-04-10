@@ -26,14 +26,13 @@ Remove-Item $home\desktop\* -include *.lnk
 if (($winver -like "6.*") -or ($winver -like "10.*")){
 	Remove-Item $env:public\Desktop\* -include *.lnk}
 
-# Remove all Shortcuts on desktop for Legacy Systems
-if (($PSVer -eq "2.0") -and ($winver -like "5.*")){
-	Remove-Item $env:allusersprofile\Desktop\* -include *.lnk}
-
+$AutoPath = $env:homedrive + "\" + $Util.AutoRuns.Setup
+$ProcPath = $env:homedrive + "\" + $Util.ProcessExp.Setup
+	
 if ($AppsModUtil -eq "True"){
 	New-Item -ItemType directory -Path "$StartMenuUser\SysInternals" | out-null
-	Shortcuts "$env:homedrive\$Util.AutoRuns.Setup" "$StartMenuUser\SysInternals\Autoruns.lnk"
-	Shortcuts "$env:homedrive\$Util.ProcessExp.Setup" "$StartMenuUser\SysInternals\Process Explorer.lnk"}
+	Shortcuts $AutoPath "$StartMenuUser\SysInternals\Autoruns.lnk"
+	Shortcuts $ProcPath "$StartMenuUser\SysInternals\Process Explorer.lnk"}
 
 # ========================
 

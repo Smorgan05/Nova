@@ -6,8 +6,7 @@ $Host.UI.RawUI.WindowTitle = "Nova Module Controller"
 
 # Check for Pending Install / Reboot then wait
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\ExtRun} else {cd $ScriptDir\ExtRun}
-. .\Get-PendingReboot.ps1
-if ((Get-PendingReboot).RebootPending -eq "True"){Restart-Computer -Force}
+. .\Get-PendingReboot.ps1; if ((Get-PendingReboot).RebootPending -eq "True"){Restart-Computer -Force}
 
 # Change Directory and gather Automatical Variables
 if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} else {cd $ScriptDir\Run}
@@ -19,9 +18,9 @@ $AutomaticVariables = Get-Variable
 # Pass Variables to the Var file
 Compare (gv) $AutomaticVariables -Property Name -PassThru | Where {$_.Name -ne "AutomaticVariables"} | Format-Table -Auto | Out-File variables.txt -Width 10000
 
-Write-Host ----------------- Nova Module Controller $NovaVer ----------------
-Write-Host --------------------------------------------------------------
-Write-Host ------ Per Ardua Ad Astra, From Adversity to the Stars --------
+Write-Host *************** Nova Module Controller $NovaVer ****************
+Write-Host ************************************************************
+Write-Host ****** Per Ardua Ad Astra, From Adversity to the Stars ******
 Write-Host
 if ($NovaMod -eq "True"){
 Write-Host Nova Settings
