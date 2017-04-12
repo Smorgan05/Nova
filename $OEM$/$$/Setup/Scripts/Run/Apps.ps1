@@ -18,13 +18,13 @@ if ($Action -eq "Setup"){
 	cd $default\Apps\Handy
 	
 		if ($arc -eq "64-bit"){
-		start-process $Handy.Firefox.Setup64 -ArgumentList "-ms" -wait
-		start-process $Handy.Chrome.Setup64 -ArgumentList "$q" -wait		
-		start-process $Handy.MPC.Setup64 -ArgumentList "$silent" -wait } else {
+		start-process $Handy.Chrome.Setup64 -ArgumentList "$q" -wait
+		start-process $Handy.Firefox.Setup64 -ArgumentList "-ms" -wait1 } else {
 		start-process $Handy.Chrome.Setup32 -ArgumentList "$q" -wait
-		start-process $Handy.Firefox.Setup32 -ArgumentList "-ms" -wait
-		start-process $Handy.MPC.Setup32 -ArgumentList "$silent" -wait
-		start-process $Handy.MediaMonkey.Setup -ArgumentList "$silent" -wait}
+		start-process $Handy.Firefox.Setup32 -ArgumentList "-ms" -wait}
+		
+		#Neutral
+		start-process $Handy.MediaMonkey.Setup -ArgumentList "$silent" -wait
 	}
 
 	# Utilities / Tools Module
@@ -54,6 +54,14 @@ if ($Action -eq "Setup"){
 
 if ($Action -eq "PostInstall"){
 
+	# Applications Module
+	if ($AppsModHandy -eq "True"){
+	cd $default\Apps\Handy
+	
+	if ($arc -eq "64-bit"){
+	start-process $Handy.MPC.Setup64 -ArgumentList "$silent" -wait } else {
+	start-process $Handy.MPC.Setup32 -ArgumentList "$silent" -wait}}
+
 	# Windows 8 & 8.1 & 10 (***Classic Shell Start Button***)
 	if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.9200") -or ($winver -like "10.*"))){
 	cd $default\Apps\Handy
@@ -77,9 +85,6 @@ if ($Action -eq "PostInstall"){
 
 	# Web Plugins Module (Multi - ARC)
 	if ($arc -eq "64-bit"){start-process $WebPlugins.Java.Setup64 -ArgumentList "/s" -wait} else { start-process $WebPlugins.Java.Setup32 -ArgumentList "/s" -wait}}
-	
-	# Firefox Silent Plugin Install
-	
 	
 	} # End Method for Post Install
 	cd $default\run	
