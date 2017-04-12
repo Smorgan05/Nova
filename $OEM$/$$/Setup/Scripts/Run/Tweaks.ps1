@@ -12,15 +12,10 @@ cd $default
 function Tweaks($Action){
 
 if ($Action -eq "Setup"){
-
-	# Add Python to the Path in the Registry (needs restart)
-	if ($Python -eq "True"){
-	$RegPath = Get-ItemProperty $SystemVar
-	$RegValue = $RegPath.Path+$PythonPath
-	Set-ItemProperty -path $SystemVar -Name Path -Value $RegValue}
 	
 	# Add 7zip to the Path in the Registry (needs restart)
 	$7zPath = ";$env:ProgramFiles\7-zip"
+	$RegPath = Get-ItemProperty $SystemVar
 	$RegValue = $RegPath.Path+$7zPath
 	Set-ItemProperty -path $SystemVar -Name Path -Value $RegValue
 

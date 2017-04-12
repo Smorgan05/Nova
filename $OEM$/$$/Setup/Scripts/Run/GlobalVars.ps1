@@ -33,7 +33,7 @@ $StartMenuUser = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs"
 
 # One Use variables
 $Classy = "/qn ADDLOCAL=ClassicStartMenu"
-$PythonInst = "/passive InstallAllUsers=1"
+$PythonInst = "/passive InstallAllUsers=1 PrependPath=1"
 $Program86 = ${Env:ProgramFiles(x86)}
 
 # Enviromental Variables (Permenant - System / User)
@@ -71,10 +71,11 @@ If ($Connection -eq "2"){
 # ============================================================================================================================================================================
 
 # Check Arc and set Correct Python path 
-if ($arc -eq "64-bit"){ $PythonPath = ";$env:ProgramFiles\Python 3.5" } else { $PythonPath = ";$Program86\Python 3.5" }
+if ($arc -eq "64-bit" -or $arc -ne "64-bit"){
+$PythonPath = (ls $env:ProgramFiles | Where-Object { $_ -match "Python"}).FullName} else {$PythonPath = (ls $Program86 | Where-Object { $_ -match "Python"}).FullName}
 
 # Set Python check variable
-if (Test-Path $PythonPath.substring(1)){
+if (Test-Path $PythonPath){
 $Python = "True"} else {$Python = "False"}
 
 # ============================================================================================================================================================================
