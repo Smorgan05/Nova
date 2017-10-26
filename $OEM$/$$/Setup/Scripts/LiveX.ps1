@@ -86,13 +86,13 @@ write-host Setup Updater
 
 # Load Apps script and Run Setup Method
 Write-Host
-Write-Host App Install Start
+Write-Host App Installer
 . .\Apps.ps1; Apps "Setup"; Apps "PostInstall"; Tweaks "PostInstall" 
 
 # Run Server Script
 if ($ServerMod -eq "True"){
 Write-Host
-Write-Host Server Workstation Install
+Write-Host Server Workstation Installer
 . .\Server.ps1; Server "ServerConv"}
 
 # Python Script Sample

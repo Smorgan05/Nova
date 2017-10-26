@@ -72,12 +72,11 @@ If ($Connection -eq "2"){
 
 # Set Correct Python path 
 
-# Set Correct Python path 
-if ((ls $env:ProgramFiles | Where-Object { $_ -match "Python"}).FullName){
+if ($arc -eq "64-bit"){
 $PythonPath = (ls $env:ProgramFiles | Where-Object { $_ -match "Python"}).FullName} else {$PythonPath = (ls $Program86 | Where-Object { $_ -match "Python"}).FullName}
 
 # Set Python check variable
-if (Test-Path $PythonPath){
+if (($PythonPath -ne $Null) -and (Test-Path $PythonPath)){
 $Python = "True"} else {$Python = "False"}
 
 # ============================================================================================================================================================================

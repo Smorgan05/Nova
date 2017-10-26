@@ -262,7 +262,7 @@ if (!$Util.ProcessExp){$Util["ProcessExp"] = @{}}
 if (!$Util.ProcessExp.Version){$Util.ProcessExp.Version = 0}
 $WebResponse = Invoke-WebRequest https://technet.microsoft.com/en-us/sysinternals/processexplorer.aspx -UseBasicParsing
 $ProcRev = $WebResponse.RawContent | Where-Object {$_ -match "v[0-9].*"}; $ProcRev = $Matches[0]; 
-$ProcRev = $ProcRev.Substring(0, $ProcRev.IndexOf('<')); $ProcRev = $ProcRev.replace("v","")
+$ProcRev = $ProcRev -replace '[a-z ]',""; $ProcRev = $ProcRev.Split('>')[1]; $ProcRev = $ProcRev.Split("<")[0]
 
 $Setup = 'ProcessExplorer.zip'
 $URL = 'https://download.sysinternals.com/files/' + $Setup
@@ -281,7 +281,7 @@ if (!$Util.AutoRuns){$Util["AutoRuns"] = @{}}
 if (!$Util.AutoRuns.Version){$Util.AutoRuns.Version = 0}
 $WebResponse = Invoke-WebRequest https://technet.microsoft.com/en-us/sysinternals/bb963902.aspx -UseBasicParsing
 $AutoRev = $WebResponse.RawContent | Where-Object {$_ -match "v[0-9].*"}; $AutoRev = $Matches[0]; 
-$AutoRev = $AutoRev.Substring(0, $AutoRev.IndexOf('<')); $AutoRev = $AutoRev.replace("v","")
+$AutoRev = $AutoRev -replace '[a-z ]',""; $AutoRev = $AutoRev.Split('>')[1]; $AutoRev = $AutoRev.Split("<")[0]
 
 $Setup = 'Autoruns.zip'
 $URL = 'https://download.sysinternals.com/files/' + $Setup
