@@ -70,8 +70,10 @@ If ($Connection -eq "2"){
 #																	 Set External Language Variables
 # ============================================================================================================================================================================
 
-# Check Arc and set Correct Python path 
-if ($arc -eq "64-bit" -or $arc -ne "64-bit"){
+# Set Correct Python path 
+
+# Set Correct Python path 
+if ((ls $env:ProgramFiles | Where-Object { $_ -match "Python"}).FullName){
 $PythonPath = (ls $env:ProgramFiles | Where-Object { $_ -match "Python"}).FullName} else {$PythonPath = (ls $Program86 | Where-Object { $_ -match "Python"}).FullName}
 
 # Set Python check variable

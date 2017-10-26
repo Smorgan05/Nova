@@ -1,14 +1,14 @@
 @echo off
 :: Setupcomplete with PS 4.0 Install for Windows 7 \ Server 2008 R2
 
-:: Check for Internet
-Ping www.google.nl -n 1 -w 1000
-if errorlevel 1 (goto NrmRun) else (goto IntRun)
+REM :: Check for Internet
+REM Ping www.google.nl -n 1 -w 1000
+REM if errorlevel 1 (goto NrmRun) else (goto IntRun)
 
-:: Execute Smart Rebuild
-:IntRun
-powershell if (Test-Path Rebuilder.ps1){. .\Rebuilder.ps1} else {iwr https://raw.githubusercontent.com/Smorgan05/Nova/Experimental/%24OEM%24/%24%24/Setup/Scripts/Rebuilder.ps1 -OutFile Rebuilder.ps1}
-PowerShell -WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File "Rebuilder.ps1"
+REM :: Execute Smart Rebuild
+REM :IntRun
+REM powershell if (Test-Path Rebuilder.ps1){. .\Rebuilder.ps1} else {iwr https://raw.githubusercontent.com/Smorgan05/Nova/Experimental/%24OEM%24/%24%24/Setup/Scripts/Rebuilder.ps1 -OutFile Rebuilder.ps1}
+REM PowerShell -WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File "Rebuilder.ps1"
 
 :: Grab the Windows Version
 :NrmRun
@@ -40,7 +40,7 @@ goto Finish
 :: -----------------------------------------------------------------------------------------
 
 :win7
-:: Install .net 4.5.2
+:: Install .net 4.6.1
 cd %windir%\setup\scripts\Prep
 start /w NDP461-KB3102436-x86-x64-AllOS-ENU.exe /q /norestart
 

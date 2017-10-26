@@ -31,9 +31,10 @@ if (!$Handy.Classic){$Handy["Classic"] = @{}}
 if (!$Handy.Classic.Version) {$Handy.Classic.Version = 0}
 
 $WebResponse = Invoke-WebRequest http://www.classicshell.net/downloads/ -UseBasicParsing
-$ClassicRev = ($WebResponse.links | Where-Object {$_ -match "English" -and $_ -match "[0-9].[0-9].[0-9]"}  | Measure-Object -Maximum).Maximum; $ClassicLnk = $Matches[0]; $ClassicRev = $ClassicLnk.replace("_",".")
-$ClassicRevKey = $WebResponse.links.href | Where-Object {$_ -match "setup" -and $_ -notmatch "-[a-z][a-z]"}
-$ClassicRevKey = $ClassicRevKey.Split("/") | Where-Object {$_.length -eq 15 }
+$Classic = ($WebResponse.Links | Where-Object { $_ -match "Setup" -and $_ -match "[0-9].*" -and $_ -notmatch "-[a-z][a-z]"}).outerhtml
+$ClassicRevKey = $Classic.Split("/") | Where-Object {$_.length -eq 15 }
+$ClassicRev = $Classic -match ' \d+.*.\d+'; $ClassicRev = $Matches[0]
+$ClassicRev = $ClassicRev.Trim(); $ClassicLnk = $ClassicRev.replace(".","_")
 
 $URL = 'http://www.mediafire.com/download/' + $ClassicRevKey + '/ClassicShellSetup_' + $ClassicLnk + '.exe'
 $Setup = 'ClassicShellSetup_' + $ClassicLnk + '.exe'
@@ -48,8 +49,8 @@ if (!$Handy.MediaMonkey){$Handy["MediaMonkey"] = @{}}
 if (!$Handy.MediaMonkey.Version) {$Handy.MediaMonkey.Version = 0}
 
 $WebResponse = Invoke-WebRequest http://www.mediamonkey.com/information/changelog/ -UseBasicParsing
-$MonkeyRev = $WebResponse.RawContent | Where-Object { $_ -match "MediaMonkey [0-9].[0-9].*"}; $MonkeyRev = $Matches[0] 
-$MonkeyRev = $MonkeyRev.Split(" ")[1]; $MonkeyRev = $MonkeyRev.Substring(0, $MonkeyRev.IndexOf('<'))
+$MonkeyRev = $WebResponse.RawContent | Where-Object { $_ -match "MediaMonkey [0-9].[0-9].*"}; $MonkeyRev = $Matches[0]; $MonkeyRev = $MonkeyRev.Split(" ")[1]
+$MonkeyRev = $MonkeyRev.Substring(0, $MonkeyRev.IndexOf('<'))
 
 $URL = 'http://e8d327b5fb.site.internapcdn.net/sw/MediaMonkey_' + $MonkeyRev + ".exe"
 $Setup = 'MediaMonkey_' + $MonkeyRev + '.exe'
@@ -65,8 +66,8 @@ if (!$Handy.MPC.Version32) {$Handy.MPC.Version32 = 0}
 if (!$Handy.MPC.Version64) {$Handy.MPC.Version64 = 0}
 
 $WebResponse = Invoke-WebRequest https://mpc-hc.org/downloads/ -UseBasicParsing
-$MPCRev =  ($WebResponse.Links.href | Where-Object {$_ -match "exe"} | Measure-Object -Maximum).Maximum
-$MPCRev = $MPCRev.Split("_"); $MPCRev = $MPCRev[1]; $MPCRev = $MPCRev.replace("v","")
+$MPCRev =  ($WebResponse.Links.href | Where-Object {$_ -match "exe"} | Measure-Object -Maximum).Maximum; $MPCRev = $MPCRev.Split("_"); $MPCRev = $MPCRev[1]
+$MPCRev = $MPCRev.replace("v","")
 
 $URLx32 = 'https://binaries.mpc-hc.org/MPC HomeCinema - Win32/MPC-HC_v' + $MPCRev + '_x86/MPC-HC.' + $MPCRev + '.x86.exe'
 $URLx64 = 'https://binaries.mpc-hc.org/MPC HomeCinema - x64/MPC-HC_v' + $MPCRev + '_x64/MPC-HC.' + $MPCRev + '.x64.exe'
@@ -87,15 +88,15 @@ Download $URLx64 $Setupx64; $Count++}
 if (!$Handy.Chrome){$Handy["Chrome"] = @{}}
 if (!$Handy.Chrome.Version32){$Handy.Chrome.Version32 = 0}
 if (!$Handy.Chrome.Version64){$Handy.Chrome.Version64 = 0}
-$WebURL = 'https://www.whatismybrowser.com/guides/the-latest-version/chrome'
-$WebResponse = Invoke-WebRequest $WebURL -UseBasicParsing
-$ChromeRev = $WebResponse.RawContent | Where-Object {$_ -match "Chrome is: [0-9][0-9].*"}; $ChromeRev = $Matches[0]
-$ChromeRev = $ChromeRev.Split(" ")[2]; $ChromeRev = $ChromeRev.Substring(0, $ChromeRev.IndexOf('<'))
 
-$URLx32 = 'https://dl.google.com/tag/s/appguid={8A69D345-D564-463C-AFF1-A69D9E530F96}&iid={00000000-0000-0000-0000-000000000000}&lang=en&browser=3&usagestats=0&appname=Google Chrome&needsadmin=prefers/edgedl/chrome/install/GoogleChromeStandaloneEnterprise.msi'
-$URLx64 = 'https://dl.google.com/tag/s/appguid={00000000-0000-0000-0000-000000000000}&iid={00000000-0000-0000-0000-000000000000}&lang=en&browser=4&usagestats=0&appname=Google Chrome&needsadmin=true/dl/chrome/install/googlechromestandaloneenterprise64.msi'
-$Setupx32 = 'Chrome ' + $ChromeRev + '.msi'
-$Setupx64 = 'Chrome64 '+ $ChromeRev +'.msi'
+$WebResponse = Invoke-WebRequest 'https://omahaproxy.appspot.com/all?os=win&channel=stable' -UseBasicParsing
+$ChromeRev = $WebResponse.Content | Where-Object {$_ -match "stable,[0-9].*"}; $ChromeRev = $Matches[0]
+$ChromeRev = $ChromeRev.Split(",")[1]
+
+$URLx32 = 'https://dl.google.com/dl/chrome/install/googlechromestandaloneenterprise.msi'
+$URLx64 = 'https://dl.google.com/dl/chrome/install/googlechromestandaloneenterprise64.msi'
+$Setupx32 = 'Chrome.msi'
+$Setupx64 = 'Chrome64.msi'
 
 if ($ChromeRev -ne $Handy.Chrome.Version32 -and $arc -eq "32-bit"){
 Write-host "Updating Chrome 32 bit"
@@ -105,7 +106,7 @@ Download $URLx32 $Setupx32; $Count++}
 if ($ChromeRev -ne $Handy.Chrome.Version64  -and $arc -eq "64-bit"){
 Write-host "Updating Chrome 64 bit"
 	if ($Handy.Chrome.Setup64){rm $Handy.Chrome.Setup64}
-Download $URLx64 $Setupx64; $Count++} 
+Download $URLx64 $Setupx64; $Count++}
  
 # Grab the newest Firefox Setup
 if (!$Handy.Firefox){$Handy["Firefox"] = @{}}
@@ -131,7 +132,7 @@ Download $URLx32 $Setupx32; $Count++}
 if ($FirefoxRev -gt $Handy.Firefox.Version64 -and $arc -eq "64-bit"){
 Write-host "Updating Firefox 64 bit"
 	if ($Handy.Firefox.Setup64){rm $Handy.Firefox.Setup64 -Force}
-Download $URLx64 $Setupx64; $Count++} 
+Download $URLx64 $Setupx64; $Count++}
 
 # ==========================================================* Update the Setups  *=============================================================
 # =============================================================================================================================================
@@ -143,8 +144,9 @@ if (!$Util){$Util = @{}}
 if (!$Util.Notepad){$Util["Notepad"] = @{}}
 if (!$Util.Notepad.Version){$Util.Notepad.Version = 0}
 $WebResponse = Invoke-WebRequest https://notepad-plus-plus.org/ -UseBasicParsing
-$NotepadRev = $WebResponse.Links.href | Where-Object {$_ -match "[0-9].[0-9]" -or $_ -match "[0-9].[0-9].[0-9]" -and $_ -like "*download*"}
-$NotepadRev = $NotepadRev.replace("download/v",""); $NotepadRev = $NotepadRev.replace(".html","")
+$NotepadRev = $WebResponse.Links.href | Where-Object {$_ -match "[0-9].*" -and $_ -like "*download*"}
+$NotepadRev = $NotepadRev.replace("download/v","")
+$NotepadRev = $NotepadRev.replace(".html","")
 $NotepadBuild = $NotepadRev.Substring(0,2); $NotepadBuild += "x"
 
 $URL = 'https://notepad-plus-plus.org/repository/' + $NotepadBuild + '/' + $NotepadRev + '/npp.' + $NotepadRev + '.Installer.exe'
@@ -153,14 +155,14 @@ $Setup = 'npp.' + $NotepadRev + '.Installer.exe'
 if ($NotepadRev -gt $Util.Notepad.Version){
 Write-host "Updating Notepad++"
 	if ($Util.Notepad.Setup){rm $Util.Notepad.Setup -Force}
-Download $URL $Setup; $Count++} 
+Download $URL $Setup; $Count++}
 
 # Grab the newest 7zip Setup
 if (!$Util["7zip"]){$Util["7zip"] = @{}}
 if (!$Util["7zip"]["Version32"]){$Util["7zip"]["Version32"] = 0}
 if (!$Util["7zip"]["Version64"]){$Util["7zip"]["Version32"] = 0}
 $WebResponse = Invoke-WebRequest http://www.7-zip.org/ -UseBasicParsing
-$7zipRev = ($WebResponse.RawContent -Match "7-zip [0-9][0-9].[0-9][0-9]" | Measure-Object -Maximum).Maximum; $7zipRev = $Matches[0];
+$7zipRev = $WebResponse.RawContent | Where-Object {$_ -match "7-zip [0-9].*"}; $7zipRev = $Matches[0];
 $7zipRev = $7zipRev | Where-Object {$_ -Match "[0-9][0-9].[0-9][0-9]"}; $7zipRev = $Matches[0]; 
 $7ziplnk = $7zipRev.replace(".","")
 
@@ -177,17 +179,17 @@ Download $URLx32 $Setupx32; $Count++}
 if ($7zipRev -gt $Util["7zip"]["Version64"] -and $arc -eq "64-bit"){
 Write-host "Updating 7-zip 64 bit"
 	if ($Util["7zip"]["Setup64"]){rm $Util["7zip"]["Setup64"] -Force}
-Download $URLx64 $Setupx64; $Count++} 
+Download $URLx64 $Setupx64; $Count++}
 
 # Grab the newest CCleaner Setup
 if (!$Util.CCleaner){$Util["CCleaner"] = @{}}
 if (!$Util.CCleaner.Version){$Util.CCleaner.Version = 0}
-$WebResponse = Invoke-WebRequest https://www.piriform.com/ccleaner/download -UseBasicParsing
-$CCVer = $WebResponse.RawContent | Where-Object {$_ -match "v[0-9].[0-9][0-9]"} 
-$CCRev = $Matches[0]; $CCRev = $CCRev.replace("v",""); $CCRev = $CCRev.replace(".","")
+$WebResponse = Invoke-WebRequest http://www.piriform.com/ccleaner/download -UseBasicParsing
+$CCRev = $WebResponse.RawContent | Where-Object {$_ -match "v[0-9].[0-9][0-9]"}; $CCRev = $Matches[0]
+$CCRev = $CCRev.replace("v",""); $CCLnk = $CCRev.replace(".","")
 
-$URL = 'http://download.piriform.com/ccsetup' + $CCRev + '.exe'
-$Setup = 'ccsetup' + $CCRev + '.exe.'
+$URL = 'http://download.piriform.com/ccsetup' + $CCLnk + '.exe'
+$Setup = 'ccsetup' + $CCLnk + '.exe.'
 
 if ($CCRev -gt $Util.CCleaner.Version){
 Write-host "Updating CCleaner"
@@ -197,24 +199,24 @@ Download $URL $Setup; $Count++}
 # Grab the newest Defraggler Setup
 if (!$Util.Defraggler){$Util["Defraggler"] = @{}}
 if (!$Util.Defraggler.Version){$Util.Defraggler.Version = 0}
-$WebResponse = Invoke-WebRequest https://www.piriform.com/defraggler/download -UseBasicParsing
-$DefragRev = $WebResponse.RawContent; $DefragRev -match "v[0-9].[0-9][0-9]" | Out-null; $DefragRev = $Matches[0]
-$DefragRev = $DefragRev.replace("v",""); $DefragRev = $DefragRev.replace(".","")
+$WebResponse = Invoke-WebRequest http://www.piriform.com/defraggler/download -UseBasicParsing
+$DefragRev = $WebResponse.RawContent | Where-Object {$_ -match "v[0-9].[0-9][0-9]"}; $DefragRev = $Matches[0]
+$DefragRev = $DefragRev.replace("v",""); $DefragLnk = $DefragRev.replace(".","")
 
-$URL = 'http://download.piriform.com/dfsetup' + $DefragRev + '.exe'
-$Setup = 'dfsetup' + $DefragRev + '.exe'
+$URL = 'http://download.piriform.com/dfsetup' + $DefragLnk + '.exe'
+$Setup = 'dfsetup' + $DefragLnk + '.exe'
 
 if ($DefragRev -gt $Util.Defraggler.Version){
 Write-host "Updating Defraggler"
 	if ($Util.Defraggler.Setup){rm $Util.Defraggler.Setup -Force}
-Download $URL $Setup; $Count++} 
+Download $URL $Setup; $Count++}
 
 # Grab the newest Filezilla Setup
 if (!$Util.FileZ){$Util["FileZ"] = @{}}
 if (!$Util.FileZ.Version32){$Util.FileZ.Version32 = 0}
 if (!$Util.FileZ.Version64){$Util.FileZ.Version64 = 0}
-$WebResponse = Invoke-WebRequest https://filezilla-project.org/download.php?show_all=1 -UseBasicParsing
-$FileRev = $WebResponse.Links | Where-Object {$_ -match "[0-9].[0-9][0-9].[0-9]*"}; $FileRev = $Matches[0]
+$WebResponse = Invoke-WebRequest https://filezilla-project.org/download.php? -UseBasicParsing
+$FileRev = $WebResponse.Links | Where-Object {$_ -match "[0-9].[0-9].*"}; $FileRev = $Matches[0]; $FileRev = $FileRev.Split("_")[0]
 $Setupx32 = 'FileZilla_' + $FileRev + '_win32-setup.exe'
 $Setupx64 = 'FileZilla_' + $FileRev + '_win64-setup.exe'
 
@@ -236,7 +238,7 @@ if (!$Util.Python){$Util["Python"] = @{}}
 if (!$Util.Python.Version32){$Util.Python.Version32 = 0}
 if (!$Util.Python.Version64){$Util.Python.Version64 = 0}
 $WebResponse = Invoke-WebRequest https://www.python.org/downloads/ -UseBasicParsing
-$PythonRev = ($WebResponse.RawContent | Where-Object { $_ -match "Python [0-9].[0-9].[0-9]"} | Measure-Object -Maximum).Maximum; $PythonRev = $Matches[0]
+$PythonRev = $WebResponse.RawContent | Where-Object { $_ -match "Python [0-9].*"}; $PythonRev = $Matches[0]
 $PythonRev = $PythonRev | Where-Object { $_ -match "[0-9].[0-9].[0-9]"}; $PythonRev = $Matches[0]
 
 $URLx32 = 'https://www.python.org/ftp/python/' + $PythonRev + '/python-' + $PythonRev + '.exe'
@@ -252,14 +254,14 @@ Download $URLx32 $Setupx32; $Count++}
 if ($PythonRev -gt $Util.Python.Version64 -and $arc -eq "64-bit"){
 Write-host "Updating Python 64 bit"
 	if ($Util.Python.Setup64){rm $Util.Python.Setup64 -Force}
-Download $URLx64 $Setupx64; $Count++} 
+Download $URLx64 $Setupx64; $Count++}
 
 
 # Grab the newest Process Explorer
 if (!$Util.ProcessExp){$Util["ProcessExp"] = @{}}
 if (!$Util.ProcessExp.Version){$Util.ProcessExp.Version = 0}
 $WebResponse = Invoke-WebRequest https://technet.microsoft.com/en-us/sysinternals/processexplorer.aspx -UseBasicParsing
-$ProcRev = $WebResponse.RawContent; $ProcRev -match "v[0-9][0-9].*" | Out-null; $ProcRev = $Matches[0]; 
+$ProcRev = $WebResponse.RawContent | Where-Object {$_ -match "v[0-9].*"}; $ProcRev = $Matches[0]; 
 $ProcRev = $ProcRev.Substring(0, $ProcRev.IndexOf('<')); $ProcRev = $ProcRev.replace("v","")
 
 $Setup = 'ProcessExplorer.zip'
@@ -272,13 +274,13 @@ Download $URL $Setup; $Count++
 
 	if (Test-path $env:Temp\Process){rm $env:Temp\Process -Recurse}
 Unzip $PWD\ProcessExplorer.zip $env:Temp\Process; cp $env:Temp\Process\ProcExp.exe $Default\Apps\Utilities -Force
-rm ProcessExplorer.zip} 
+rm ProcessExplorer.zip}
 
 # Grab the Newest Autoruns
 if (!$Util.AutoRuns){$Util["AutoRuns"] = @{}}
 if (!$Util.AutoRuns.Version){$Util.AutoRuns.Version = 0}
 $WebResponse = Invoke-WebRequest https://technet.microsoft.com/en-us/sysinternals/bb963902.aspx -UseBasicParsing
-$AutoRev = $WebResponse.RawContent; $AutoRev -match "v[0-9][0-9].*" | Out-null; $AutoRev = $Matches[0]; 
+$AutoRev = $WebResponse.RawContent | Where-Object {$_ -match "v[0-9].*"}; $AutoRev = $Matches[0]; 
 $AutoRev = $AutoRev.Substring(0, $AutoRev.IndexOf('<')); $AutoRev = $AutoRev.replace("v","")
 
 $Setup = 'Autoruns.zip'
@@ -293,13 +295,12 @@ Unzip $PWD\AutoRuns.Zip $env:Temp\Autoruns; cp $env:Temp\Autoruns\AutoRuns.exe $
 rm Autoruns.zip}
 
 # Grab the Newest qBittorrent
-
 if (!$Util.Qbit){$Util["Qbit"] = @{}}
 if (!$Util.Qbit.Version32){$Util.Qbit.Version32 = 0}
 if (!$Util.Qbit.Version64){$Util.Qbit.Version64 = 0}
 $WebResponse = Invoke-WebRequest https://www.qbittorrent.org/download.php -UseBasicParsing
-$QbitRev = $WebResponse.RawContent; $QbitRev -match "v[0-9].[0-9].*" | Out-null
-$QbitRev = $Matches[0]; $QbitRev = $QbitRev.replace("v",""); $QbitRev = $QbitRev.Split("<")[0]
+$QbitRev = $WebResponse.RawContent | Where-Object {$_ -match "v[0-9].*"}; $QbitRev = $Matches[0]
+$QbitRev = $QbitRev.replace("v",""); $QbitRev = $QbitRev.Split("<")[0]
 
 $URLx32 = "https://sourceforge.net/projects/qbittorrent/files/qbittorrent-win32/qbittorrent-" + $QbitRev + "/qbittorrent_" + $QbitRev + "_setup.exe/download"
 $URLx64 = "https://sourceforge.net/projects/qbittorrent/files/qbittorrent-win32/qbittorrent-" + $QbitRev + "/qbittorrent_" + $QbitRev + "_x64_setup.exe/download"
@@ -314,7 +315,7 @@ Download $URLx32 $Setupx32; $Count++}
 if ($QbitRev -gt $Util.Qbit.Version64 -and $arc -eq "64-bit"){
 Write-host "Updating Qbittorrent 64 bit"
 	if ($Util.Qbit.Setup64){rm $Util.Qbit.Setup64 -Force}
-Download $URLx64 $Setupx64; $Count++} 
+Download $URLx64 $Setupx64; $Count++}
 
 # ==========================================================* Update the Setups  *=============================================================
 # =============================================================================================================================================
@@ -348,13 +349,14 @@ Download $URLx32 $Setupx32; $Count++}
 if ($JavaRev -gt $WebPlugins.Java.Version64 -and $arc -eq "64-bit"){
 Write-host "Updating Java 64 bit"
 	if ($WebPlugins.Java.Setup64){rm $WebPlugins.Java.Setup64 -Force}
-Download $URLx64 $Setupx64; $Count++} 
+Download $URLx64 $Setupx64; $Count++}
 
 # Grab the latest Flash Player
 if (!$WebPlugins.Flash){$WebPlugins["Flash"] = @{}}
 if (!$WebPlugins.Flash.Version){$WebPlugins.Flash.Version = 0}
 $WebResponse = Invoke-WebRequest https://get.adobe.com/flashplayer/ -UseBasicParsing
-$FlashRev = $WebResponse.RawContent | Where-Object { $_ -match "Version [0-9][0-9].[0-9].[0-9].[0-9][0-9]"}; $FlashRev = $Matches[0]; $FlashRev = $FlashRev.replace("Version ",""); $Flashlnk = $FlashRev.Substring(0, 2)
+$FlashRev = $WebResponse.RawContent | Where-Object { $_ -match "Version [0-9].*"}; $FlashRev = $Matches[0]
+$FlashRev = $FlashRev.replace("Version ",""); $FlashRev = $FlashRev.Substring(0, $FlashRev.IndexOf('<'));$Flashlnk = $FlashRev.Substring(0, 2)
 
 $URL = 'https://fpdownload.macromedia.com/pub/flashplayer/updaters/' + $Flashlnk + '/flashplayer_' + $Flashlnk + '_plugin_debug.exe'
 $Setup = 'flashplayer_' + $Flashlnk + '_plugin_debug.exe'
@@ -362,7 +364,7 @@ $Setup = 'flashplayer_' + $Flashlnk + '_plugin_debug.exe'
 if ($FlashRev -gt $WebPlugins.Flash.Version){
 Write-host "Updating Flash Player"
 	if ($WebPlugins.Flash.Setup){rm $WebPlugins.Flash.Setup -Force}
-Download $URL $Setup; $Count++} 
+Download $URL $Setup; $Count++}
 
 # Update / Download Report
 Write-host

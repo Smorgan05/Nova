@@ -19,7 +19,7 @@ if ($Action -eq "Setup"){
 	
 		if ($arc -eq "64-bit"){
 		start-process $Handy.Chrome.Setup64 -ArgumentList "$q" -wait
-		start-process $Handy.Firefox.Setup64 -ArgumentList "-ms" -wait1 } else {
+		start-process $Handy.Firefox.Setup64 -ArgumentList "-ms" -wait } else {
 		start-process $Handy.Chrome.Setup32 -ArgumentList "$q" -wait
 		start-process $Handy.Firefox.Setup32 -ArgumentList "-ms" -wait}
 		
