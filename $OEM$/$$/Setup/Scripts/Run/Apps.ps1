@@ -34,7 +34,6 @@ if ($Action -eq "Setup"){
 	copy $Util.AutoRuns.Setup "$env:homedrive\"
 	copy $Util.ProcessExp.Setup "$env:homedrive\"
 	start-process $Util.CCleaner.Setup -ArgumentList "$s_big" -wait
-	start-process $Util.Defraggler.Setup -ArgumentList "$s_big" -wait
 	start-process $Util.Notepad.Setup -ArgumentList "$s_big" -wait
 
 	# Utilities / Tools Module (Multi - Arc)
@@ -57,10 +56,6 @@ if ($Action -eq "PostInstall"){
 	# Applications Module
 	if ($AppsModHandy -eq "True"){
 	cd $default\Apps\Handy
-	
-	if ($arc -eq "64-bit"){
-	start-process $Handy.MPC.Setup64 -ArgumentList "$silent" -wait } else {
-	start-process $Handy.MPC.Setup32 -ArgumentList "$silent" -wait}}
 
 	# Windows 8 & 8.1 & 10 (***Classic Shell Start Button***)
 	if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.9200") -or ($winver -like "10.*"))){
@@ -80,8 +75,6 @@ if ($Action -eq "PostInstall"){
 	# Web Plugins Module
 	if ($AppsModWebPlugins -eq "True"){
 	cd $default\Apps\Webplugins
-	
-	start-process $WebPlugins.Flash.Setup -ArgumentList "-install" -wait
 
 	# Web Plugins Module (Multi - ARC)
 	if ($arc -eq "64-bit"){start-process $WebPlugins.Java.Setup64 -ArgumentList "/s" -wait} else { start-process $WebPlugins.Java.Setup32 -ArgumentList "/s" -wait}}

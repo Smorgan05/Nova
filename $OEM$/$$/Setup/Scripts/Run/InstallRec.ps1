@@ -37,7 +37,6 @@ $Handy=@{}
 $Handy["Classic"] = @{}
 $Handy["Firefox"] = @{} 
 $Handy["MediaMonkey"] = @{}
-$Handy["MPC"] = @{}
 $Handy["Chrome"] = @{}
 
 	# Set Variables for Handy
@@ -46,8 +45,6 @@ $Handy["Chrome"] = @{}
 	if ($HandyArray[$i] -match 'MediaMonkey'){$Handy["MediaMonkey"]["Setup"] = $HandyArray[$i]; $Temp = $Handy.MediaMonkey.Setup.Split("_")[1]; $Handy["MediaMonkey"]["Version"] = $Temp.Substring(0,$Temp.IndexOf(".exe"))}
 	if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win32*')){$Handy["Firefox"]["Setup32"] = $HandyArray[$i]; $Handy["Firefox"]["Version32"] = $Handy.Firefox.Setup32.Substring($Handy.Firefox.Setup32.IndexOf("-")+1,$Handy.Firefox.Setup32.IndexOf(".e")-8)}	
 	if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win64*')){$Handy["Firefox"]["Setup64"] = $HandyArray[$i]; $Handy["Firefox"]["Version64"] = $Handy.Firefox.Setup64.Substring($Handy.Firefox.Setup64.IndexOf("-")+1,$Handy.Firefox.Setup64.IndexOf(".e")-8)}
-	if (($HandyArray[$i] -match 'MPC') -and ($HandyArray[$i] -like '*x86*')){$Handy["MPC"]["Setup32"] = $HandyArray[$i]; $Handy["MPC"]["Version32"] = SetupVer $Handy.MPC.Setup32}
-	if (($HandyArray[$i] -match 'MPC') -and ($HandyArray[$i] -like '*x64*')){$Handy["MPC"]["Setup64"] = $HandyArray[$i]; $Handy["MPC"]["Version64"] = SetupVer $Handy.MPC.Setup64}
 	if (($HandyArray[$i] -match 'chrome') -and ($HandyArray[$i] -notmatch '64')){$Handy["Chrome"]["Setup32"] = $HandyArray[$i]; $Handy["Chrome"]["Version32"] = ChromeVer $Handy.Chrome.Setup32}
 	if (($HandyArray[$i] -match 'chrome') -and ($HandyArray[$i] -match '64')){$Handy["Chrome"]["Setup64"] = $HandyArray[$i]; $Handy["Chrome"]["Version64"] = ChromeVer $Handy.Chrome.Setup64}}
 
@@ -60,7 +57,6 @@ cd $Default\Apps\Utilities
 
 $Util = @{};
 $Util["CCleaner"] = @{}
-$Util["Defraggler"] = @{}
 $Util["Notepad"] = @{}
 $Util["AutoRuns"] = @{}
 $Util["ProcessExp"] = @{}
@@ -72,7 +68,6 @@ $Util["Qbit"] = @{}
 	# Set Variables for Utilities
 	for ($i=0; $i -le $UtilArray.length; $i++){
 	if ($UtilArray[$i] -match 'cc'){$Util["CCleaner"]["Setup"] = $UtilArray[$i]; $Util["CCleaner"]["Version"] = SetupVer $Util.CCleaner.Setup}
-	if ($UtilArray[$i] -match 'df'){$Util["Defraggler"]["Setup"] = $UtilArray[$i]; $Util["Defraggler"]["Version"] = $Util.Defraggler.Setup -match '\d+'; $Temp = $Matches[0]; $Util.Defraggler.Version = $Temp.Insert(1,".") }
 	if ($UtilArray[$i] -match 'npp'){$Util["Notepad"]["Setup"] = $UtilArray[$i]; $Temp = $Util.Notepad.Setup.Substring(4);  $Util["Notepad"]["Version"] = $Temp.Substring(0,$Temp.IndexOf("I")-1)}
 	if ($UtilArray[$i] -match 'Auto'){$Util["AutoRuns"]["Setup"] = $UtilArray[$i]; $Util["AutoRuns"]["Version"] = SetupVer $Util.AutoRuns.Setup}
 	if ($UtilArray[$i] -match 'exp'){$Util["ProcessExp"]["Setup"] = $UtilArray[$i]; $Util["ProcessExp"]["Version"] = SetupVer $Util.ProcessExp.Setup}
@@ -92,12 +87,10 @@ cd $Default\Apps\WebPlugins
 # Setup Web Plugins Hash Table
 
 $WebPlugins = @{}
-$WebPlugins["Flash"] = @{}
 $WebPlugins["Java"] = @{}
 
 	# Set Variables for WebPlugins
 	for ($i=0; $i -le $WebPluginArray.length; $i++){
-	if ($WebPluginArray[$i] -match 'flash'){$WebPlugins["Flash"]["Setup"] = $WebPluginArray[$i]; $WebPlugins["Flash"]["Version"] = SetupVer $WebPlugins.Flash.Setup; $WebPlugins["Flash"]["Version"] = $WebPlugins["Flash"]["Version"].replace(",",".")}
 	if (($WebPluginArray[$i] -match 'jre') -and ($WebPluginArray[$i] -match 'i586')){$WebPlugins["Java"]["Setup32"] = $WebPluginArray[$i]; $WebPlugins["Java"]["Version32"] = SetupVer $WebPlugins.Java.Setup32}
 	if (($WebPluginArray[$i] -match 'jre') -and ($WebPluginArray[$i] -match 'x64')){$WebPlugins["Java"]["Setup64"] = $WebPluginArray[$i]; $WebPlugins["Java"]["Version64"] = SetupVer $WebPlugins.Java.Setup64}}
 
