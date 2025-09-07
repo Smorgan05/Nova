@@ -7,11 +7,13 @@ if (Test-path "$env:windir\Setup\Scripts"){cd $env:windir\Setup\Scripts\Run} els
 
 # Disable Windows 10 upgrade
 if ($winver -notlike "10.*"){
-	New-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate" -Name DisableOSUpgrade -Value "1" -PropertyType "DWord"  -Force | out-null}
+	New-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate" -Name DisableOSUpgrade -Value "1" -PropertyType "DWord"  -Force | out-null
+}
 
 # Disable Windows 10 Specific
 if ($winver -like "10.*"){
-	New-NetFirewallRule -DisplayName "MS Telemetry" -Direction Outbound -Program "$env:Windir\SystemApps\Microsoft\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy\SearchUI.exe" -Action Block}
+	New-NetFirewallRule -DisplayName "MS Telemetry" -Direction Outbound -Program "$env:Windir\SystemApps\Microsoft\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy\SearchUI.exe" -Action Block
+}
 
 # Host
 cd $env:windir\System32\drivers\etc
@@ -83,48 +85,61 @@ if (Test-Path "Customer Experience Improvement Program"){
 	SCHTASKS /Change /TN "Microsoft\Windows\Customer Experience Improvement Program\KernelCeipTask" /Disable
 	SCHTASKS /Change /TN "Microsoft\Windows\Customer Experience Improvement Program\UsbCeip" /Disable
 	SCHTASKS /Change /TN "Microsoft\Windows\Customer Experience Improvement Program\Consolidator" /Disable
-	SCHTASKS /Change /TN "Microsoft\Windows\Customer Experience Improvement Program\Uploader" /Disable}
+	SCHTASKS /Change /TN "Microsoft\Windows\Customer Experience Improvement Program\Uploader" /Disable
+}
 
 if (Test-Path "Power Efficiency Diagnostics\AnalyzeSystem"){
-	SCHTASKS /Change /TN "Microsoft\Windows\Power Efficiency Diagnostics\AnalyzeSystem" /Disable}
+	SCHTASKS /Change /TN "Microsoft\Windows\Power Efficiency Diagnostics\AnalyzeSystem" /Disable
+}
 
 if (Test-Path Shell){
 	SCHTASKS /Change /TN "Microsoft\Windows\Shell\FamilySafetyMonitor" /Disable
 	SCHTASKS /Change /TN "Microsoft\Windows\Shell\FamilySafetyRefresh" /Disable
-	SCHTASKS /Change /TN "Microsoft\Windows\Shell\FamilySafetyUpload" /Disable}
+	SCHTASKS /Change /TN "Microsoft\Windows\Shell\FamilySafetyUpload" /Disable
+}
 
 if (Test-Path "Application Experience"){
 	SCHTASKS /Change /TN "Microsoft\Windows\Application Experience\AitAgent" /Disable
 	SCHTASKS /Change /TN "Microsoft\Windows\Application Experience\ProgramDataUpdater" /Disable
 	SCHTASKS /Change /TN "Microsoft\Windows\Application Experience\StartupAppTask" /Disable
-	SCHTASKS /Change /TN "Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" /Disable}
+	SCHTASKS /Change /TN "Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" /Disable
+}
 
 if (Test-Path Autochk){
-	SCHTASKS /Change /TN "Microsoft\Windows\Autochk\Proxy" /Disable}
+	SCHTASKS /Change /TN "Microsoft\Windows\Autochk\Proxy" /Disable
+}
 
 if (Test-Path AppID){
-	SCHTASKS /Change /TN "Microsoft\Windows\AppID\SmartScreenSpecific" /Disable}
+	SCHTASKS /Change /TN "Microsoft\Windows\AppID\SmartScreenSpecific" /Disable
+}
 
 if (Test-Path DiskDiagnostic){
-	SCHTASKS /Change /TN "Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector" /Disable}
+	SCHTASKS /Change /TN "Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector" /Disable
+}
 
 if (Test-Path NetTrace){
-	SCHTASKS /Change /TN "Microsoft\Windows\NetTrace\GatherNetworkInfo" /Disable}
+	SCHTASKS /Change /TN "Microsoft\Windows\NetTrace\GatherNetworkInfo" /Disable
+}
 
 if (Test-Path PI){
-	SCHTASKS /Change /TN "Microsoft\Windows\PI\Sqm-Tasks" /Disable}
+	SCHTASKS /Change /TN "Microsoft\Windows\PI\Sqm-Tasks" /Disable
+}
 
 if (Test-Path FileHistory){
-	SCHTASKS /Change /TN "Microsoft\Windows\FileHistory\File History (maintenance mode)" /Disable}
+	SCHTASKS /Change /TN "Microsoft\Windows\FileHistory\File History (maintenance mode)" /Disable
+}
 
 if (Test-Path DiskFootprint){
-	SCHTASKS /Change /TN "Microsoft\Windows\DiskFootprint\Diagnostics" /Disable}
+	SCHTASKS /Change /TN "Microsoft\Windows\DiskFootprint\Diagnostics" /Disable
+}
 
 if (Test-Path CloudExperienceHost){
-	SCHTASKS /Change /TN "Microsoft\Windows\CloudExperienceHost\CreateObjectTask" /Disable}
+	SCHTASKS /Change /TN "Microsoft\Windows\CloudExperienceHost\CreateObjectTask" /Disable
+}
 
 if (Test-Path "Windows Error Reporting"){
-	SCHTASKS /Change /TN "Microsoft\Windows\Windows Error Reporting\QueueReporting" /Disable}
+	SCHTASKS /Change /TN "Microsoft\Windows\Windows Error Reporting\QueueReporting" /Disable
+}
 
 if (Test-Path $OffTasks){
 	cd $OffTasks
@@ -132,27 +147,33 @@ if (Test-Path $OffTasks){
 	SCHTASKS /Change /TN "Microsoft\Office\OfficeTelemetryAgentFallBack" /Disable
 	SCHTASKS /Change /TN "Microsoft\Office\Office 15 Subscription Heartbeat" /Disable
 	SCHTASKS /change /TN "Microsoft\Office\OfficeTelemetry\AgentFallBack2016" /Disable
-	SCHTASKS /Change /TN "Microsoft\Office\OfficeTelemetry\OfficeTelemetryAgentLogOn2016" /Disable}
+	SCHTASKS /Change /TN "Microsoft\Office\OfficeTelemetry\OfficeTelemetryAgentLogOn2016" /Disable
+}
 
 #Telemtry query for running services to delete
 if ($DiagTrack){
-	SC stop DiagTrack; SC delete DiagTrack}
+	SC stop DiagTrack; SC delete DiagTrack
+}
 	
 if ($Dmwappush){
-	SC stop dmwappushservice; SC delete dmwappushservice}
+	SC stop dmwappushservice; SC delete dmwappushservice
+}
 
 # Disable if present Diagnosis folder and .etl file locations for telemetry logging
 if (Test-Path $Diagnostics){
 	TAKEOWN /F $Diagnostics; ICACLS $Diagnostics /reset /T /Q
-	CMD /C "ICACLS $Diagnostics /remove:g SYSTEM /inheritance:r /deny SYSTEM:(OI)(CI)F"}
+	CMD /C "ICACLS $Diagnostics /remove:g SYSTEM /inheritance:r /deny SYSTEM:(OI)(CI)F"
+}
 
 if (Test-Path $Diagnostics\$AutoLogger){
 	$FullAutoLogger = $Diagnostics +"\"+ $AutoLogger
-	TAKEOWN /F $FullAutoLogger; ICACLS $FullAutoLogger /reset /T /Q; rm $FullAutoLogger}
+	TAKEOWN /F $FullAutoLogger; ICACLS $FullAutoLogger /reset /T /Q; rm $FullAutoLogger
+}
 
 if (Test-Path $Diagnostics\$ShutLogger){
 	$FullShutLogger = $Diagnostics +"\"+ $ShutLogger
-	TAKEOWN /F $FullShutLogger; ICACLS $FullShutLogger /reset /T /Q; rm $FullShutLogger}
+	TAKEOWN /F $FullShutLogger; ICACLS $FullShutLogger /reset /T /Q; rm $FullShutLogger
+}
 
 # Flush to bypass reboot after hosts file entries
 nbtstat -R

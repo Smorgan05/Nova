@@ -11,7 +11,6 @@ cd $Default
 # Set Arrays for App Modules
 if ($AppsModHandy -eq "True"){$HandyArray = ls Apps\Handy -name}
 if ($AppsModUtil -eq "True"){$UtilArray = ls Apps\Utilities -name}
-if ($AppsModWebPlugins -eq "True"){$WebPluginArray = ls Apps\WebPlugins -name}
 
 # Set Version Grab Function
 function SetupVer($Setup){
@@ -36,13 +35,11 @@ cd $Default\Apps\Handy
 $Handy=@{}
 $Handy["Classic"] = @{}
 $Handy["Firefox"] = @{} 
-$Handy["MediaMonkey"] = @{}
 $Handy["Chrome"] = @{}
 
 	# Set Variables for Handy
 	for($i=0; $i -le $HandyArray.length; $i++){
 	if ($HandyArray[$i] -match 'ClassicShell'){ $Handy["Classic"]["Setup"] = $HandyArray[$i]; $Handy["Classic"]["Version"] = SetupVer $Handy.Classic.Setup; $Handy.Classic.Version = $Handy.Classic.Version.replace(", ",".")}
-	if ($HandyArray[$i] -match 'MediaMonkey'){$Handy["MediaMonkey"]["Setup"] = $HandyArray[$i]; $Temp = $Handy.MediaMonkey.Setup.Split("_")[1]; $Handy["MediaMonkey"]["Version"] = $Temp.Substring(0,$Temp.IndexOf(".exe"))}
 	if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win32*')){$Handy["Firefox"]["Setup32"] = $HandyArray[$i]; $Handy["Firefox"]["Version32"] = $Handy.Firefox.Setup32.Substring($Handy.Firefox.Setup32.IndexOf("-")+1,$Handy.Firefox.Setup32.IndexOf(".e")-8)}	
 	if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win64*')){$Handy["Firefox"]["Setup64"] = $HandyArray[$i]; $Handy["Firefox"]["Version64"] = $Handy.Firefox.Setup64.Substring($Handy.Firefox.Setup64.IndexOf("-")+1,$Handy.Firefox.Setup64.IndexOf(".e")-8)}
 	if (($HandyArray[$i] -match 'chrome') -and ($HandyArray[$i] -notmatch '64')){$Handy["Chrome"]["Setup32"] = $HandyArray[$i]; $Handy["Chrome"]["Version32"] = ChromeVer $Handy.Chrome.Setup32}
@@ -80,22 +77,6 @@ $Util["Qbit"] = @{}
 	if (($UtilArray[$i] -match 'qbit') -and ($UtilArray[$i] -notlike '*x64*')){$Util["Qbit"]["Setup32"] = $UtilArray[$i]; $Util["Qbit"]["Version32"] = $Util.Qbit.Setup32.Split("_")[1]}
 	if (($UtilArray[$i] -match 'qbit') -and ($UtilArray[$i] -like '*x64*')){$Util["Qbit"]["Setup64"] = $UtilArray[$i]; $Util["Qbit"]["Version64"] = $Util.Qbit.Setup64.Split("_")[1]}}
 }
-# ==============================* Web Plugins *======================================
-if ($AppsModWebPlugins -eq "True"){
-cd $Default\Apps\WebPlugins
-
-# Setup Web Plugins Hash Table
-
-$WebPlugins = @{}
-$WebPlugins["Java"] = @{}
-
-	# Set Variables for WebPlugins
-	for ($i=0; $i -le $WebPluginArray.length; $i++){
-	if (($WebPluginArray[$i] -match 'jre') -and ($WebPluginArray[$i] -match 'i586')){$WebPlugins["Java"]["Setup32"] = $WebPluginArray[$i]; $WebPlugins["Java"]["Version32"] = SetupVer $WebPlugins.Java.Setup32}
-	if (($WebPluginArray[$i] -match 'jre') -and ($WebPluginArray[$i] -match 'x64')){$WebPlugins["Java"]["Setup64"] = $WebPluginArray[$i]; $WebPlugins["Java"]["Version64"] = SetupVer $WebPlugins.Java.Setup64}}
-
-}
-# ===================================================================================
 
 # Return to original directory
 cd $default\run

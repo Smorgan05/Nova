@@ -1,11 +1,11 @@
 # Global Variables for Scripts
 
 # General Script Variables
-$edition = (gwmi Win32_OperatingSystem).Caption
-$winver = (gwmi win32_OperatingSystem).Version
-$arc = (gwmi win32_OperatingSystem).OSArchitecture
+$edition = (get-wmiobject Win32_OperatingSystem).Caption
+$winver = (get-wmiobject Win32_OperatingSystem).Version
+$arc = (get-wmiobject Win32_OperatingSystem).OSArchitecture
 $PSVer = $PSVersionTable.PSVersion.Major
-$VidRez = (gwmi win32_videocontroller).CurrentHorizontalResolution
+$VidRez = (get-wmiobject win32_videocontroller).CurrentHorizontalResolution
 $Temp = $env:temp
 
 # Set Master script directory
@@ -13,7 +13,7 @@ if (Test-path "$env:windir\Setup\Scripts"){
 $default = "$env:windir\Setup\Scripts"} else {$default = Split-Path (Split-Path $script:MyInvocation.MyCommand.Path) -Parent}
 
 # Set Master Version
-$NovaVer = "13.0"
+$NovaVer = "13.1"
 
 # Set Startup Folder Variable
 $Startup = "$env:programdata\Microsoft\Windows\Start Menu\Programs\Startup"
@@ -73,11 +73,12 @@ If ($Connection -eq "2"){
 # Set Correct Python path 
 
 if ($arc -eq "64-bit"){
-$PythonPath = (ls $env:ProgramFiles | Where-Object { $_ -match "Python"}).FullName} else {$PythonPath = (ls $Program86 | Where-Object { $_ -match "Python"}).FullName}
+	$PythonPath = (ls $env:ProgramFiles | Where-Object { $_ -match "Python"}).FullName} else {$PythonPath = (ls $Program86 | Where-Object { $_ -match "Python"}).FullName
+}
 
 # Set Python check variable
 if (($PythonPath -ne $Null) -and (Test-Path $PythonPath)){
-$Python = "True"} else {$Python = "False"}
+	$Python = "True"} else {$Python = "False"}
 
 # ============================================================================================================================================================================
 #																		Set Primary Module Variables
@@ -107,10 +108,6 @@ $AppsModHandy = "True"} else { $AppsModHandy = "False"}
 # Set Apps Utilities Module Variable
 if (Test-Path "Apps\Utilities"){
 $AppsModUtil = "True"} else { $AppsModUtil = "False"}
-
-# Set Apps WebPlugins Module Variable
-if (Test-Path "Apps\Webplugins"){
-$AppsModWebPlugins = "True"} else { $AppsModWebPlugins = "False"}
 
 # ============================================================================================================================================================================ 
 

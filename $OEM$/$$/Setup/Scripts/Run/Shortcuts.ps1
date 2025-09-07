@@ -24,7 +24,8 @@ Remove-Item $home\desktop\* -include *.lnk
 
 # Remove all Shortcuts on desktop for Modern Operating Systems
 if (($winver -like "6.*") -or ($winver -like "10.*")){
-	Remove-Item $env:public\Desktop\* -include *.lnk}
+	Remove-Item $env:public\Desktop\* -include *.lnk
+}
 
 $AutoPath = $env:homedrive + "\" + $Util.AutoRuns.Setup
 $ProcPath = $env:homedrive + "\" + $Util.ProcessExp.Setup
@@ -32,7 +33,8 @@ $ProcPath = $env:homedrive + "\" + $Util.ProcessExp.Setup
 if ($AppsModUtil -eq "True"){
 	New-Item -ItemType directory -Path "$StartMenuUser\SysInternals" | out-null
 	Shortcuts $AutoPath "$StartMenuUser\SysInternals\Autoruns.lnk"
-	Shortcuts $ProcPath "$StartMenuUser\SysInternals\Process Explorer.lnk"}
+	Shortcuts $ProcPath "$StartMenuUser\SysInternals\Process Explorer.lnk"
+}
 
 # ========================
 

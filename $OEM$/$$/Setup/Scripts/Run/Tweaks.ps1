@@ -43,34 +43,45 @@ if ($Action -eq "PostInstall"){
 
 	# Prep Registry by adding items (Windows 8)
 	if ($winver -like "6.2.*") {
-	New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows\EdgeUI" -Force | out-null
-	New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Force | out-null
-	New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ImmersiveShell" -Force | out-null}
+		New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows\EdgeUI" -Force | out-null
+		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Force | out-null
+		New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ImmersiveShell" -Force | out-null
+	}
 
 	# Prep Registry by adding items (Windows 8.1)
 	if ($winver -like "6.3.*") {
-	New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Force | out-null}
+		New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Force | out-null
+	}
 
 	# Prep Registry by adding items (Windows 8.1 / 10)
 	if (($winver -like "6.3.*") -or ($winver -like "10.*")){
-	New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Force | out-null
-	New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\MiniNT" -Force | out-null}
+		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Force | out-null
+		New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\MiniNT" -Force | out-null
+	}
 
 	# Prep Registry by adding items (Windows 10)
 	if ($winver -like "10.*") {
-	New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize" -Force | out-null
-	New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Force | out-null
-	New-item -Path "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" -Force | out-null
-	New-Item -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Force | out-null}
+		New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize" -Force | out-null
+		New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Force | out-null
+		New-item -Path "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" -Force | out-null
+		New-Item -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Force | out-null
+	}
+
+	# Prep Registry by adding items (Windows 11)
+	if ($winver -ge "10.0.22000"){
+
+	}
 
 	# Prep Registry by adding items (Custimzations to Programs)
-	if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.*") -or ($winver -like "10.*"))){
-	New-Item -Path "HKLM:\Software\IvoSoft" -Force | out-null
-	New-Item -Path "HKLM:\Software\IvoSoft\ClassicStartMenu" -Force | out-null}
+	if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.*") -or ($winver -like "10.*"))) {
+		New-Item -Path "HKLM:\Software\IvoSoft" -Force | out-null
+		New-Item -Path "HKLM:\Software\IvoSoft\ClassicStartMenu" -Force | out-null
+	}
 
 	if ($AppsModUtil -eq "True"){
-	New-Item -Path "HKCU:\Software\Sysinternals" -Force | out-null
-	New-Item -Path "HKCU:\Software\Sysinternals\Process Explorer" -Force | out-null}
+		New-Item -Path "HKCU:\Software\Sysinternals" -Force | out-null
+		New-Item -Path "HKCU:\Software\Sysinternals\Process Explorer" -Force | out-null
+	}
 
 # ============================================================================================================================================================================
 #															Add the Registry modifications to Windows
@@ -101,45 +112,56 @@ if ($Action -eq "PostInstall"){
 
 	# Windows 8 Tweaks
 	if ($winver -like "6.2.*") {
-	New-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\EdgeUI" -Name "DisableHelpSticker" -Value 1 -PropertyType "DWORD" -Force | out-null
-	New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\StartPage" -Name "OpenAtLogon" -Value 0 -PropertyType "DWORD" -Force | out-null
-	New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ImmersiveShell" -Name "DisableCharmsHint" -Value 1 -PropertyType "DWORD" -Force | out-null
-	New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "EnableSmartScreen" -Value 0 -PropertyType "DWORD" -Force | out-null
-	New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "-NoLockScreen" -Value 1 -PropertyType "DWORD" -Force | out-null}
+		New-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\EdgeUI" -Name "DisableHelpSticker" -Value 1 -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\StartPage" -Name "OpenAtLogon" -Value 0 -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ImmersiveShell" -Name "DisableCharmsHint" -Value 1 -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "EnableSmartScreen" -Value 0 -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "-NoLockScreen" -Value 1 -PropertyType "DWORD" -Force | out-null
+	}
 
 	# Windows 8.1 Tweaks
 	if ($winver -like "6.3.*") {
-	New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Name "MotionAccentId_v1.00" -Value "219" -PropertyType "DWORD" -Force | out-null}
+		New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Name "MotionAccentId_v1.00" -Value "219" -PropertyType "DWORD" -Force | out-null
+	}
 
 	# Windows 8.1 / Windows 10
 	if (($winver -like "6.3.*") -or ($winver -like "10.*")){
-	New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\MiniNT" -Name "AllowRefsFormatOverNonmirrorVolume" -Value "1" -PropertyType "DWORD" -Force | out-null
-	New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\FileSystem" -Name "RefsDisableLastAccessUpdate" -Value "1" -PropertyType "DWORD" -Force | out-null
-	New-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "AUOptions" -Value "2" -PropertyType "DWORD" -Force | out-null
-	New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "-NoLockScreen" -Value 1 -PropertyType "DWORD" -Force | out-null}
+		New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\MiniNT" -Name "AllowRefsFormatOverNonmirrorVolume" -Value "1" -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\FileSystem" -Name "RefsDisableLastAccessUpdate" -Value "1" -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "AUOptions" -Value "2" -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "-NoLockScreen" -Value 1 -PropertyType "DWORD" -Force | out-null
+	}
 
 	# Windows 10 Tweaks
 	if ($winver -like "10.*") {
-	New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize" -Name "StartupDelayInMSec" -Value "0" -PropertyType "DWORD" -Force | out-null
-	New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "EnableProactive" -Value "0" -PropertyType "DWORD" -Force | out-null
-	New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Value "0" -PropertyType "DWORD" -Force | out-null
-	New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" -Value "Play To menu" -PropertyType "String" -Force | out-null}
+		New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize" -Name "StartupDelayInMSec" -Value "0" -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "EnableProactive" -Value "0" -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Value "0" -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" -Value "Play To menu" -PropertyType "String" -Force | out-null
+	}
 	
-	
+	# Windows 11 Tweaks
+	if ($winver -ge "10.0.22000"){
+
+	}
+
 # ============================================================================================================================================================================
 #															Add the Registry modifications to Windows
 # ============================================================================================================================================================================
 
 	# Customizations specific to Windows versions
 	if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.9200") -or ($winver -like "10.*"))){
-			if ($VidRez -eq "3840"){New-ItemProperty -Path "HKCU:\Software\IvoSoft\ClassicStartMenu\Settings" -Name "StartButtonSize" -Value "100" -PropertyType "DWORD" -Force | out-null}
-	
-	New-ItemProperty -Path "HKLM:\Software\IvoSoft\ClassicStartMenu" -Name MenuStyle_Default -Value "Win7" -PropertyType "String" -Force | out-null}
+			if ($VidRez -eq "3840"){
+				New-ItemProperty -Path "HKCU:\Software\IvoSoft\ClassicStartMenu\Settings" -Name "StartButtonSize" -Value "100" -PropertyType "DWORD" -Force | out-null
+		}
+		New-ItemProperty -Path "HKLM:\Software\IvoSoft\ClassicStartMenu" -Name MenuStyle_Default -Value "Win7" -PropertyType "String" -Force | out-null
+	}
 
 	if ($AppsModUtil -eq "True"){
-	New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe" -Force | out-null
-	New-ItemProperty -Path "HKCU:\Software\Sysinternals\Process Explorer" -Name EulaAccepted -Value 1 -PropertyType "DWORD" -Force | out-null
-	New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe" -Name Debugger -Value "C:\PROCEXP.EXE" -PropertyType String -Force | out-null}
+		New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe" -Force | out-null
+		New-ItemProperty -Path "HKCU:\Software\Sysinternals\Process Explorer" -Name EulaAccepted -Value 1 -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe" -Name Debugger -Value "C:\PROCEXP.EXE" -PropertyType String -Force | out-null
+	}
 
 # ============================================================================================================================================================================
 #															Add registry imports (the big changes)
@@ -154,20 +176,23 @@ if ($Action -eq "PostInstall"){
 
 	# Win 7
 	if ($winver -like "6.1.*"){
-	regedit /s "Reg\Windows\Pane_Off.reg"}
+		regedit /s "Reg\Windows\Pane_Off.reg"
+	}
 
 	# Win 8 and Win 10
 	if (($winver -ge "6.2.*") -or ($winver -like "10.*")){
-	regedit /s "Reg\Windows\MetroIE.reg"
-	regedit /s "Reg\Windows\AddLibrariesToNavi.reg"
-	regedit /s "Reg\Windows\BackColor.reg"
-	regedit /s "Reg\Windows\RemoveFoldersMyComp.reg"
-	regedit /s "Reg\Windows\DisableAC.reg"
-	regedit /s "Reg\Windows\Preview_Pane.reg"}
+		regedit /s "Reg\Windows\MetroIE.reg"
+		regedit /s "Reg\Windows\AddLibrariesToNavi.reg"
+		regedit /s "Reg\Windows\BackColor.reg"
+		regedit /s "Reg\Windows\RemoveFoldersMyComp.reg"
+		regedit /s "Reg\Windows\DisableAC.reg"
+		regedit /s "Reg\Windows\Preview_Pane.reg"
+	}
 
 	# Win 10
 	if ($winver -like "10.*"){
-	regedit /s "Reg\Windows\Photo_Viewer.reg"}
+		regedit /s "Reg\Windows\Photo_Viewer.reg"
+	}
 
 	}# End Method
 	cd $default\run

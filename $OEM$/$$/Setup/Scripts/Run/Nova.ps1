@@ -19,31 +19,36 @@ if (($NovaMod -eq "True") -and (($PSVer -ge "4.0") -or ($winver -ge "6.1") -or (
 	
 	if (($winver -ge "6.1") -or ($winver -like "10.*")){
 	
-	# Set information in System Information
-	New-ItemProperty $OEMkey -Name Manufacturer -Value "Nova Edition" -Force | out-null
-	New-ItemProperty $OEMkey -Name Model -Value "Nova $NovaVer ($date)" -Force | out-null
-	New-ItemProperty $OEMkey -Name Logo -Value "$home\Nova Pack\Themes\NovaMini.bmp" -Force | out-null
+		# Set information in System Information
+		New-ItemProperty $OEMkey -Name Manufacturer -Value "Nova Edition" -Force | out-null
+		New-ItemProperty $OEMkey -Name Model -Value "Nova $NovaVer ($date)" -Force | out-null
+		New-ItemProperty $OEMkey -Name Logo -Value "$home\Nova Pack\Themes\NovaMini.bmp" -Force | out-null
 
 		# Unpack Buttons for Classic Shell
 		if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.*") -or ($winver -like "10.*"))){
-		start-process "Nova\Buttons.exe" -ArgumentList "$s_small" -wait}
+			start-process "Nova\Buttons.exe" -ArgumentList "$s_small" -wait
+		}
 
 		# Start themes for Server side
 		if (($ServerMod -eq "True") -and ($ThemesServ -ne "Running")){
-		Set-Service Themes -startupType automatic
-		net start Themes}
+			Set-Service Themes -startupType automatic
+			net start Themes
+		}
 
 		# Theme install for Windows (Must be different for V/7/8+)
 		if (($winver -ge "6.2.9200") -or ($winver -like "10.*")){
-		start-process "$home\Nova Pack\Themes\Nova v8.themepack"} 
+			start-process "$home\Nova Pack\Themes\Nova v8.themepack"
+		}
 		elseif ($winver -like "6.1.*"){
-		start-process "$home\Nova Pack\Themes\Nova v7.themepack"}
+			start-process "$home\Nova Pack\Themes\Nova v7.themepack"
+		}
 	}
 	
 	if (($PSVer -ge "4.0") -or (($winver -like "6.1.*") -and ($edition -ne "Starter") -and ($edition -ne "Home Basic"))){
-	Set-ItemProperty "HKCU:\Control Panel\Desktop" -Name Wallpaper -Value "$env:userprofile\Nova Pack\Themes\Nova.bmp"}
+		Set-ItemProperty "HKCU:\Control Panel\Desktop" -Name Wallpaper -Value "$env:userprofile\Nova Pack\Themes\Nova.bmp"
+	}
 	
-	} # End Nova Module Check
+} # End Nova Module Check
 
 # Return to original directory
 cd $default\run
