@@ -2,6 +2,9 @@
 
 <img src="https://i.imgur.com/1mPjoac.png">
 
+<h2 style"font-size:200%;">Update</h2>
+<p>Ok, I'm gonna spend some time to update this to support Windows 11.  This is gonna take a minute and some testing...time to bring Nova into 2025.</p>
+
 <h2 style"font-size:200%;">Goal</h2>
 
 <p>The main goal of the Nova Pack is to create a flexible OEM pack that can be used on multiple Windows Operating Systems. This means we want to be able to use this on legacy systems that have powershell 2.0 and above (think Vista and above). That being said we can modify an ISO and inject this into the Windows install media sources folder to automate the creation of a custom distro of windows. This is easier to do than Sysprepping an image or modifying the WIM (Windows Install Image). Also given the ability to use this on multiple Windows Operating Systems we can make one OEM pack to conquer all of them. That means we don't need to do multiple syspreps of the same install across different versions of windows. We can also interface different scripting languages to the OS making it easier to customize the OS when it's installed.</p>
