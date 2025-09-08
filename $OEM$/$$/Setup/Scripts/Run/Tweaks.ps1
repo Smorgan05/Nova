@@ -69,7 +69,11 @@ if ($Action -eq "PostInstall"){
 
 	# Prep Registry by adding items (Windows 11)
 	if ($winver -ge "10.0.22000"){
-
+		New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows\WindowsCopilot" -Force | out-null
+		New-Item -Path "HKLM:\Software\Policies\Microsoft\Windows\WindowsCopilot" -Force | out-null
+		New-Item -Path "HKLM:\Software\Policies\Microsoft\Edge" -Force | out-null
+		New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Force | out-null
+		New-Item -Path "HKLM:\Software\Policies\Microsoft\Windows\Explorer" -Force | out-null
 	}
 
 	# Prep Registry by adding items (Custimzations to Programs)
@@ -142,7 +146,11 @@ if ($Action -eq "PostInstall"){
 	
 	# Windows 11 Tweaks
 	if ($winver -ge "10.0.22000"){
-
+		New-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\WindowsCopilot" -Name "TurnOffWindowsCopilot" -Value 1 -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\WindowsCopilot" -Name "TurnOffWindowsCopilot" -Value 1 -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Edge" -Name "HubsSidebarEnabled" -Value 0 -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "DisableSearchBoxSuggestions" -Value 1 -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Explorer" -Name "DisableSearchBoxSuggestions" -Value 1 -PropertyType "DWORD" -Force | out-null
 	}
 
 # ============================================================================================================================================================================
