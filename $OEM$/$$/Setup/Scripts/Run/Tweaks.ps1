@@ -74,6 +74,7 @@ if ($Action -eq "PostInstall"){
 		New-Item -Path "HKLM:\Software\Policies\Microsoft\Edge" -Force | out-null
 		New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Force | out-null
 		New-Item -Path "HKLM:\Software\Policies\Microsoft\Windows\Explorer" -Force | out-null
+		New-Item -Path "HKLM:\SOFTWARE\Policies\WindowsNotepad" -Force | out-null
 	}
 
 	# Prep Registry by adding items (Custimzations to Programs)
@@ -151,6 +152,7 @@ if ($Action -eq "PostInstall"){
 		New-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Edge" -Name "HubsSidebarEnabled" -Value 0 -PropertyType "DWORD" -Force | out-null
 		New-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "DisableSearchBoxSuggestions" -Value 1 -PropertyType "DWORD" -Force | out-null
 		New-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Explorer" -Name "DisableSearchBoxSuggestions" -Value 1 -PropertyType "DWORD" -Force | out-null
+		New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\WindowsNotepad" -Name "DisableAIFeatures" -Value 1 -PropertyType "DWORD" -Force | out-null
 	}
 
 # ============================================================================================================================================================================
@@ -200,6 +202,11 @@ if ($Action -eq "PostInstall"){
 	# Win 10
 	if ($winver -like "10.*"){
 		regedit /s "Reg\Windows\Photo_Viewer.reg"
+	}
+
+	# Win 11
+	if ($winver -ge "10.0.22000"){
+
 	}
 
 	}# End Method

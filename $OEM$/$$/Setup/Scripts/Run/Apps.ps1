@@ -61,7 +61,7 @@ if ($Action -eq "PostInstall"){
 	if (($AppsModHandy -eq "True") -and (($winver -ge "6.2.9200") -or ($winver -like "10.*"))){
 	cd $default\Apps\Handy
 	
-	start-process $Handy.Classic.Setup -ArgumentList "$Classy" -wait
+	start-process $Handy.OpenShell.Setup -ArgumentList "$Classy" -wait
 	regedit /s "$default\Reg\Tweaks\Classicshell.reg"}
 
 	# Utilities / Tools Module (Multi - ARC)

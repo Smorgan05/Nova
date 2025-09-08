@@ -33,13 +33,13 @@ cd $Default\Apps\Handy
 # Setup Handy Hash Table
 
 $Handy=@{}
-$Handy["Classic"] = @{}
+$Handy["OpenShell"] = @{}
 $Handy["Firefox"] = @{} 
 $Handy["Chrome"] = @{}
 
 	# Set Variables for Handy
 	for($i=0; $i -le $HandyArray.length; $i++){
-	if ($HandyArray[$i] -match 'ClassicShell'){ $Handy["Classic"]["Setup"] = $HandyArray[$i]; $Handy["Classic"]["Version"] = SetupVer $Handy.Classic.Setup; $Handy.Classic.Version = $Handy.Classic.Version.replace(", ",".")}
+	if ($HandyArray[$i] -match 'OpenShell'){ $Handy["OpenShell"]["Setup"] = $HandyArray[$i]; $Handy["OpenShell"]["Version"] = SetupVer $Handy.OpenShell.Setup}
 	if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win32*')){$Handy["Firefox"]["Setup32"] = $HandyArray[$i]; $Handy["Firefox"]["Version32"] = $Handy.Firefox.Setup32.Substring($Handy.Firefox.Setup32.IndexOf("-")+1,$Handy.Firefox.Setup32.IndexOf(".e")-8)}	
 	if (($HandyArray[$i] -match 'Firefox') -and ($HandyArray[$i] -like '*win64*')){$Handy["Firefox"]["Setup64"] = $HandyArray[$i]; $Handy["Firefox"]["Version64"] = $Handy.Firefox.Setup64.Substring($Handy.Firefox.Setup64.IndexOf("-")+1,$Handy.Firefox.Setup64.IndexOf(".e")-8)}
 	if (($HandyArray[$i] -match 'chrome') -and ($HandyArray[$i] -notmatch '64')){$Handy["Chrome"]["Setup32"] = $HandyArray[$i]; $Handy["Chrome"]["Version32"] = ChromeVer $Handy.Chrome.Setup32}

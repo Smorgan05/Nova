@@ -35,8 +35,11 @@ if (($NovaMod -eq "True") -and (($PSVer -ge "4.0") -or ($winver -ge "6.1") -or (
 			net start Themes
 		}
 
-		# Theme install for Windows (Must be different for V/7/8+)
-		if (($winver -ge "6.2.9200") -or ($winver -like "10.*")){
+		# Theme install for Windows (Must be different for V/7/8/10/11)
+		if ($winver -ge "10.0.22000"){
+			
+		}
+		elseif (($winver -ge "6.2.9200") -or ($winver -like "10.*")){
 			start-process "$home\Nova Pack\Themes\Nova v8.themepack"
 		}
 		elseif ($winver -like "6.1.*"){
